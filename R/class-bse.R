@@ -1,11 +1,11 @@
 
-#'Class for broken stick estimates
+#'Class for individual broken stick estimates
 #'
 #'The \code{bse} class stores three variables that result from predicting
 #'a given broken stick model. The \code{bse} class extend
 #'the \code{\link{xyz-class}} class. The \code{bse} class calculates
-#'predicted values according to the broken stick model applied to the
-#'values specified in the \code{data} argument.
+#'predicted values from the broken stick model fitted to the
+#'values specified in the \code{data} argument of the \code{new("bse", data)} function.
 #'
 #'@section Slots:
 #'  \describe{
@@ -104,16 +104,3 @@ setValidity("bse", function(object) {
   return(TRUE)
 })
 
-
-
-# re-calculate the broken stick estimates for the newly edited
-# child
-# library(donordata)
-# library(brokenstick)
-# library(clopus)
-#
-# z <- new("xyz", x = c(0, 0.2), y = c(53, 65))
-#
-# p <- new("bse", data = z)
-#
-#

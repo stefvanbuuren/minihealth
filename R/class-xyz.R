@@ -1,4 +1,4 @@
-#'Class for ages, measurements and standard deviation scores
+#'Class for individual anthropometric data
 #'
 #'The \code{xyz} class stores three variables useful for growth curves:
 #'\code{x} (usually age), \code{y} (height, weight, etc) and \code{z} (Z-score,
@@ -35,13 +35,32 @@
 #'@seealso \code{\link[clopus]{create.reference.call}}
 #'@keywords classes
 #'@examples
-#'# specify three height measures
-#'d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
-#'# Note that Z-scores are added, relative to nl1997 reference for males
-#'d
-#'# Same, but now for a female
-#'d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
-#'d
+#'# specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
+#'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+#'print(d1)
+#'
+#'# weight (in kg) at same ages
+#'d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt")
+#'
+#'# Obtain reference table to calculate Z-scores
+#'eval(d2@call)
+#'
+#'# Specify custom reference table
+#'# List available WHO references in clopus package
+#'find.reference(libname = "who")
+#'
+#'# Head circumference of girl, relative to WHO standard
+#'d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
+#'libname = "who", row = "who2011", sex = "female", sub = "", yname = "hdc")
+#'print(d3)
+#'
+#'# Shortcut spefication of WHO standard
+#'d3@call
+#'d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
+#'
+#'# Standard weight centiles at age 0.5 year of Dutch girls
+#'d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
+#'
 #'@export
 
 setClass("xyz",
@@ -114,3 +133,9 @@ setValidity("xyz", function(object) {
   }
   return(TRUE)
 })
+
+
+
+d <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 40), libname = "nl2009", sex = "female", sub = "", yname = "hdc")
+d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 40), libname = "who", row = "who2011", sex = "female", sub = "", yname = "hdc")
+

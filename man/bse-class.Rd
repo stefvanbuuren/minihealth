@@ -3,13 +3,13 @@
 \docType{class}
 \name{bse-class}
 \alias{bse-class}
-\title{Class for broken stick estimates}
+\title{Class for individual broken stick estimates}
 \description{
 The \code{bse} class stores three variables that result from predicting
 a given broken stick model. The \code{bse} class extend
 the \code{\link{xyz-class}} class. The \code{bse} class calculates
-predicted values according to the broken stick model applied to the
-values specified in the \code{data} argument.
+predicted values from the broken stick model fitted to the
+values specified in the \code{data} argument of the \code{new("bse", data)} function.
 }
 \section{Slots}{
 
