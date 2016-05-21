@@ -30,13 +30,18 @@
 #'
 #'@name xyz-class
 #'@rdname xyz-class
-#'@aliases yxz-class
+#'@aliases xyz-class
 #'@author Stef van Buuren 2016
 #'@seealso \code{\link[clopus]{create.reference.call}}
 #'@keywords classes
 #'@examples
 #'# specify three height measures
-#'new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+#'d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+#'# Note that Z-scores are added, relative to nl1997 reference for males
+#'d
+#'# Same, but now for a female
+#'d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
+#'d
 #'@export
 
 setClass("xyz",

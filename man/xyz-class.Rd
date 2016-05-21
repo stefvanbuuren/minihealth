@@ -3,7 +3,6 @@
 \docType{class}
 \name{xyz-class}
 \alias{xyz-class}
-\alias{yxz-class}
 \title{Class for ages, measurements and standard deviation scores}
 \description{
 The \code{xyz} class stores three variables useful for growth curves:
@@ -37,7 +36,12 @@ corresponding to \code{y} given \code{x}). The class calculates
 }
 \examples{
 # specify three height measures
-new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+# Note that Z-scores are added, relative to nl1997 reference for males
+d
+# Same, but now for a female
+d <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
+d
 }
 \author{
 Stef van Buuren 2016
