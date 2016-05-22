@@ -26,6 +26,8 @@
 #'    \code{sex},
 #'    \code{yname} and \code{sub} arguments, which are passed down to
 #'    \code{create.reference.call()}. See below for examples.}
+#'    \item{\code{found}:}{Logical indicating whether the reference specified by
+#'    \code{call} was actually found.}
 #'}
 #'
 #'@name xyz-class
@@ -37,30 +39,30 @@
 #'@examples
 #'# specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
 #'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
-#'print(d1)
+#'d1
 #'
-#'# weight (in kg) at same ages
+#'# Z-scores of weight (in kg) at same ages
 #'d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt")
+#'d2@z
 #'
-#'# Obtain reference table to calculate Z-scores
+#'# Obtain reference table used to calculate Z-scores in d2
 #'eval(d2@call)
 #'
-#'# Specify custom reference table
 #'# List available WHO references in clopus package
 #'find.reference(libname = "who")
 #'
 #'# Head circumference of girl, relative to WHO standard
 #'d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
-#'libname = "who", row = "who2011", sex = "female", sub = "", yname = "hdc")
-#'print(d3)
+#'libname = "who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
+#'d3
 #'
-#'# Shortcut spefication of WHO standard
+#'# Shortcut specification of WHO standard
 #'d3@call
 #'d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
 #'
 #'# Standard weight centiles at age 0.5 year of Dutch girls
 #'d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
-#'
+#'d5
 #'@export
 
 setClass("xyz",
@@ -71,9 +73,11 @@ setClass("xyz",
            xname = "character",
            yname = "character",
            zname = "character",
-           call = "ANY"
+           call  = "ANY",
+           found = "logical"
          ), prototype = list(
-           call = quote(as.numeric(NULL))
+           call = quote(as.numeric(NULL)),
+           found = FALSE
          )
 )
 
@@ -99,19 +103,25 @@ setMethod("initialize", "xyz",
               slot(.Object, "call") <- call
             }
 
+            # obtain reference table
+            ref <- eval(call)
+            .Object@found <- is.reference(ref)
+
             # try to fill up z if there are y values
             if (length(.Object@z) == 0 && length(.Object@y) > 0)
               slot(.Object, "z") <-
               as.numeric(clopus::y2z(y = slot(.Object, "y"),
                                      x = slot(.Object, "x"),
-                                     ref = eval(call)))
+                                     ref = ref))
 
             # try to fill up y if there are z values
             if (length(.Object@y) == 0 && length(.Object@z) > 0)
               slot(.Object, "y") <-
               as.numeric(clopus::z2y(z = slot(.Object, "z"),
                                      x = slot(.Object, "x"),
-                                     ref = eval(call)))
+                                     ref = ref))
+
+            check <- validObject(.Object)
             return(.Object)
           }
 )
@@ -134,8 +144,18 @@ setValidity("xyz", function(object) {
   return(TRUE)
 })
 
+setMethod("show", signature(object = "xyz" ),
+          function (object) {
+            if (!object@found) cat("Reference not found.\n")
+            else cat(paste("package: clopus, library:", as.character(object@call[[2]]),
+                      ", member:", as.character(object@call[[3]]), "\n"))
+            df <- data.frame(object@x, object@y, object@z)
+            names(df) <- c(object@xname, object@yname, object@zname)
+            print(df)
+          }
+)
 
 
-d <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 40), libname = "nl2009", sex = "female", sub = "", yname = "hdc")
-d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 40), libname = "who", row = "who2011", sex = "female", sub = "", yname = "hdc")
+
+
 

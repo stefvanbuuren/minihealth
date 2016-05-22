@@ -6,27 +6,29 @@
 \title{Class for individual broken stick estimates}
 \description{
 The \code{bse} class stores three variables that result from predicting
-a given broken stick model. The \code{bse} class extend
+a given broken stick model. The \code{bse} class extends
 the \code{\link{xyz-class}} class. The \code{bse} class calculates
 predicted values from the broken stick model fitted to the
-values specified in the \code{data} argument of the \code{new("bse", data)} function.
+values specified in the \code{data} argument of the
+\code{new("bse", data)} function.
 }
 \section{Slots}{
 
  \describe{
    \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick.export} as created by
    \code{\link[brokenstick]{export.brokenstick}}.}
+   \item{\code{found}:}{Logical indicating whether the broken stick model specified by
+   \code{call} was actually found.}
    \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
 }
 }
 \examples{
-# specify three height measures
-d <- new("bse", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
-# Note that Z-scores are added, relative to nl1997 reference for males
-d
+# first specify three height measures
+d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
+d1
 # Same, but now for a female
-d <- new("bse", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
-d
+d2 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female"))
+d2
 }
 \author{
 Stef van Buuren 2016
