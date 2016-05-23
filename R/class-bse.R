@@ -20,7 +20,7 @@
 #'@rdname bse-class
 #'@aliases bse-class
 #'@author Stef van Buuren 2016
-#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}
+#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
 #'@examples
 #'# first specify three height measures
@@ -29,6 +29,10 @@
 #'# Same, but now for a female
 #'d2 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female"))
 #'d2
+#'# Calculate predicted value for each x
+#'d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
+#' sex = "female"), type = "response")
+#'d3
 #'@export
 #'@include class-xyz.R
 

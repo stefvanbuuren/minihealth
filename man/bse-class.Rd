@@ -29,12 +29,16 @@ d1
 # Same, but now for a female
 d2 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female"))
 d2
+# Calculate predicted value for each x
+d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
+sex = "female"), type = "response")
+d3
 }
 \author{
 Stef van Buuren 2016
 }
 \seealso{
-\code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}
+\code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
 }
 \keyword{classes}
 
