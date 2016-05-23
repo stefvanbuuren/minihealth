@@ -42,6 +42,10 @@ setClass("personAN",
            hgt = "xyz",
            wgt = "xyz",
            hdc = "xyz"
+         ), prototype = list(
+           hgt = new("xyz", yname = "hgt"),
+           wgt = new("xyz", yname = "wgt"),
+           hdc = new("xyz", yname = "hdc")
          )
 )
 
@@ -50,6 +54,10 @@ setClass("personBS",
            bs.hgt = "bse",
            bs.wgt = "bse",
            bs.hdc = "bse"
+         ), prototype = list(
+           bs.hgt = new("bse", data = new("xyz", yname = "hgt")),
+           bs.wgt = new("bse", data = new("xyz", yname = "wgt")),
+           bs.hdc = new("bse", data = new("xyz", yname = "hdc"))
          )
 )
 
