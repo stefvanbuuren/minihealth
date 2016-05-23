@@ -37,8 +37,6 @@ setClass("personBG",
 )
 
 
-
-
 setClass("personAN",
          slots = c(
            hgt = "xyz",
@@ -47,8 +45,17 @@ setClass("personAN",
          )
 )
 
+setClass("personBS",
+         slots = c(
+           bs.hgt = "bse",
+           bs.wgt = "bse",
+           bs.hdc = "bse"
+         )
+)
+
+
 setClass("person",
-         contains = c("personID", "personBG", "personAN"),
+         contains = c("personID", "personBG", "personAN", "personBS"),
          slots = c(
            test    = "integer"
          ),

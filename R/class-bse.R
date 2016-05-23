@@ -56,7 +56,7 @@ setMethod("initialize", "bse",
                     ...) {
 
             # can't calculate if we have no data
-            if (missing(data)) stop("argument 'data' is missing")
+            if (missing(data)) data <- new("xyz", ...)
 
             # do nothing if data slot is not of class 'xyz'
             if (!inherits(data, "xyz")) return(.Object)
@@ -89,6 +89,7 @@ setMethod("initialize", "bse",
             if (.Object@zscale) {
               .Object@z <- predict(object = model, y = data@z,
                                    age = data@x, type = type)
+              if (length(.Object@z) == 0) .Object@x <- numeric(0)
               .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
                                                   x = .Object@x,
                                                   ref = eval(data@call)))
@@ -96,6 +97,7 @@ setMethod("initialize", "bse",
             else {
               .Object@y <- predict(object = model, y = data@y,
                                    age = data@x, type = type)
+              if (length(.Object@y) == 0) .Object@y <- numeric(0)
               .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
                                                   x = .Object@x,
                                                   ref = eval(data@call)))
@@ -123,7 +125,7 @@ setValidity("bse", function(object) {
 setMethod("show", signature(object = "bse" ),
           function (object) {
             if (!object@found) cat("Broken stick model not found.\n")
-            else cat(paste("package: donordata, library:", as.character(object@call[[2]]),
+            else cat(paste("package: donordata, model:", as.character(object@call[[2]]),
                            ", member:", as.character(object@call[[3]]), "\n"))
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
