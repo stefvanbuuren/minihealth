@@ -39,7 +39,7 @@
 setClass("bse",
          contains = "xyz",
          slots = c(
-           call = "ANY",
+           call = "language",
            found = "logical",
            zscale = "logical"
          ), prototype = list(

@@ -73,7 +73,7 @@ setClass("xyz",
            xname = "character",
            yname = "character",
            zname = "character",
-           call  = "ANY",
+           call  = "language",
            found = "logical"
          ), prototype = list(
            call = quote(as.numeric(NULL)),

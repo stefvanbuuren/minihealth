@@ -1,4 +1,4 @@
-#' @importFrom methods slot slot<- validObject
+#' @importFrom methods slot slot<- validObject new
 #' @importFrom stats predict
 #' @import clopus
 #' @import brokenstick
