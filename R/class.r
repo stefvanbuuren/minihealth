@@ -2,6 +2,7 @@
 
 setClass("personID",
          slots = c(
+           src   = "character",
            id    = "integer",
            name  = "character",
            dob   = "POSIXct"
@@ -15,6 +16,7 @@ setClass("personID",
 setClass("personBG",
          slots = c(
            sex   = "character",
+           etn   = "character",
            ga    = "numeric",
            bw    = "numeric",
            mult  = "numeric",
@@ -24,15 +26,13 @@ setClass("personBG",
            wgtm  = "numeric",
            landm = "character",
            edum  = "character",
-           agem  = "numeric",
+           agem  = "character",
            smo   = "logical",
 
            hgtf  = "numeric",
            wgtf  = "numeric",
            landf = "character",
            eduf  = "character"
-         ), prototype = list(
-           sex   = "male"
          )
 )
 
@@ -65,10 +65,11 @@ setClass("personBS",
 setClass("person",
          contains = c("personID", "personBG", "personAN", "personBS"),
          slots = c(
-           test    = "integer"
+           src    = "character"
          ),
          prototype = list(
-           test = as.integer(0)
+           src    = ""
          )
 )
+
 
