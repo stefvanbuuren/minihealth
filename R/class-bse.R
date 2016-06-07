@@ -1,4 +1,7 @@
-#'Class for individual broken stick estimates
+#'@include class-xyz.R
+NULL
+
+#' An S4 class for broken stick estimates
 #'
 #'The \code{bse} class stores three variables that result from predicting
 #'a given broken stick model. The \code{bse} class extends
@@ -34,7 +37,6 @@
 #' sex = "female"), type = "response")
 #'d3
 #'@export
-#'@include class-xyz.R
 
 setClass("bse",
          contains = "xyz",

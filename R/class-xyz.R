@@ -1,4 +1,4 @@
-#'Class for individual anthropometric data
+#' An S4 class for anthropometric data
 #'
 #'The \code{xyz} class stores three variables useful for growth curves:
 #'\code{x} (usually age), \code{y} (height, weight, etc) and \code{z} (Z-score,

@@ -3,7 +3,7 @@
 \docType{class}
 \name{bse-class}
 \alias{bse-class}
-\title{Class for individual broken stick estimates}
+\title{An S4 class for broken stick estimates}
 \description{
 The \code{bse} class stores three variables that result from predicting
 a given broken stick model. The \code{bse} class extends
