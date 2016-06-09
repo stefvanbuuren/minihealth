@@ -1,139 +1,8 @@
-# class-individual.R
-
-#' An S4 class to represent individual identifiers
-#'
-#' @slot id   Unique numerical individual identifier in source (\code{integer}, length 1)
-#' @slot name Name of the individual (\code{character})
-#' @slot dob  Date of birth of class (\code{date}, length 1)
-#' @slot src  Name of data source (\code{character})
-#' @author Stef van Buuren 2016
-#' @examples
-#' # Create a new ID for Ron and Jasper
-#' ron <- new("individualID", name = c("Ron", "Smith"),
-#'            dob = as.Date("1999-08-22"), id = as.integer(204))
-#' jasper <- new("individualID", name = c("Jasper", "Fielding"),
-#'            id = as.integer(220))
-#'@export
-setClass("individualID",
-         slots = c(
-           id    = "integer",
-           name  = "character",
-           dob   = "Date",
-           src   = "character"
-         ), prototype = list(
-           id    = 0L,
-           name  = NA_character_,
-           dob   = as.Date(NA),
-           src   = NA_character_
-           )
-)
-
-validIndividualID <- function(object) {
-  if(length(object@id) != 1) return("Slot id not of length 1")
-  if(length(object@dob) != 1) return("Slot dob not of length 1")
-  TRUE
-  }
-setValidity("individualID", validIndividualID)
-
-
-
-
-#' An S4 class to represent individual background variables
-#'
-#' @slot sex  Either \code{"male"} or \code{"female"} (\code{character})
-#' @slot etn  Etnicity code (\code{character})
-#' @slot ga   Gestational age in weeks (\code{numeric})
-#' @slot bw   Birth weight in grammes (\code{numeric})
-#' @slot mult Multiplicity, 1 = singleton, 2 = twin (\code{integer})
-#' @slot goodhealth In good health, \code{TRUE} or \code{FALSE} (\code{logical})
-#' @slot hgtm Height of mother in cm (\code{numeric})
-#' @slot wgtm Weight of mother in kg (\code{numeric})
-#' @slot landm Country of birth, mother (\code{character})
-#' @slot edum Education mother, \code{"low"}, \code{"middle"}, \code{"high"} (\code{character})
-#' @slot agem Mother age when pregnant, \code{"(15,25]"},
-#'\code{"(25,36]"} or \code{"(36,45]"} (\code{character})
-#' @slot smo  Mother smoked during pregnancy, \code{TRUE} or \code{FALSE} (\code{logical})
-#' @slot hgtf Height of father in cm (\code{numeric})
-#' @slot wgtf Weight of father in kg (\code{numeric})
-#' @slot landf Country of birth, father (\code{character})
-#' @slot eduf Education father, \code{"low"}, \code{"middle"}, \code{"high"} (\code{character})
-setClass("individualBG",
-         slots = c(
-           sex   = "character",
-           etn   = "character",
-           ga    = "numeric",
-           bw    = "numeric",
-           mult  = "integer",
-           goodhealth = "logical",
-
-           hgtm  = "numeric",
-           wgtm  = "numeric",
-           landm = "character",
-           edum  = "character",
-           agem  = "character",
-           smo   = "logical",
-
-           hgtf  = "numeric",
-           wgtf  = "numeric",
-           landf = "character",
-           eduf  = "character"
-         )
-)
-
-#' An S4 class to represent individual anthropometric data
-#'
-#'The \code{individualAN} class stores anthropometric measures as the collection of three \code{xyz}-class for height, weight and head circumference, respectively.
-#' @slot hgt  Length/height in cm (\code{xyz})
-#' @slot wgt  Weight in kg (\code{xyz})
-#' @slot hdc  Head circumference in cm (\code{xyz})
-#' @seealso \code{\link{xyz-class}}
-#' @examples
-#' # create object with height and weight measures
-#' # add Z-scores calculate according to Dutch 1997 references
-#' new("individualAN",
-#'      hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
-#'      wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
-#'
-#' # calculate -2 and +2 centiles for height and head circumference
-#' # using the WHO Child Growth Standard for girls
-#' hgtref <- create.reference.call(libname = "who", prefix = "who2011",
-#'                                 sex = "female", yname = "hgt", sub = "")
-#' hdcref <- create.reference.call(libname = "who", prefix = "who2011",
-#'                                 sex = "female", yname = "hdc", sub = "")
-#' new("individualAN",
-#'      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25), z = c(-2, 2, -2, 2), call = hgtref),
-#'      wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1), z = c(-2, 2, -2, 2), call = hdcref))
-
-#' @author Stef van Buuren 2016
-setClass("individualAN",
-         slots = c(
-           hgt = "xyz",
-           wgt = "xyz",
-           hdc = "xyz"
-         ), prototype = list(
-           hgt = new("xyz", yname = "hgt"),
-           wgt = new("xyz", yname = "wgt"),
-           hdc = new("xyz", yname = "hdc")
-         )
-)
-
-#' An S4 class to represent individual broken stick estimates
-#'
-#' @slot hgt  Length/height in cm (\code{bse})
-#' @slot wgt  Weight in kg (\code{bse})
-#' @slot hdc  Head circumference in cm (\code{bse})
-#' @author Stef van Buuren 2016
-setClass("individualBS",
-         slots = c(
-           bs.hgt = "bse",
-           bs.wgt = "bse",
-           bs.hdc = "bse"
-         ), prototype = list(
-           bs.hgt = new("bse", data = new("xyz", yname = "hgt")),
-           bs.wgt = new("bse", data = new("xyz", yname = "wgt")),
-           bs.hdc = new("bse", data = new("xyz", yname = "hdc"))
-         )
-)
+#'@include class-individualID.R
+#'@include class-individualBG.R
+#'@include class-individualAN.R
+#'@include class-individualBS.R
+NULL
 
 #' An S4 class to represent individual data
 #'
@@ -151,7 +20,7 @@ setClass("individual",
                       "individualBS")
 )
 
-#' Convert single individual donor data to individual class
+#' Convert single individual from donor data to class individual
 #'
 #' This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
 #' @aliases donordata.to.individual

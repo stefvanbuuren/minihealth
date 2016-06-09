@@ -21,6 +21,10 @@ RoxygenNote: 5.0.1
 Collate:
     'class-xyz.R'
     'class-bse.R'
+    'class-individualBS.R'
+    'class-individualAN.R'
+    'class-individualBG.R'
+    'class-individualID.R'
     'class-individual.R'
     'class-cabinet.R'
     'imports.R'

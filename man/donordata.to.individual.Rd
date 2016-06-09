@@ -2,7 +2,7 @@
 % Please edit documentation in R/class-individual.R
 \name{donordata.to.individual}
 \alias{donordata.to.individual}
-\title{Convert single individual donor data to individual class}
+\title{Convert single individual from donor data to class individual}
 \usage{
 donordata.to.individual(id, src = donordata::smocc, ...)
 }
