@@ -140,10 +140,10 @@ list2cabinet <- function(from, ...) {
   n <- length(ids)
   cab <- new("cabinet", n = length(ids))
 
-  for (i in length(cab))
+  for (i in 1:length(cab))
     cab[[i]] <- donordata.to.individual(id = ids[i], ...)
-    cab@ids <- sapply(cab, slot, "id")
-    cab@n <- length(cab@.Data)
+  cab@ids <- sapply(cab, slot, "id")
+  cab@n <- length(cab@.Data)
 
   validObject(cab)
   return(cab)

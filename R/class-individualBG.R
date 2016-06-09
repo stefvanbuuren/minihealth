@@ -69,3 +69,5 @@ validIndividualBG <- function(object) {
 }
 setValidity("individualBG", validIndividualBG)
 
+
+cleanout <- function(){}

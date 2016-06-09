@@ -114,8 +114,7 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
                             ...))
   }
 
-  p <- new("individual",
-           pid, pbg, pan, pbs)
+  p <- new("individual", pid, pbg, pan, pbs)
 
   return(p)
 }
