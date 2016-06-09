@@ -10,20 +10,19 @@ An S4 class to represent individual identifiers
 \section{Slots}{
 
 \describe{
-\item{\code{src}}{Name of data source (\code{character})}
-
-\item{\code{id}}{Unique numerical individual identifier in source (\code{integer})}
+\item{\code{id}}{Unique numerical individual identifier in source (\code{integer}, length 1)}
 
 \item{\code{name}}{Name of the individual (\code{character})}
 
-\item{\code{dob}}{Date of birth of class (\code{date})}
+\item{\code{dob}}{Date of birth of class (\code{date}, length 1)}
+
+\item{\code{src}}{Name of data source (\code{character})}
 }}
 \examples{
 # Create a new ID for Ron and Jasper
-ron <- new("individualID", name = "Ron Smith",
-           dob = as.character(as.Date("22-08-99", format = "\%d-\%m-\%y")),
-           id = as.integer(204))
-jasper <- new("individualID", name = "Jasper Fielding",
+ron <- new("individualID", name = c("Ron", "Smith"),
+           dob = as.Date("1999-08-22"), id = as.integer(204))
+jasper <- new("individualID", name = c("Jasper", "Fielding"),
            id = as.integer(220))
 }
 \author{

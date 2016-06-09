@@ -45,7 +45,7 @@ library("donordata")
 cab <- as(smocc, "cabinet")
 
 # same, but not relative to WHO references
-all2 <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
+cab.who <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
 }
 }
 \author{

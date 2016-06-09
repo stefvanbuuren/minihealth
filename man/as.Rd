@@ -6,4 +6,7 @@
 \description{
 as("list", "cabinet")
 }
+\seealso{
+Other cabinet: \code{\link{list2cabinet}}
+}
 

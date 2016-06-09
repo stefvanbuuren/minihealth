@@ -40,7 +40,7 @@ NULL
 #'cab <- as(smocc, "cabinet")
 #'
 #'# same, but not relative to WHO references
-#'all2 <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
+#'cab.who <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
 #'}
 #'@export
 setClass("cabinet",
@@ -142,6 +142,18 @@ setClass("cabinet",
 #' @name as
 #' @family cabinet
 setAs("list", "cabinet", function(from) list2cabinet(from))
+
+#' Convert donordata object to cabinet object
+#'
+#' This function calls the \code{donordata.to.individual} function to
+#' transform data of each \code{id} into an object of \code{individual} S4 class,
+#' and then collects all individuals into an object of \code{cabinet} S4 class.
+#' @param from Longitudinal data in the \code{list} format as used by the \code{donordata} package
+#' @param \dots Argument passed down to \code{donordata.to.individual}
+#' @family cabinet
+#'@author Stef van Buuren 2016
+#'@seealso \code{\link{donordata.to.individual}}
+#' @export
 list2cabinet <- function(from, ...) {
   if (length(from) != 3) stop("Data type of unrecognised")
   ids <- from[[2]]$id

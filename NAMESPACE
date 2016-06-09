@@ -3,6 +3,7 @@
 export(donordata.to.individual)
 export(is.cabinet)
 export(is.individual)
+export(list2cabinet)
 exportClasses(bse)
 exportClasses(cabinet)
 exportClasses(individual)
