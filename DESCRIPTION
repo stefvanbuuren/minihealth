@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.1.8
+Version: 0.1.9
 Author: Stef van Buuren
 Depends:
     clopus (>= 0.28),
@@ -19,10 +19,11 @@ Acknowledgement: Development of this package was kindly suported by the Bill &
     Melinda Gates Foundation
 RoxygenNote: 5.0.1
 Collate:
-    'Untitled.R'
     'class-xyz.R'
     'class-bse.R'
     'class-individual.R'
     'class-cabinet.R'
     'imports.R'
     'tests.R'
+Suggests:
+    testthat

@@ -5,20 +5,31 @@
 #' @slot src  Name of data source (\code{character})
 #' @slot id   Unique numerical individual identifier in source (\code{integer})
 #' @slot name Name of the individual (\code{character})
-#' @slot dob  Date of birth (\code{POSIXct})
+#' @slot dob  Date of birth of class (\code{date})
 #' @author Stef van Buuren 2016
+#' @examples
+#' # Create a new ID for Ron and Jasper
+#' ron <- new("individualID", name = "Ron Smith",
+#'            dob = as.character(as.Date("22-08-99", format = "%d-%m-%y")),
+#'            id = as.integer(204))
+#' jasper <- new("individualID", name = "Jasper Fielding",
+#'            id = as.integer(220))
+#'@export
 setClass("individualID",
          slots = c(
-           src   = "character",
            id    = "integer",
            name  = "character",
-           dob   = "POSIXct"
-         ),
-         prototype = list(
-           id    = as.integer(0),
-           dob   = as.POSIXct(Sys.Date())
-         )
+           dob   = "character",
+           src   = "character"
+         ), prototype = list(
+           id    = 0L,
+           name  = NA_character_,
+           dob   = NA_character_,
+           src   = NA_character_
+           )
 )
+
+
 
 #' An S4 class to represent individual background variables
 #'
@@ -64,9 +75,28 @@ setClass("individualBG",
 
 #' An S4 class to represent individual anthropometric data
 #'
+#'The \code{individualAN} class stores anthropometric measures as the collection of three \code{xyz}-class for height, weight and head circumference, respectively.
 #' @slot hgt  Length/height in cm (\code{xyz})
 #' @slot wgt  Weight in kg (\code{xyz})
 #' @slot hdc  Head circumference in cm (\code{xyz})
+#' @seealso \code{\link{xyz-class}}
+#' @examples
+#' # create object with height and weight measures
+#' # add Z-scores calculate according to Dutch 1997 references
+#' new("individualAN",
+#'      hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
+#'      wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
+#'
+#' # calculate -2 and +2 centiles for height and head circumference
+#' # using the WHO Child Growth Standard for girls
+#' hgtref <- create.reference.call(libname = "who", prefix = "who2011",
+#'                                 sex = "female", yname = "hgt", sub = "")
+#' hdcref <- create.reference.call(libname = "who", prefix = "who2011",
+#'                                 sex = "female", yname = "hdc", sub = "")
+#' new("individualAN",
+#'      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25), z = c(-2, 2, -2, 2), call = hgtref),
+#'      wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1), z = c(-2, 2, -2, 2), call = hdcref))
+
 #' @author Stef van Buuren 2016
 setClass("individualAN",
          slots = c(
@@ -103,44 +133,23 @@ setClass("individualBS",
 #'A collection of object of \code{individualID}, \code{individualBG}, \code{individualAN} and \code{individualBS}, representing data of an individual.
 #'The type of information covers individual identifyers, fixed background variables, time-varying anthroponetric measures and time-varying broken stick estimates. The \code{new("individual")} function can automatically calculate standard deviation scores relative to a growth reference, and predictions according the a broken stick model.
 #'@name individual-class
-#'@rdname cabinet-class
-#'@slot .Data A list of objects of class \code{individual}
-#'@slot ids A number vector the indexes the (unique) individual \code{id}
-#'@slot src Name of the source data
-#'@slot created Creation date
-#'@slot updated Update date
-#'@aliases cabinet-class
 #'@author Stef van Buuren 2016
-#'@seealso \code{\link[=individual-class]{individual}}
+#'@seealso \code{\link[=individualID-class]{individualID}}
 #'@keywords classes
-#'@examples
-#'\dontrun{
-#'# convert all 1933 children of SMOCC in `individual` objects
-#'library("donordata")
-#'all <- as(smocc, "cabinet")
-#'
-#'# same, but not relative to WHO references
-#'all2 <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
-#'}
 #'@export
 setClass("individual",
-         contains = c("individualID", "individualBG", "individualAN", "individualBS"),
-         slots = c(
-           src    = "character"
-         ),
-         prototype = list(
-           src    = ""
-         )
+         contains = c("individualID",
+                      "individualBG",
+                      "individualAN",
+                      "individualBS")
 )
-
-
 
 #' Convert single individual donor data to individual class
 #'
 #' This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
 #' @aliases donordata.to.individual
 #' @param id the id number of the individual in specified source
-#' @param src the object containing the donor data, e.g. \code{donordata::smocc}
+#' @param src A character indicating the source
 #' @param \dots Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}. Useful parameters are \code{model = "bsmodel"} for setting the broken stick model, or \code{call = as.call(...)} for setting proper reference standards.
 #' @author Stef van Buuren 2016
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
@@ -173,8 +182,8 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
     pid <- new("individualID")
     pbg <- new("individualBG")
   } else {
-    dob <- as.POSIXct(ifelse( is.null(child$dob), as.Date(NA), child$dob),
-                      format = "%d-%m-%y", tz = "UTC", origin = NA)
+    if (is.null(child$dob)) child$dob <- NA
+    dob <- as.character(as.Date(child$dob, format = "%d-%m-%y"))
     pid <- new("individualID",
                id    = as.integer(id),
                name  = as.character(child$name),
@@ -230,11 +239,19 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
   }
 
   p <- new("individual",
-           src = deparse(substitute(src)),
            pid, pbg, pan, pbs)
 
   return(p)
 }
 
 
+#' Is this object of class `individual`?
+#'
+#' @param x An object
+#' @return A logical
+#' @export
+is.individual <- function(x)
+{
+  inherits(x,"individual")
+}
 

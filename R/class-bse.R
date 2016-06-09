@@ -44,7 +44,7 @@ setClass("bse",
            call = "language",
            found = "logical",
            zscale = "logical"
-         ), prototype = list(
+         ), prototype = prototype(
            call = quote(as.numeric(NULL)),
            found = FALSE,
            zscale = TRUE
@@ -124,7 +124,9 @@ setValidity("bse", function(object) {
   return(TRUE)
 })
 
-setMethod("show", signature(object = "bse" ),
+
+setMethod("show",
+          signature(object = "bse" ),
           function (object) {
             if (!object@found) cat("Broken stick model not found.\n")
             else cat(paste("package: donordata, model:", as.character(object@call[[2]]),

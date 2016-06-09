@@ -16,8 +16,16 @@ An S4 class to represent individual identifiers
 
 \item{\code{name}}{Name of the individual (\code{character})}
 
-\item{\code{dob}}{Date of birth (\code{POSIXct})}
+\item{\code{dob}}{Date of birth of class (\code{date})}
 }}
+\examples{
+# Create a new ID for Ron and Jasper
+ron <- new("individualID", name = "Ron Smith",
+           dob = as.character(as.Date("22-08-99", format = "\%d-\%m-\%y")),
+           id = as.integer(204))
+jasper <- new("individualID", name = "Jasper Fielding",
+           id = as.integer(220))
+}
 \author{
 Stef van Buuren 2016
 }

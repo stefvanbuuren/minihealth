@@ -1,5 +1,5 @@
-#' @importFrom methods slot slot<- validObject new initialize slotNames
 #' @importFrom stats predict
+#' @import methods
 #' @import clopus
 #' @import brokenstick
 #' @import donordata

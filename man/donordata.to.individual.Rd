@@ -9,7 +9,7 @@ donordata.to.individual(id, src = donordata::smocc, ...)
 \arguments{
 \item{id}{the id number of the individual in specified source}
 
-\item{src}{the object containing the donor data, e.g. \code{donordata::smocc}}
+\item{src}{A character indicating the source}
 
 \item{\dots}{Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}. Useful parameters are \code{model = "bsmodel"} for setting the broken stick model, or \code{call = as.call(...)} for setting proper reference standards.}
 }

@@ -63,6 +63,12 @@ d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
 # Standard weight centiles at age 0.5 year of Dutch girls
 d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
 d5
+
+# calculate centiles at 1 year using the female WHO head circumference reference
+ref <- create.reference.call(libname = "who", prefix = "who2011",
+                                sex = "female", yname = "hdc", sub = "")
+d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
+d6
 }
 \author{
 Stef van Buuren 2016

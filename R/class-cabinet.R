@@ -14,7 +14,7 @@ NULL
 #'@rdname cabinet-class
 #'@slot .Data A list of objects of class \code{individual}
 #'@slot ids A number vector the indexes the (unique) individual \code{id}
-#'@slot src Name of the source data
+#'@slot n Number of individuals
 #'@slot created Creation date
 #'@slot updated Update date
 #'@aliases cabinet-class
@@ -22,10 +22,22 @@ NULL
 #'@seealso \code{\link[=individual-class]{individual}}
 #'@keywords classes
 #'@examples
+#'# create cabinet with 1 empty record
+#'z <- new("cabinet")
+#'z
+#'slotNames(z[[1]])
+#'
+#'# create cabinet from two individual
+#'fred <- new("individual", name = "Fred", id = as.integer(33))
+#'bill <- new("individual", name = "Bill", id = as.integer(20))
+#'z <- new("cabinet", c(fred, bill))
+#'z[[1]]@name
+#'z[[2]]@name
+#'
 #'\dontrun{
 #'# convert all 1933 children of SMOCC in `individual` objects
 #'library("donordata")
-#'all <- as(smocc, "cabinet")
+#'cab <- as(smocc, "cabinet")
 #'
 #'# same, but not relative to WHO references
 #'all2 <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
@@ -34,48 +46,160 @@ NULL
 setClass("cabinet",
          contains = "list",
          representation(
+           n       = "integer",
            ids     = "numeric",
-           src     = "character",
-           created = "POSIXct",
-           updated = "POSIXct"
+           created = "Date",
+           updated = "Date"
          ),
-         prototype = list(
-           new("individual"),
-           src     = NA_character_,
-           created = as.POSIXct(Sys.Date()),
-           updated = as.POSIXct(Sys.Date())
-           )
+         prototype = prototype(
+           list(new("individual")),
+           n       = 1L,
+           ids     = 0,
+           created = as.Date(Sys.Date()),
+           updated = as.Date(Sys.Date())
+         )
 )
+
+# setMethod("initialize", "cabinet",
+#           function (.Object, n = 1, data,
+#                     src = "", ...) {
+#
+#             # case 1: missing(data), n = 1: 1 new
+#             # case 2: missing(data), n > 1: n new
+#             # case 3: is.individual(data), n = 1
+#             # case 4: is.individual(data), n > 1
+#
+#             s4Vec <- lapply(rep("individual", n), new)
+#
+#             # can't calculate if we have no data
+#             if (missing(data)) data <- new("individual", ...)
+#
+#             # do nothing if data slot is not of class 'xyz'
+#             if (!inherits(data, "individual")) return(.Object)
+#
+#             # direct call specification overides everything else
+#             if (!missing(call)) slot(.Object, "call") <- as.call(call)
+#             # else, create new call from models and yname arguments
+#             else {
+#               call <- call("[[", as.name(models), data@yname)
+#               slot(.Object, "call") <- call
+# #             }
+# #
+# #             # fetch the model
+# #             model <- eval(call)
+# #             .Object@found <- inherits(model, "brokenstick.export")
+# #
+# #             # Was the model in the Z-score scale
+# #             if (is.null(model$zmodel)) .Object@zscale <- TRUE
+# #             else .Object@zscale <- model$zmodel
+# #
+# #             # fill y and z
+# #             if (type == "response") .Object@x <- data@x
+#             else .Object@x <- c(model$knots, model$Boundary.knots[2])
+#
+#             if (.Object@zscale) {
+#               .Object@z <- predict(object = model, y = data@z,
+#                                    age = data@x, type = type)
+#               if (length(.Object@z) == 0) .Object@x <- numeric(0)
+#               .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
+#                                                   x = .Object@x,
+#                                                   ref = eval(data@call)))
+#             }
+#             else {
+#               .Object@y <- predict(object = model, y = data@y,
+#                                    age = data@x, type = type)
+#               if (length(.Object@y) == 0) .Object@y <- numeric(0)
+#               .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
+#                                                   x = .Object@x,
+#                                                   ref = eval(data@call)))
+#             }
+#
+#             # remove estimate for Boundary.knots[2]
+#             if (type == "curve") {
+#               .Object@x <- .Object@x[-length(.Object@x)]
+#               .Object@y <- .Object@y[-length(.Object@y)]
+#               .Object@z <- .Object@z[-length(.Object@z)]
+#             }
+#
+#             check <- validObject(.Object)
+#             return(.Object)
+#           }
+# )
+#
+#
+# setValidity("bse", function(object) {
+#   if (!inherits(eval(object@call), "brokenstick.export"))
+#     return(paste0("eval(", object@call, ") is not an object of class 'brokenstick.export'"))
+#   return(TRUE)
+# })
+
 
 ## as() reads the data structure as used in the
 ## donordata package, and transforms it into a cabinet object.
-setAs("list", "cabinet", function(from) list2cabinet(from))
 
+#' as("list", "cabinet")
+#'
+#' @name as
+#' @family cabinet
+setAs("list", "cabinet", function(from) list2cabinet(from))
 list2cabinet <- function(from, ...) {
   if (length(from) != 3) stop("Data type of unrecognised")
   ids <- from[[2]]$id
   individuals <- vector("list", length(ids))
   for (i in seq_along(individuals))
     individuals[[i]] <- donordata.to.individual(id = ids[i],
-                                        src = from, ...)
+                                                src = from, ...)
   class(individuals) <- "cabinet"
   return(individuals)
 }
 
-
-#' Extract individuals from cabinet
+#' Is this object of class `cabinet`?
 #'
-#'@param x An object of class \code{cabinet}
-#'@param i Index vector
-setMethod("[", signature(x = "cabinet", i = "ANY"),
+#' @param x An object
+#' @return A logical
+#' @export
+is.cabinet <- function(x)
+{
+  inherits(x,"cabinet")
+}
+
+
+
+setMethod(f = "[", signature(x = "cabinet", i = "ANY"),
           function (x, i) {
             individuals <- vector("list", length(i))
-            for (j in seq_along(individuals))
-              individuals[[j]] <- x[[j]]
+            for (k in seq_along(individuals)) {
+              individuals[[k]] <- x[[k]]
+            }
             class(individuals) <- "cabinet"
+            # validObject(individuals)
             return(individuals)
           }
 )
 
+setMethod(f = "[<-", signature(x = "cabinet"),
+          definition = function(x, i, ..., value) {
+            if (is.individual(value)) {
+              x[[i]] <- value
+              validObject(x)
+              return(x)
+            }
+            if (is.cabinet(value)) {
+              if (length(value) != length(i)) stop("Length of arguments i and value do not match")
+              for (k in 1:length(value)) x[[i[k]]] <- value[k]
+              validObject(x)
+              return(x)
+            }
+            stop("Incompatible types")
+          }
+)
 
+
+setMethod("show",
+          signature(object = "cabinet"),
+          function (object)
+          {
+            print(cat("Object with", length(object), "individuals.\n"))
+          }
+)
 
