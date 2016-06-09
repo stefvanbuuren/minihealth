@@ -25,16 +25,21 @@ NULL
 #'# create cabinet with 1 empty record
 #'z <- new("cabinet")
 #'class(z)
+#'slotNames(z)
 #'slotNames(z[[1]])
+#'
+#'# create cabinet with three empty records
+#'z <- new("cabinet", n = 3)
+#'slotNames(z)
 #'
 #'# create cabinet with one individual, Sally
 #'sally <- new("individual", name = "Sally", sex = "female", id = 22L)
-#'z <- new("cabinet", list(sally))
+#'z <- new("cabinet", data = sally)
 #'length(z)
 #'
 #'# create cabinet with two individuals, Harry and Sally
 #'harry <- new("individual", name = "Harry", id = as.integer(33))
-#'z <- new("cabinet", list(harry = harry, sally = sally))
+#'z <- new("cabinet", data = list(harry = harry, sally = sally))
 #'z[["harry"]]@name; z[["harry"]]@sex
 #'z[["sally"]]@name; z[["sally"]]@sex
 #'
@@ -64,78 +69,46 @@ setClass("cabinet",
          )
 )
 
-# setMethod("initialize", "cabinet",
-#           function (.Object, n = 1, data,
-#                     src = "", ...) {
-#
-#             # case 1: missing(data), n = 1: 1 new
-#             # case 2: missing(data), n > 1: n new
-#             # case 3: is.individual(data), n = 1
-#             # case 4: is.individual(data), n > 1
-#
-#             s4Vec <- lapply(rep("individual", n), new)
-#
-#             # can't calculate if we have no data
-#             if (missing(data)) data <- new("individual", ...)
-#
-#             # do nothing if data slot is not of class 'xyz'
-#             if (!inherits(data, "individual")) return(.Object)
-#
-#             # direct call specification overides everything else
-#             if (!missing(call)) slot(.Object, "call") <- as.call(call)
-#             # else, create new call from models and yname arguments
-#             else {
-#               call <- call("[[", as.name(models), data@yname)
-#               slot(.Object, "call") <- call
-# #             }
-# #
-# #             # fetch the model
-# #             model <- eval(call)
-# #             .Object@found <- inherits(model, "brokenstick.export")
-# #
-# #             # Was the model in the Z-score scale
-# #             if (is.null(model$zmodel)) .Object@zscale <- TRUE
-# #             else .Object@zscale <- model$zmodel
-# #
-# #             # fill y and z
-# #             if (type == "response") .Object@x <- data@x
-#             else .Object@x <- c(model$knots, model$Boundary.knots[2])
-#
-#             if (.Object@zscale) {
-#               .Object@z <- predict(object = model, y = data@z,
-#                                    age = data@x, type = type)
-#               if (length(.Object@z) == 0) .Object@x <- numeric(0)
-#               .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
-#                                                   x = .Object@x,
-#                                                   ref = eval(data@call)))
-#             }
-#             else {
-#               .Object@y <- predict(object = model, y = data@y,
-#                                    age = data@x, type = type)
-#               if (length(.Object@y) == 0) .Object@y <- numeric(0)
-#               .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
-#                                                   x = .Object@x,
-#                                                   ref = eval(data@call)))
-#             }
-#
-#             # remove estimate for Boundary.knots[2]
-#             if (type == "curve") {
-#               .Object@x <- .Object@x[-length(.Object@x)]
-#               .Object@y <- .Object@y[-length(.Object@y)]
-#               .Object@z <- .Object@z[-length(.Object@z)]
-#             }
-#
-#             check <- validObject(.Object)
-#             return(.Object)
-#           }
-# )
-#
-#
-# setValidity("bse", function(object) {
-#   if (!inherits(eval(object@call), "brokenstick.export"))
-#     return(paste0("eval(", object@call, ") is not an object of class 'brokenstick.export'"))
-#   return(TRUE)
-# })
+setMethod("initialize", "cabinet",
+          function (.Object, data, n = 1, ...) {
+
+            if (missing(data)) {
+              # create list of n S4 objects of class individual
+              .Object@.Data <- lapply(rep("individual", n), new)
+              # set id to unique number
+              for (i in 1:length(.Object@.Data)) .Object@.Data[[i]]@id <- i
+              .Object@ids <- sapply(.Object, slot, "id")
+              .Object@n <- length(.Object@.Data)
+              return(.Object)
+            }
+
+            # if data is a list, check whether its elements are of class
+            # individual, and
+            if (is.list(data)) {
+              # if all elements are individual, assign to .Data slot
+              if (all(sapply(data, is.individual))) .Object@.Data <- data
+              # set n to length of list
+              .Object@ids <- sapply(.Object, slot, "id")
+              .Object@n <- length(.Object@.Data)
+              return(.Object)
+            }
+
+            # if data has class individual, just create cabinet with one
+            if (is.individual(data)) {
+              .Object@.Data <- list(data)
+              .Object@ids <- sapply(.Object, slot, "id")
+              .Object@n <- length(.Object@.Data)
+              return(.Object)
+            }
+            stop("Cannot create cabinet")
+          }
+)
+
+
+setValidity("cabinet", function(object) {
+  if (any(duplicated(object@ids))) return("Duplicated id's are not allowed.")
+  return(TRUE)
+})
 
 
 #' as("list", "cabinet")
@@ -158,13 +131,14 @@ setAs("list", "cabinet", function(from) list2cabinet(from))
 #'@seealso \code{\link{donordata.to.individual}}
 #' @export
 list2cabinet <- function(from, ...) {
-  if (length(from) != 3) stop("Data type of unrecognised")
+  if (length(from) != 3) stop("Data type not from donordata")
   ids <- from[[2]]$id
-  individuals <- vector("list", length(ids))
+  n <- length(ids)
+  individuals <- new("cabinet", n = length(ids))
+
   for (i in seq_along(individuals))
     individuals[[i]] <- donordata.to.individual(id = ids[i],
                                                 src = from, ...)
-  class(individuals) <- "cabinet"
   return(individuals)
 }
 
@@ -182,13 +156,13 @@ is.cabinet <- function(x)
 
 setMethod(f = "[", signature(x = "cabinet", i = "ANY"),
           function (x, i) {
-            individuals <- vector("list", length(i))
-            for (k in seq_along(individuals)) {
-              individuals[[k]] <- x[[k]]
+            cab <- new("cabinet", n = length(i))
+            for (k in 1:length(cab)) {
+              cab[[k]] <- x[[i[k]]]
             }
-            class(individuals) <- "cabinet"
-            # validObject(individuals)
-            return(individuals)
+            cab@ids <- sapply(cab, slot, "id")
+            validObject(cab)
+            return(cab)
           }
 )
 

@@ -30,16 +30,21 @@ Data of individual persons can be assessed by position by as list index
 # create cabinet with 1 empty record
 z <- new("cabinet")
 class(z)
+slotNames(z)
 slotNames(z[[1]])
+
+# create cabinet with three empty records
+z <- new("cabinet", n = 3)
+slotNames(z)
 
 # create cabinet with one individual, Sally
 sally <- new("individual", name = "Sally", sex = "female", id = 22L)
-z <- new("cabinet", list(sally))
+z <- new("cabinet", data = sally)
 length(z)
 
 # create cabinet with two individuals, Harry and Sally
 harry <- new("individual", name = "Harry", id = as.integer(33))
-z <- new("cabinet", list(harry = harry, sally = sally))
+z <- new("cabinet", data = list(harry = harry, sally = sally))
 z[["harry"]]@name; z[["harry"]]@sex
 z[["sally"]]@name; z[["sally"]]@sex
 
