@@ -40,13 +40,30 @@ setClass("individualBG",
            wgtf  = "numeric",
            landf = "character",
            eduf  = "character"
+         ), prototype = list(
+           sex   = NA_character_,
+           etn   = NA_character_,
+           ga    = NA_real_,
+           bw    = NA_real_,
+           mult  = NA_integer_,
+           goodhealth = NA,
+           hgtm  = NA_real_,
+           wgtm  = NA_real_,
+           landm = NA_character_,
+           edum  = NA_character_,
+           agem  = NA_character_,
+           smo   = NA,
+           hgtf  = NA_real_,
+           wgtf  = NA_real_,
+           landf = NA_character_,
+           eduf  = NA_character_
          )
 )
 
 validIndividualBG <- function(object) {
   v <- slotNames(object)
   for (i in 1:length(v)) {
-    if (length(slot(object, v[i])) > 1) return(paste("Length of slot", v[i],"larger than 1"))
+    if (length(slot(object, v[i])) > 1) return(paste("Length of slot", v[i],"higher than 1"))
   }
   TRUE
 }

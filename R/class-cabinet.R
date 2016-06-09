@@ -24,15 +24,19 @@ NULL
 #'@examples
 #'# create cabinet with 1 empty record
 #'z <- new("cabinet")
-#'z
+#'class(z)
 #'slotNames(z[[1]])
 #'
-#'# create cabinet from two individual
-#'fred <- new("individual", name = "Fred", id = as.integer(33))
-#'bill <- new("individual", name = "Bill", id = as.integer(20))
-#'z <- new("cabinet", c(fred, bill))
-#'z[[1]]@name
-#'z[[2]]@name
+#'# create cabinet with one individual, Sally
+#'sally <- new("individual", name = "Sally", sex = "female", id = 22L)
+#'z <- new("cabinet", list(sally))
+#'length(z)
+#'
+#'# create cabinet with two individuals, Harry and Sally
+#'harry <- new("individual", name = "Harry", id = as.integer(33))
+#'z <- new("cabinet", list(harry = harry, sally = sally))
+#'z[["harry"]]@name; z[["harry"]]@sex
+#'z[["sally"]]@name; z[["sally"]]@sex
 #'
 #'\dontrun{
 #'# convert all 1933 children of SMOCC in `individual` objects
@@ -134,11 +138,10 @@ setClass("cabinet",
 # })
 
 
-## as() reads the data structure as used in the
-## donordata package, and transforms it into a cabinet object.
-
 #' as("list", "cabinet")
 #'
+#' as() reads the data structure as used in the
+#' donordata package, and transforms it into a cabinet object.
 #' @name as
 #' @family cabinet
 setAs("list", "cabinet", function(from) list2cabinet(from))
@@ -207,11 +210,11 @@ setMethod(f = "[<-", signature(x = "cabinet"),
 )
 
 
-setMethod("show",
-          signature(object = "cabinet"),
-          function (object)
-          {
-            print(cat("Object with", length(object), "individuals.\n"))
-          }
-)
+# setMethod("show",
+#           signature(object = "cabinet"),
+#           function (object)
+#           {
+#             print(cat("Object with", length(object), "individuals.\n"))
+#           }
+# )
 

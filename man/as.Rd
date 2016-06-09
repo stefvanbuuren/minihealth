@@ -4,7 +4,8 @@
 \alias{as}
 \title{as("list", "cabinet")}
 \description{
-as("list", "cabinet")
+as() reads the data structure as used in the
+donordata package, and transforms it into a cabinet object.
 }
 \seealso{
 Other cabinet: \code{\link{list2cabinet}}
