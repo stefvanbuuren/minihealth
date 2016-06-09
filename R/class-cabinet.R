@@ -15,6 +15,8 @@ NULL
 #'@slot .Data A list of objects of class \code{individual}
 #'@slot ids A number vector the indexes the (unique) individual \code{id}
 #'@slot n Number of individuals
+#'@slot readonly Logical indicating whether the cabinet is just for viewing
+#'(\code{TRUE}) or for editing by the user (\code{FALSE}, the default)
 #'@slot created Creation date
 #'@slot updated Update date
 #'@aliases cabinet-class
@@ -58,6 +60,7 @@ setClass("cabinet",
          representation(
            n       = "integer",
            ids     = "numeric",
+           readonly = "logical",
            created = "Date",
            updated = "Date"
          ),
@@ -65,6 +68,7 @@ setClass("cabinet",
            list(new("individual")),
            n       = 1L,
            ids     = 0,
+           readonly = FALSE,
            created = as.Date(Sys.Date()),
            updated = as.Date(Sys.Date())
          )

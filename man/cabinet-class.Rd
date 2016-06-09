@@ -22,6 +22,9 @@ Data of individual persons can be assessed by position by as list index
 
 \item{\code{n}}{Number of individuals}
 
+\item{\code{readonly}}{Logical indicating whether the cabinet is just for viewing
+(\code{TRUE}) or for editing by the user (\code{FALSE}, the default)}
+
 \item{\code{created}}{Creation date}
 
 \item{\code{updated}}{Update date}
