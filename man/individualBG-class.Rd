@@ -5,7 +5,9 @@
 \alias{individualBG-class}
 \title{An S4 class to represent individual background variables}
 \description{
-An S4 class to represent individual background variables
+This class stores individual time-invariant background variables,
+such as sex or birth weight. Each slot can only have
+length zero (if entry is unset or missing) or length one.
 }
 \section{Slots}{
 

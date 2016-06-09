@@ -1,5 +1,8 @@
 #' An S4 class to represent individual background variables
 #'
+#' This class stores individual time-invariant background variables,
+#' such as sex or birth weight. Each slot can only have
+#' length zero (if entry is unset or missing) or length one.
 #' @slot sex  Either \code{"male"} or \code{"female"} (\code{character})
 #' @slot etn  Etnicity code (\code{character})
 #' @slot ga   Gestational age in weeks (\code{numeric})
@@ -39,3 +42,13 @@ setClass("individualBG",
            eduf  = "character"
          )
 )
+
+validIndividualBG <- function(object) {
+  v <- slotNames(object)
+  for (i in 1:length(v)) {
+    if (length(slot(object, v[i])) > 1) return(paste("Length of slot", v[i],"larger than 1"))
+  }
+  TRUE
+}
+setValidity("individualBG", validIndividualBG)
+
