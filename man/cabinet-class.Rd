@@ -39,12 +39,12 @@ slotNames(z)
 
 # create cabinet with one individual, Sally
 sally <- new("individual", name = "Sally", sex = "female", id = 22L)
-z <- new("cabinet", data = sally)
+z <- new("cabinet", sally)
 length(z)
 
 # create cabinet with two individuals, Harry and Sally
 harry <- new("individual", name = "Harry", id = as.integer(33))
-z <- new("cabinet", data = list(harry = harry, sally = sally))
+z <- new("cabinet", list(harry = harry, sally = sally))
 z[["harry"]]@name; z[["harry"]]@sex
 z[["sally"]]@name; z[["sally"]]@sex
 
@@ -52,6 +52,7 @@ z[["sally"]]@name; z[["sally"]]@sex
 # convert all 1933 children of SMOCC in `individual` objects
 library("donordata")
 cab <- as(smocc, "cabinet")
+smoccdemo <- cab[1:10]
 
 # same, but not relative to WHO references
 cab.who <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")

@@ -34,12 +34,12 @@ NULL
 #'
 #'# create cabinet with one individual, Sally
 #'sally <- new("individual", name = "Sally", sex = "female", id = 22L)
-#'z <- new("cabinet", data = sally)
+#'z <- new("cabinet", sally)
 #'length(z)
 #'
 #'# create cabinet with two individuals, Harry and Sally
 #'harry <- new("individual", name = "Harry", id = as.integer(33))
-#'z <- new("cabinet", data = list(harry = harry, sally = sally))
+#'z <- new("cabinet", list(harry = harry, sally = sally))
 #'z[["harry"]]@name; z[["harry"]]@sex
 #'z[["sally"]]@name; z[["sally"]]@sex
 #'
@@ -47,6 +47,7 @@ NULL
 #'# convert all 1933 children of SMOCC in `individual` objects
 #'library("donordata")
 #'cab <- as(smocc, "cabinet")
+#'smoccdemo <- cab[1:10]
 #'
 #'# same, but not relative to WHO references
 #'cab.who <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
@@ -106,7 +107,10 @@ setMethod("initialize", "cabinet",
 
 
 setValidity("cabinet", function(object) {
-  if (any(duplicated(object@ids))) return("Duplicated id's are not allowed.")
+  if (any(duplicated(object@ids)))
+    return(paste("Duplicated id's."))
+  if (!all(sapply(object, is.individual)))
+    return("Some list elements are not of S4 class 'individual'")
   return(TRUE)
 })
 
@@ -134,12 +138,15 @@ list2cabinet <- function(from, ...) {
   if (length(from) != 3) stop("Data type not from donordata")
   ids <- from[[2]]$id
   n <- length(ids)
-  individuals <- new("cabinet", n = length(ids))
+  cab <- new("cabinet", n = length(ids))
 
-  for (i in seq_along(individuals))
-    individuals[[i]] <- donordata.to.individual(id = ids[i],
-                                                src = from, ...)
-  return(individuals)
+  for (i in length(cab))
+    cab[[i]] <- donordata.to.individual(id = ids[i], ...)
+    cab@ids <- sapply(cab, slot, "id")
+    cab@n <- length(cab@.Data)
+
+  validObject(cab)
+  return(cab)
 }
 
 #' Is this object of class `cabinet`?
@@ -153,9 +160,15 @@ is.cabinet <- function(x)
 }
 
 
-
-setMethod(f = "[", signature(x = "cabinet", i = "ANY"),
-          function (x, i) {
+#'Extract part of cabinet
+#'
+#'@param x An S4 object of class `cabinet`
+#'@param i Indices specifying elements to extract.
+#'@param j Not used
+#'@param \dots Not used
+#'@param drop Not used
+setMethod(f = "[", signature(x = "cabinet", i = "ANY", j = "ANY"),
+          function (x, i, j, ..., drop = FALSE) {
             cab <- new("cabinet", n = length(i))
             for (k in 1:length(cab)) {
               cab[[k]] <- x[[i[k]]]
@@ -166,22 +179,34 @@ setMethod(f = "[", signature(x = "cabinet", i = "ANY"),
           }
 )
 
+#'Replace part of cabinet
+#'
+#'@param x An S4 object of class `cabinet`
+#'@param i Indices specifying elements to replace
+#'@param value An S4 object of class `cabinet` or `individual`
 setMethod(f = "[<-", signature(x = "cabinet"),
-          definition = function(x, i, ..., value) {
+          definition = function(x, i, value) {
+
             if (is.individual(value)) {
               x[[i]] <- value
+              x@ids <- sapply(x, slot, "id")
+              x@updated <- Sys.Date()
               validObject(x)
               return(x)
             }
+
             if (is.cabinet(value)) {
               if (length(value) != length(i)) stop("Length of arguments i and value do not match")
-              for (k in 1:length(value)) x[[i[k]]] <- value[k]
+              for (k in 1:length(value)) x[[i[k]]] <- value[[k]]
+              x@ids <- sapply(x, slot, "id")
+              x@updated <- Sys.Date()
               validObject(x)
               return(x)
             }
             stop("Incompatible types")
           }
 )
+
 
 
 # setMethod("show",
