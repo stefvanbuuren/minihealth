@@ -37,24 +37,29 @@ setClass("individual",
 #' # from lollypop.preterm
 #' # calculating Z-score relative to preterm growth references
 #' q <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
-#'ref.hgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
-#'                                 sex = q@sex, yname = "hgt", sub = q@ga)
-#'ref.wgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
-#'                                 sex = q@sex, yname = "wgt", sub = q@ga)
-#'ref.hdc <- create.reference.call(libname = "preterm", prefix = "pt2012b",
-#'                                 sex = q@sex, yname = "hdc", sub = q@ga)
 #'
 #' # overwrite hgt, wgt and hdc slots
-#' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, call = ref.hgt)
-#' q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, call = ref.wgt)
-#' q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, call = ref.hdc)
+#' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
+#'              libname = "preterm", prefix = "pt2012a",
+#'              sex = q@sex, sub = q@ga)
+#' q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, yname = "wgt",
+#'              libname = "preterm", prefix = "pt2012a",
+#'              sex = q@sex, sub = q@ga)
+#' q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, yname = "hdc",
+#'              libname = "preterm", prefix = "pt2012b",
+#'              sex = q@sex, sub = q@ga)
 #'
-#' # and update broken stick estimate
+#' # update broken stick estimate
 #' q@bs.hgt <- new("bse", data = q@hgt)
 #' q@bs.wgt <- new("bse", data = q@wgt)
 #' q@bs.hdc <- new("bse", data = q@hdc)
 #'
 #' q
+#'
+#' # a slightly more compact way to do this
+#' r <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
+
+
 #' @export
 donordata.to.individual <- function(id, src = donordata::smocc, ...) {
 
