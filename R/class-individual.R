@@ -33,6 +33,28 @@ setClass("individual",
 #' require("donordata")
 #' p <- donordata.to.individual(10001)
 #' p
+#'
+#' # from lollypop.preterm
+#' # calculating Z-score relative to preterm growth references
+#' q <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
+#'ref.hgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+#'                                 sex = "female", yname = "hgt", sub = "32")
+#'ref.wgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+#'                                 sex = "female", yname = "wgt", sub = "32")
+#'ref.hdc <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+#'                                 sex = "female", yname = "hdc", sub = "32")
+#'
+#' # overwrite hgt, wgt and hdc slots
+#' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, call = ref.hgt)
+#' q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, call = ref.wgt)
+#' q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, call = ref.hdc)
+#'
+#' # and update broken stick estimate
+#' q@bs.hgt <- new("bse", data = q@hgt)
+#' q@bs.wgt <- new("bse", data = q@wgt)
+#' q@bs.hdc <- new("bse", data = q@hdc)
+#'
+#' q
 #' @export
 donordata.to.individual <- function(id, src = donordata::smocc, ...) {
 

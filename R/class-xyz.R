@@ -69,6 +69,12 @@
 #'                                 sex = "female", yname = "hdc", sub = "")
 #'d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
 #'d6
+#'
+#'# calculate P50 for preterms, female and born a GA week 32
+#'ref <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+#'                                 sex = "female", yname = "hgt", sub = "32")
+#'d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
+#'d7
 #'@export
 setClass("xyz",
          slots = c(
