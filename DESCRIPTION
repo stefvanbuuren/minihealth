@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.13
+Version: 0.14
 Author: Stef van Buuren
 Depends:
     clopus (>= 0.28),

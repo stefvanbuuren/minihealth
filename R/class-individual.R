@@ -38,11 +38,11 @@ setClass("individual",
 #' # calculating Z-score relative to preterm growth references
 #' q <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
 #'ref.hgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
-#'                                 sex = "female", yname = "hgt", sub = "32")
+#'                                 sex = q@sex, yname = "hgt", sub = q@ga)
 #'ref.wgt <- create.reference.call(libname = "preterm", prefix = "pt2012a",
-#'                                 sex = "female", yname = "wgt", sub = "32")
-#'ref.hdc <- create.reference.call(libname = "preterm", prefix = "pt2012a",
-#'                                 sex = "female", yname = "hdc", sub = "32")
+#'                                 sex = q@sex, yname = "wgt", sub = q@ga)
+#'ref.hdc <- create.reference.call(libname = "preterm", prefix = "pt2012b",
+#'                                 sex = q@sex, yname = "hdc", sub = q@ga)
 #'
 #' # overwrite hgt, wgt and hdc slots
 #' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, call = ref.hgt)
