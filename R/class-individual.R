@@ -99,6 +99,7 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
                dob   = dob)
     pbg <- new("individualBG",
                sex   = as.character(child$sex),
+               etn   = as.character(child$etn),
                ga    = as.numeric(child$ga),
                bw    = as.numeric(child$bw),
                mult  = as.integer(child$mult),
@@ -154,6 +155,7 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
 }
 
 
+
 #' Is this object of class `individual`?
 #'
 #' @param x An object
@@ -163,4 +165,5 @@ is.individual <- function(x)
 {
   inherits(x,"individual")
 }
+
 
