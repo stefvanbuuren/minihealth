@@ -159,14 +159,19 @@ setMethod("show", signature(object = "xyz" ),
           function (object) {
             if (!object@found) cat("Reference not found.\n")
             else cat(paste("package: clopus, library:", as.character(object@call[[2]]),
-                      ", member:", as.character(object@call[[3]]), "\n"))
+                           ", member:", as.character(object@call[[3]]), "\n"))
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)
           }
 )
 
-
-
-
-
+#' as("xyz", "data.frame")
+#'
+#' @name as
+#' @family xyz
+setAs("xyz", "data.frame", function(from) {
+  df <- data.frame(x = from@x, y = from@y, z = from@z)
+  names(df) <- c(from@xname, from@yname, from@zname)
+  return(df)}
+)

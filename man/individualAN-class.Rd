@@ -19,9 +19,10 @@ The \code{individualAN} class stores anthropometric measures as the collection o
 \examples{
 # create object with height and weight measures
 # add Z-scores calculate according to Dutch 1997 references
-new("individualAN",
+z <- new("individualAN",
      hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
      wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
+z
 
 # calculate -2 and +2 centiles for height and head circumference
 # using the WHO Child Growth Standard for girls

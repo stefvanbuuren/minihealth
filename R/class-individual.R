@@ -9,6 +9,8 @@ NULL
 #'A collection of object of \code{individualID}, \code{individualBG}, \code{individualAN} and \code{individualBS}, representing data of an individual.
 #'The type of information covers individual identifyers, fixed background variables, time-varying anthroponetric measures and time-varying broken stick estimates. The \code{new("individual")} function can automatically calculate standard deviation scores relative to a growth reference, and predictions according the a broken stick model.
 #'@name individual-class
+#'@slot child If constructed from a `donordata` object, this slot contains the child level record. This slot is included for backward compatibility, and should be removed when feasible.
+#'@slot time If constructed from a `donordata` object, this slot contains the time level data frame. This slot is included for backward compatibility, and should be removed when feasible.
 #'@author Stef van Buuren 2016
 #'@seealso \code{\link[=individualID-class]{individualID}}
 #'@keywords classes
@@ -17,7 +19,15 @@ setClass("individual",
          contains = c("individualID",
                       "individualBG",
                       "individualAN",
-                      "individualBS")
+                      "individualBS"),
+         slots = c(
+           child = "data.frame",
+           time = "data.frame"
+         ),
+         prototype = list(
+           child = data.frame(),
+           time = data.frame()
+         )
 )
 
 #' Convert single individual from donor data to class individual
@@ -56,10 +66,6 @@ setClass("individual",
 #'
 #' q
 #'
-#' # a slightly more compact way to do this
-#' r <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
-
-
 #' @export
 donordata.to.individual <- function(id, src = donordata::smocc, ...) {
 
@@ -141,7 +147,8 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
                             ...))
   }
 
-  p <- new("individual", pid, pbg, pan, pbs)
+  p <- new("individual", pid, pbg, pan, pbs,
+           child = child, time = time)
 
   return(p)
 }

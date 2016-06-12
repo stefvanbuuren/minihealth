@@ -8,9 +8,10 @@
 #' @examples
 #' # create object with height and weight measures
 #' # add Z-scores calculate according to Dutch 1997 references
-#' new("individualAN",
+#' z <- new("individualAN",
 #'      hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
 #'      wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
+#' z
 #'
 #' # calculate -2 and +2 centiles for height and head circumference
 #' # using the WHO Child Growth Standard for girls
@@ -33,4 +34,20 @@ setClass("individualAN",
            wgt = new("xyz", yname = "wgt"),
            hdc = new("xyz", yname = "hdc")
          )
+)
+
+
+#' as("bse", "data.frame")
+#'
+#' @name as
+#' @family individualAN
+setAs("individualAN", "data.frame", function(from) {
+  # note: preserve only first row in case of duplicate ages
+  hgt <- as(from@hgt, "data.frame") %>% distinct_("age")
+  wgt <- as(from@wgt, "data.frame") %>% distinct_("age")
+  hdc <- as(from@hdc, "data.frame") %>% distinct_("age")
+  m <- dplyr::full_join(hgt, wgt, by = "age")
+  m <- dplyr::full_join(m, hdc, by = "age")
+  return(dplyr::arrange_(m, .dots = "age"))
+}
 )

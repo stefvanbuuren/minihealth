@@ -137,5 +137,14 @@ setMethod("show",
           }
 )
 
+#' as("bse", "data.frame")
+#'
+#' @name as
+#' @family bse
+setAs("bse", "data.frame", function(from) {
+  df <- data.frame(x = from@x, y = from@y, z = from@z)
+  names(df) <- c(from@xname, from@yname, from@zname)
+  return(df)}
+)
 
 

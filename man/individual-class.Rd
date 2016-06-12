@@ -8,6 +8,13 @@
 A collection of object of \code{individualID}, \code{individualBG}, \code{individualAN} and \code{individualBS}, representing data of an individual.
 The type of information covers individual identifyers, fixed background variables, time-varying anthroponetric measures and time-varying broken stick estimates. The \code{new("individual")} function can automatically calculate standard deviation scores relative to a growth reference, and predictions according the a broken stick model.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{child}}{If constructed from a `donordata` object, this slot contains the child level record. This slot is included for backward compatibility, and should be removed when feasible.}
+
+\item{\code{time}}{If constructed from a `donordata` object, this slot contains the time level data frame. This slot is included for backward compatibility, and should be removed when feasible.}
+}}
 \author{
 Stef van Buuren 2016
 }
