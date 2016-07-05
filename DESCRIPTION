@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.18
+Version: 0.20
 Author: Stef van Buuren
 Depends:
     clopus (>= 0.28),
@@ -10,6 +10,9 @@ Depends:
 Imports:
     methods,
     dplyr
+Remotes: github::stefvanbuuren/clopus,
+    github::stefvanbuuren/brokenstick,
+    github::stefvanbuuren/donordata
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.

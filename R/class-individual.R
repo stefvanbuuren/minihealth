@@ -93,9 +93,11 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
   } else {
     if (is.null(child$dob)) child$dob <- NA
     dob <- as.Date(child$dob, format = "%d-%m-%y")
+    name <- as.character(child$name)
+    # if (is.null(name) || is.na(name) || name == "") name <- paste("ID", id, sep = "-")
     pid <- new("individualID",
                id    = as.integer(id),
-               name  = as.character(child$name),
+               name  = as.character(name),
                dob   = dob)
     pbg <- new("individualBG",
                sex   = as.character(child$sex),
