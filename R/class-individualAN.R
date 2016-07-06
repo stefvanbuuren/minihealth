@@ -43,9 +43,9 @@ setClass("individualAN",
 #' @family individualAN
 setAs("individualAN", "data.frame", function(from) {
   # note: preserve only first row in case of duplicate ages
-  hgt <- as(from@hgt, "data.frame") %>% distinct_("age")
-  wgt <- as(from@wgt, "data.frame") %>% distinct_("age")
-  hdc <- as(from@hdc, "data.frame") %>% distinct_("age")
+  hgt <- as(from@hgt, "data.frame") %>% distinct_("age", .keep_all = TRUE)
+  wgt <- as(from@wgt, "data.frame") %>% distinct_("age", .keep_all = TRUE)
+  hdc <- as(from@hdc, "data.frame") %>% distinct_("age", .keep_all = TRUE)
   m <- dplyr::full_join(hgt, wgt, by = "age")
   m <- dplyr::full_join(m, hdc, by = "age")
   return(dplyr::arrange_(m, .dots = "age"))

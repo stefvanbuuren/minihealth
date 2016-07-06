@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.21
+Version: 0.22
 Author: Stef van Buuren
 Depends:
     clopus (>= 0.28),
@@ -9,7 +9,7 @@ Depends:
     donordata
 Imports:
     methods,
-    dplyr
+    dplyr (>= 0.5.0)
 Remotes: stefvanbuuren/clopus,
     stefvanbuuren/brokenstick,
     stefvanbuuren/donordata
