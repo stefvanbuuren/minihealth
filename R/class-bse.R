@@ -34,7 +34,7 @@ NULL
 #'d2
 #'# Calculate predicted value for each x
 #'d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
-#' sex = "female"), type = "response")
+#' sex = "female"))
 #'d3
 #'@export
 
@@ -53,7 +53,7 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    type = "curve", models = "smocc.bs",
+                    type = "atage", models = "smocc.bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 
@@ -85,12 +85,15 @@ setMethod("initialize", "bse",
             else .Object@zscale <- model$zmodel
 
             # fill y and z
-            if (type == "response") .Object@x <- data@x
+            if (type == "atage") .Object@x <- data@x
             else .Object@x <- c(model$knots, model$Boundary.knots[2])
 
             if (.Object@zscale) {
               .Object@z <- predict(object = model, y = data@z,
-                                   age = data@x, type = type)
+                                   age = data@x, type = type,
+                                   output = "vector",
+                                   include.boundaries = TRUE,
+                                   onlynew = FALSE, ...)
               if (length(.Object@z) == 0) .Object@x <- numeric(0)
               .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
                                                   x = .Object@x,
@@ -98,7 +101,10 @@ setMethod("initialize", "bse",
             }
             else {
               .Object@y <- predict(object = model, y = data@y,
-                                   age = data@x, type = type)
+                                   age = data@x, type = type,
+                                   output = "vector",
+                                   include.boundaries = TRUE,
+                                   onlynew = FALSE, ...)
               if (length(.Object@y) == 0) .Object@y <- numeric(0)
               .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
                                                   x = .Object@x,
@@ -106,7 +112,7 @@ setMethod("initialize", "bse",
             }
 
             # remove estimate for Boundary.knots[2]
-            if (type == "curve") {
+            if (type == "atknots") {
               .Object@x <- .Object@x[-length(.Object@x)]
               .Object@y <- .Object@y[-length(.Object@y)]
               .Object@z <- .Object@z[-length(.Object@z)]

@@ -31,7 +31,7 @@ d2 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "
 d2
 # Calculate predicted value for each x
 d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
-sex = "female"), type = "response")
+sex = "female"))
 d3
 }
 \author{
