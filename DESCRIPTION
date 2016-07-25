@@ -10,9 +10,6 @@ Depends:
 Imports:
     methods,
     dplyr (>= 0.5.0)
-Remotes: stefvanbuuren/clopus,
-    stefvanbuuren/brokenstick,
-    stefvanbuuren/donordata
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.
