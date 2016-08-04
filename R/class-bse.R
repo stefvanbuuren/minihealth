@@ -53,7 +53,7 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    at = "knots", models = "smocc.bs",
+                    at = "x", models = "smocc.bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 
