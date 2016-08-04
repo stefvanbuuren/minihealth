@@ -53,7 +53,7 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    type = "atknots", models = "smocc.bs",
+                    at = "knots", models = "smocc.bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 
@@ -85,12 +85,12 @@ setMethod("initialize", "bse",
             else .Object@zscale <- model$zmodel
 
             # fill y and z
-            if (type == "atx") .Object@x <- data@x
+            if (at == "x") .Object@x <- data@x
             else .Object@x <- c(model$knots, model$Boundary.knots[2])
 
             if (.Object@zscale) {
               .Object@z <- predict(object = model, y = data@z,
-                                   x = data@x, type = type,
+                                   x = data@x, at = at,
                                    output = "vector",
                                    include.boundaries = TRUE,
                                    onlynew = FALSE, ...)
@@ -101,7 +101,7 @@ setMethod("initialize", "bse",
             }
             else {
               .Object@y <- predict(object = model, y = data@y,
-                                   x = data@x, type = type,
+                                   x = data@x, at = at,
                                    output = "vector",
                                    include.boundaries = TRUE,
                                    onlynew = FALSE, ...)
@@ -112,7 +112,7 @@ setMethod("initialize", "bse",
             }
 
             # remove estimate for Boundary.knots[2]
-            if (type == "atknots") {
+            if (at == "knots") {
               .Object@x <- .Object@x[-length(.Object@x)]
               .Object@y <- .Object@y[-length(.Object@y)]
               .Object@z <- .Object@z[-length(.Object@z)]
