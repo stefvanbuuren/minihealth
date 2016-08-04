@@ -26,7 +26,8 @@
 #'    \code{sex},
 #'    \code{yname} and \code{sub} arguments, which are passed down to
 #'    \code{create.reference.call()}. See below for examples.}
-#'    \item{\code{found}:}{Logical indicating whether the reference specified by
+#'    \item{\code{found}:}{Internal logical flag indicating
+#'    whether the reference specified by
 #'    \code{call} was actually found.}
 #'}
 #'
@@ -92,49 +93,55 @@ setClass("xyz",
          )
 )
 
-setMethod("initialize", "xyz",
-          function (.Object, x, y, z,
-                    xname = "age", yname = "hgt",
-                    call = quote(as.numeric(NULL)),
-                    ...) {
+setMethod(
+  "initialize", "xyz",
+  function (.Object, x = numeric(0), y, z,
+            xname = "age", yname = "hgt",
+            call = quote(as.numeric(NULL)),
+            ...) {
 
-            if (!missing(x)) slot(.Object, "x") <- x
-            if (!missing(y)) slot(.Object, "y") <- y
-            if (!missing(z)) slot(.Object, "z") <- z
+    # direct call specification overides everything else
+    if (!missing(call)) slot(.Object, "call") <- as.call(call)
+    # else, create new call from any ... arguments
+    else {
+      call <- clopus::create.reference.call(yname = yname, ...)
+      slot(.Object, "call") <- call
+    }
 
-            .Object@xname <- as.character(xname[1])
-            .Object@yname <- as.character(yname[1])
-            if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], ".z")
+    # obtain reference table
+    ref <- eval(call)
+    .Object@found <- clopus::is.reference(ref)
 
-            # direct call specification overides everything else
-            if (!missing(call)) slot(.Object, "call") <- as.call(call)
-            # else, create new call from any ... arguments
-            else {
-              call <- clopus::create.reference.call(yname = yname, ...)
-              slot(.Object, "call") <- call
-            }
+    # initialize x, y and z
+    slot(.Object, "x") <- as.numeric(x)
+    lx <- length(slot(.Object, "x"))
 
-            # obtain reference table
-            ref <- eval(call)
-            .Object@found <- is.reference(ref)
+    if (missing(y)) {
+      if (missing(z)) slot(.Object, "y") <- as.numeric(rep(NA, lx))
+      else slot(.Object, "y") <-
+          as.numeric(clopus::z2y(z = as.numeric(z),
+                                 x = slot(.Object, "x"),
+                                 ref = ref))
+    }
+    else slot(.Object, "y") <- as.numeric(y)
 
-            # try to fill up z if there are y values
-            if (length(.Object@z) == 0 && length(.Object@y) > 0)
-              slot(.Object, "z") <-
-              as.numeric(clopus::y2z(y = slot(.Object, "y"),
-                                     x = slot(.Object, "x"),
-                                     ref = ref))
+    if (missing(z)) {
+      if (missing(y)) slot(.Object, "z") <- as.numeric(rep(NA, lx))
+      else slot(.Object, "z") <-
+          as.numeric(clopus::y2z(y = as.numeric(y),
+                                 x = slot(.Object, "x"),
+                                 ref = ref))
+    }
+    else slot(.Object, "z") <- as.numeric(z)
 
-            # try to fill up y if there are z values
-            if (length(.Object@y) == 0 && length(.Object@z) > 0)
-              slot(.Object, "y") <-
-              as.numeric(clopus::z2y(z = slot(.Object, "z"),
-                                     x = slot(.Object, "x"),
-                                     ref = ref))
+    # administrative names
+    .Object@xname <- as.character(xname[1])
+    .Object@yname <- as.character(yname[1])
+    if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], ".z")
 
-            check <- validObject(.Object)
-            return(.Object)
-          }
+    check <- validObject(.Object)
+    return(.Object)
+  }
 )
 
 
@@ -157,7 +164,7 @@ setValidity("xyz", function(object) {
 
 setMethod("show", signature(object = "xyz" ),
           function (object) {
-            if (!object@found) cat("Reference not found.\n")
+            if (!object@found) cat("No reference\n")
             else cat(paste("package: clopus, library:", as.character(object@call[[2]]),
                            ", member:", as.character(object@call[[3]]), "\n"))
             df <- data.frame(object@x, object@y, object@z)

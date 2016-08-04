@@ -32,7 +32,8 @@ corresponding to \code{y} given \code{x}). The class calculates
    \code{sex},
    \code{yname} and \code{sub} arguments, which are passed down to
    \code{create.reference.call()}. See below for examples.}
-   \item{\code{found}:}{Logical indicating whether the reference specified by
+   \item{\code{found}:}{Internal logical flag indicating
+   whether the reference specified by
    \code{call} was actually found.}
 }
 }
