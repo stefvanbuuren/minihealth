@@ -143,6 +143,7 @@ setMethod("show",
           }
 )
 
+
 #' as("bse", "data.frame")
 #'
 #' @name as

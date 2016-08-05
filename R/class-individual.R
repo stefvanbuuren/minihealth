@@ -141,12 +141,15 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
     pbs <- new("individualBS",
                bs.hgt = new("bse", yname = "hgt",
                             data = pan@hgt,
+                            at = "knots",
                             ...),
                bs.wgt = new("bse", yname = "wgt",
                             data = pan@wgt,
+                            at = "knots",
                             ...),
                bs.hdc = new("bse", yname = "hdc",
                             data = pan@hdc,
+                            at = "knots",
                             ...))
   }
 
