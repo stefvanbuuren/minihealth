@@ -12,8 +12,8 @@ NULL
 #'
 #'@section Slots:
 #'  \describe{
-#'    \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick.export} as created by
-#'    \code{\link[brokenstick]{export.brokenstick}}.}
+#'    \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick_export} as created by
+#'    \code{\link[brokenstick]{export}}.}
 #'    \item{\code{found}:}{Logical indicating whether the broken stick model specified by
 #'    \code{call} was actually found.}
 #'    \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
@@ -23,7 +23,7 @@ NULL
 #'@rdname bse-class
 #'@aliases bse-class
 #'@author Stef van Buuren 2016
-#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
+#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
 #'@examples
 #'# first specify three height measures
@@ -53,7 +53,7 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    at = "x", models = "smocc.bs",
+                    at = "x", models = "smocc_bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 
@@ -78,7 +78,7 @@ setMethod("initialize", "bse",
 
             # fetch the model
             model <- eval(call)
-            .Object@found <- inherits(model, "brokenstick.export")
+            .Object@found <- inherits(model, "brokenstick_export")
 
             # Was the model in the Z-score scale
             if (is.null(model$zmodel)) .Object@zscale <- TRUE
@@ -125,8 +125,8 @@ setMethod("initialize", "bse",
 
 
 setValidity("bse", function(object) {
-  if (!inherits(eval(object@call), "brokenstick.export"))
-    return(paste0("eval(", object@call, ") is not an object of class 'brokenstick.export'"))
+  if (!inherits(eval(object@call), "brokenstick_export"))
+    return(paste0("eval(", object@call, ") is not an object of class 'brokenstick_export'"))
   return(TRUE)
 })
 

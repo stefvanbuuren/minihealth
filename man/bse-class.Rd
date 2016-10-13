@@ -15,8 +15,8 @@ values specified in the \code{data} argument of the
 \section{Slots}{
 
  \describe{
-   \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick.export} as created by
-   \code{\link[brokenstick]{export.brokenstick}}.}
+   \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick_export} as created by
+   \code{\link[brokenstick]{export}}.}
    \item{\code{found}:}{Logical indicating whether the broken stick model specified by
    \code{call} was actually found.}
    \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
@@ -38,7 +38,7 @@ d3
 Stef van Buuren 2016
 }
 \seealso{
-\code{\link{xyz-class}}, \code{\link[brokenstick]{export.brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
+\code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
 }
 \keyword{classes}
 
