@@ -86,14 +86,12 @@ setMethod("initialize", "bse",
 
             # fill y and z
             if (at == "x") .Object@x <- data@x
-            else .Object@x <- c(model$knots, model$Boundary.knots[2])
+            else .Object@x <- get_knots(model)
 
             if (.Object@zscale) {
               .Object@z <- predict(object = model, y = data@z,
                                    x = data@x, at = at,
-                                   output = "vector",
-                                   include.boundaries = TRUE,
-                                   onlynew = FALSE, ...)
+                                   output = "vector", ...)
               if (length(.Object@z) == 0) .Object@x <- numeric(0)
               .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
                                                   x = .Object@x,
@@ -102,16 +100,14 @@ setMethod("initialize", "bse",
             else {
               .Object@y <- predict(object = model, y = data@y,
                                    x = data@x, at = at,
-                                   output = "vector",
-                                   include.boundaries = TRUE,
-                                   onlynew = FALSE, ...)
+                                   output = "vector", ...)
               if (length(.Object@y) == 0) .Object@y <- numeric(0)
               .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
                                                   x = .Object@x,
                                                   ref = eval(data@call)))
             }
 
-            # remove estimate for Boundary.knots[2]
+            # remove estimate for boundary[2]
             if (at == "knots") {
               .Object@x <- .Object@x[-length(.Object@x)]
               .Object@y <- .Object@y[-length(.Object@y)]
