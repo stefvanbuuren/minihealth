@@ -51,11 +51,15 @@ d2@z
 eval(d2@call)
 
 # List available WHO references in clopus package
+# find.references() only searches packages in the search list
+# so let attach clopus first
+library("clopus")
 find.reference(libname = "who")
+detach("package:clopus")
 
 # Head circumference of girl, relative to WHO standard
 d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
-libname = "who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
+libname = "clopus::who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
 d3
 
 # Shortcut specification of WHO standard
@@ -67,13 +71,13 @@ d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
 d5
 
 # calculate centiles at 1 year using the female WHO head circumference reference
-ref <- create.reference.call(libname = "who", prefix = "who2011",
+ref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
                                 sex = "female", yname = "hdc", sub = "")
 d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
 d6
 
 # calculate P50 for preterms, female and born a GA week 32
-ref <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+ref <- clopus::create.reference.call(libname = "clopus::preterm", prefix = "pt2012a",
                                 sex = "female", yname = "hgt", sub = "32")
 d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
 d7

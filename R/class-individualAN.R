@@ -15,9 +15,9 @@
 #'
 #' # calculate -2 and +2 centiles for height and head circumference
 #' # using the WHO Child Growth Standard for girls
-#' hgtref <- create.reference.call(libname = "who", prefix = "who2011",
+#' hgtref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
 #'                                 sex = "female", yname = "hgt", sub = "")
-#' hdcref <- create.reference.call(libname = "who", prefix = "who2011",
+#' hdcref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
 #'                                 sex = "female", yname = "hdc", sub = "")
 #' new("individualAN",
 #'      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25), z = c(-2, 2, -2, 2), call = hgtref),

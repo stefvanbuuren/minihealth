@@ -50,13 +50,13 @@ setClass("individual",
 #'
 #' # overwrite hgt, wgt and hdc slots
 #' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
-#'              libname = "preterm", prefix = "pt2012a",
+#'              libname = "clopus::preterm", prefix = "pt2012a",
 #'              sex = q@sex, sub = q@ga)
 #' q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, yname = "wgt",
-#'              libname = "preterm", prefix = "pt2012a",
+#'              libname = "clopus::preterm", prefix = "pt2012a",
 #'              sex = q@sex, sub = q@ga)
 #' q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, yname = "hdc",
-#'              libname = "preterm", prefix = "pt2012b",
+#'              libname = "clopus::preterm", prefix = "pt2012b",
 #'              sex = q@sex, sub = q@ga)
 #'
 #' # update broken stick estimate

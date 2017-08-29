@@ -1,7 +1,6 @@
 #' @importFrom stats predict
 #' @importFrom dplyr full_join arrange_ distinct_ %>%
 #' @import methods
-#' @import clopus
-#' @import brokenstick
-#' @import donordata
+#' @importFrom clopus y2z z2y create.reference.call is.reference
+#' @importFrom brokenstick get_knots
 NULL

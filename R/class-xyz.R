@@ -50,11 +50,15 @@
 #'eval(d2@call)
 #'
 #'# List available WHO references in clopus package
+#'# find.references() only searches packages in the search list
+#'# so let attach clopus first
+#'library("clopus")
 #'find.reference(libname = "who")
+#'detach("package:clopus")
 #'
 #'# Head circumference of girl, relative to WHO standard
 #'d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
-#'libname = "who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
+#'libname = "clopus::who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
 #'d3
 #'
 #'# Shortcut specification of WHO standard
@@ -66,13 +70,13 @@
 #'d5
 #'
 #'# calculate centiles at 1 year using the female WHO head circumference reference
-#'ref <- create.reference.call(libname = "who", prefix = "who2011",
+#'ref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
 #'                                 sex = "female", yname = "hdc", sub = "")
 #'d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
 #'d6
 #'
 #'# calculate P50 for preterms, female and born a GA week 32
-#'ref <- create.reference.call(libname = "preterm", prefix = "pt2012a",
+#'ref <- clopus::create.reference.call(libname = "clopus::preterm", prefix = "pt2012a",
 #'                                 sex = "female", yname = "hgt", sub = "32")
 #'d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
 #'d7
@@ -104,13 +108,13 @@ setMethod(
     if (!missing(call)) slot(.Object, "call") <- as.call(call)
     # else, create new call from any ... arguments
     else {
-      call <- clopus::create.reference.call(yname = yname, ...)
+      call <- create.reference.call(yname = yname, ...)
       slot(.Object, "call") <- call
     }
 
     # obtain reference table
     ref <- eval(call)
-    .Object@found <- clopus::is.reference(ref)
+    .Object@found <- is.reference(ref)
 
     # initialize x, y and z
     slot(.Object, "x") <- as.numeric(x)
@@ -119,7 +123,7 @@ setMethod(
     if (missing(y)) {
       if (missing(z)) slot(.Object, "y") <- as.numeric(rep(NA, lx))
       else slot(.Object, "y") <-
-          as.numeric(clopus::z2y(z = as.numeric(z),
+          as.numeric(z2y(z = as.numeric(z),
                                  x = slot(.Object, "x"),
                                  ref = ref))
     }
@@ -128,9 +132,9 @@ setMethod(
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- as.numeric(rep(NA, lx))
       else slot(.Object, "z") <-
-          as.numeric(clopus::y2z(y = as.numeric(y),
-                                 x = slot(.Object, "x"),
-                                 ref = ref))
+          as.numeric(y2z(y = as.numeric(y),
+                         x = slot(.Object, "x"),
+                         ref = ref))
     }
     else slot(.Object, "z") <- as.numeric(z)
 
@@ -165,8 +169,11 @@ setValidity("xyz", function(object) {
 setMethod("show", signature(object = "xyz" ),
           function (object) {
             if (!object@found) cat("No reference\n")
-            else cat(paste("package: clopus, library:", as.character(object@call[[2]]),
-                           ", member:", as.character(object@call[[3]]), "\n"))
+            else cat(paste("package: clopus, library:",
+                           strsplit(as.character(object@call[[2]]), '\\[\\[\\"')[[1]][1],
+                           ", member:",
+                           strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
+                           "\n"))
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)

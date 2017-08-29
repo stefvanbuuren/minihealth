@@ -93,18 +93,18 @@ setMethod("initialize", "bse",
                                    x = data@x, at = at,
                                    output = "vector", ...)
               if (length(.Object@z) == 0) .Object@x <- numeric(0)
-              .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
-                                                  x = .Object@x,
-                                                  ref = eval(data@call)))
+              .Object@y <- as.numeric(z2y(z = .Object@z,
+                                          x = .Object@x,
+                                          ref = eval(data@call)))
             }
             else {
               .Object@y <- predict(object = model, y = data@y,
                                    x = data@x, at = at,
                                    output = "vector", ...)
               if (length(.Object@y) == 0) .Object@y <- numeric(0)
-              .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
-                                                  x = .Object@x,
-                                                  ref = eval(data@call)))
+              .Object@z <- as.numeric(y2z(y = .Object@y,
+                                          x = .Object@x,
+                                          ref = eval(data@call)))
             }
 
             # remove estimate for boundary[2]
@@ -131,8 +131,11 @@ setMethod("show",
           signature(object = "bse" ),
           function (object) {
             if (!object@found) cat("Broken stick model not found.\n")
-            else cat(paste("package: donordata, model:", as.character(object@call[[2]]),
-                           ", member:", as.character(object@call[[3]]), "\n"))
+            else cat(paste("package: donordata, model:",
+                           strsplit(as.character(object@call[[2]]), '\\[\\[\\"')[[1]][1],
+                           ", member:",
+                           strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
+                           "\n"))
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)
