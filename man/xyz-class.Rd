@@ -37,6 +37,7 @@ corresponding to \code{y} given \code{x}). The class calculates
    \code{call} was actually found.}
 }
 }
+
 \examples{
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
 d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
@@ -77,11 +78,10 @@ ref <- create.reference.call(libname = "preterm", prefix = "pt2012a",
 d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
 d7
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link[clopus]{create.reference.call}}
 }
+\author{
+Stef van Buuren 2016
+}
 \keyword{classes}
-

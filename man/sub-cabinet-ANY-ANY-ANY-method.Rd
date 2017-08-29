@@ -14,11 +14,10 @@
 
 \item{j}{Not used}
 
-\item{drop}{Not used}
-
 \item{\dots}{Not used}
+
+\item{drop}{Not used}
 }
 \description{
 Extract part of cabinet
 }
-

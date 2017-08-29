@@ -16,12 +16,11 @@ This function calls the \code{donordata.to.individual} function to
 transform data of each \code{id} into an object of \code{individual} S4 class,
 and then collects all individuals into an object of \code{cabinet} S4 class.
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link{donordata.to.individual}}
 
 Other cabinet: \code{\link{as}}
 }
-
+\author{
+Stef van Buuren 2016
+}

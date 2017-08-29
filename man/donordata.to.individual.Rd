@@ -44,10 +44,9 @@ q@bs.hdc <- new("bse", data = q@hdc)
 q
 
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link{xyz-class}}, \code{\link{bse-class}}
 }
-
+\author{
+Stef van Buuren 2016
+}

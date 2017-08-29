@@ -16,6 +16,7 @@ The \code{individualAN} class stores anthropometric measures as the collection o
 
 \item{\code{hdc}}{Head circumference in cm (\code{xyz})}
 }}
+
 \examples{
 # create object with height and weight measures
 # add Z-scores calculate according to Dutch 1997 references
@@ -34,10 +35,9 @@ new("individualAN",
      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25), z = c(-2, 2, -2, 2), call = hgtref),
      wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1), z = c(-2, 2, -2, 2), call = hdcref))
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link{xyz-class}}
 }
-
+\author{
+Stef van Buuren 2016
+}

@@ -15,4 +15,3 @@ A logical
 \description{
 Is this object of class `individual`?
 }
-

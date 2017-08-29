@@ -16,7 +16,7 @@ An S4 class to represent individual broken stick estimates
 
 \item{\code{hdc}}{Head circumference in cm (\code{bse})}
 }}
+
 \author{
 Stef van Buuren 2016
 }
-

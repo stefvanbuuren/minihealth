@@ -29,6 +29,7 @@ Data of individual persons can be assessed by position by as list index
 
 \item{\code{updated}}{Update date}
 }}
+
 \examples{
 # create cabinet with 1 empty record
 z <- new("cabinet")
@@ -61,11 +62,10 @@ smoccdemo <- cab[1:10]
 cab.who <- list2cabinet(smocc, libname = "who", prefix = "who2011", sub = "")
 }
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link[=individual-class]{individual}}
 }
+\author{
+Stef van Buuren 2016
+}
 \keyword{classes}
-

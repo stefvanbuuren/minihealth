@@ -22,6 +22,7 @@ values specified in the \code{data} argument of the
    \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
 }
 }
+
 \examples{
 # first specify three height measures
 d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
@@ -34,11 +35,10 @@ d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
 sex = "female"))
 d3
 }
-\author{
-Stef van Buuren 2016
-}
 \seealso{
 \code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
 }
+\author{
+Stef van Buuren 2016
+}
 \keyword{classes}
-

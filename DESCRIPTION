@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.27.0
+Version: 0.28.0
 Author: Stef van Buuren
 Depends:
     clopus (>= 0.28),
@@ -15,10 +15,10 @@ Description: Contains a collection of tools to store, handle and update
     individual health data.
 License: file LICENSE
 LazyData: TRUE
-Copyright: Stef van Buuren 2016
+Copyright: Stef van Buuren 2017
 Acknowledgement: Development of this package was kindly suported by the Bill &
     Melinda Gates Foundation
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Collate:
     'class-xyz.R'
     'class-bse.R'

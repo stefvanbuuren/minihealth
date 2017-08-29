@@ -18,6 +18,7 @@ An S4 class to represent individual identifiers
 
 \item{\code{src}}{Name of data source (\code{character})}
 }}
+
 \examples{
 # Create a new ID for Ron and Jasper
 ron <- new("individualID", name = c("Ron", "Smith"),
@@ -28,4 +29,3 @@ jasper <- new("individualID", name = c("Jasper", "Fielding"),
 \author{
 Stef van Buuren 2016
 }
-

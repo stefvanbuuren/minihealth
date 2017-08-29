@@ -15,11 +15,11 @@ The type of information covers individual identifyers, fixed background variable
 
 \item{\code{time}}{If constructed from a `donordata` object, this slot contains the time level data frame. This slot is included for backward compatibility, and should be removed when feasible.}
 }}
-\author{
-Stef van Buuren 2016
-}
+
 \seealso{
 \code{\link[=individualID-class]{individualID}}
 }
+\author{
+Stef van Buuren 2016
+}
 \keyword{classes}
-
