@@ -53,7 +53,7 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    at = "x", models = "smocc_bs",
+                    at = "x", models = "donordata::smocc_bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 
@@ -72,7 +72,9 @@ setMethod("initialize", "bse",
             if (!missing(call)) slot(.Object, "call") <- as.call(call)
             # else, create new call from models and yname arguments
             else {
-              call <- call("[[", as.name(models), data@yname)
+              expr <- parse(text = paste0(models, '[["', data@yname, '"]]'))
+              call <- call("eval", expr)
+              # call <- call("[[", as.name(models), data@yname)
               slot(.Object, "call") <- call
             }
 
@@ -80,38 +82,41 @@ setMethod("initialize", "bse",
             model <- eval(call)
             .Object@found <- inherits(model, "brokenstick_export")
 
-            # Was the model in the Z-score scale
-            if (is.null(model$zmodel)) .Object@zscale <- TRUE
-            else .Object@zscale <- model$zmodel
+            # fill only if we have a model
+            if (.Object@found) {
 
-            # fill y and z
-            if (at == "x") .Object@x <- data@x
-            else .Object@x <- get_knots(model)
+              # Was the model in the Z-score scale
+              if (is.null(model$zmodel)) .Object@zscale <- TRUE
+              else .Object@zscale <- model$zmodel
 
-            if (.Object@zscale) {
-              .Object@z <- predict(object = model, y = data@z,
-                                   x = data@x, at = at,
-                                   output = "vector", ...)
-              if (length(.Object@z) == 0) .Object@x <- numeric(0)
-              .Object@y <- as.numeric(z2y(z = .Object@z,
-                                          x = .Object@x,
-                                          ref = eval(data@call)))
-            }
-            else {
-              .Object@y <- predict(object = model, y = data@y,
-                                   x = data@x, at = at,
-                                   output = "vector", ...)
-              if (length(.Object@y) == 0) .Object@y <- numeric(0)
-              .Object@z <- as.numeric(y2z(y = .Object@y,
-                                          x = .Object@x,
-                                          ref = eval(data@call)))
-            }
+              # fill y and z
+              if (at == "x") .Object@x <- data@x
+              else .Object@x <- as.numeric(get_knots(model))
 
-            # remove estimate for boundary[2]
-            if (at == "knots") {
-              .Object@x <- .Object@x[-length(.Object@x)]
-              .Object@y <- .Object@y[-length(.Object@y)]
-              .Object@z <- .Object@z[-length(.Object@z)]
+              if (.Object@zscale) {
+                .Object@z <- predict(object = model, y = data@z,
+                                     x = data@x, at = at,
+                                     output = "vector", ...)
+                if (length(.Object@z) == 0) .Object@x <- numeric(0)
+                .Object@y <- as.numeric(z2y(z = .Object@z,
+                                            x = .Object@x,
+                                            ref = eval(data@call)))
+              } else {
+                .Object@y <- predict(object = model, y = data@y,
+                                     x = data@x, at = at,
+                                     output = "vector", ...)
+                if (length(.Object@y) == 0) .Object@y <- numeric(0)
+                .Object@z <- as.numeric(y2z(y = .Object@y,
+                                            x = .Object@x,
+                                            ref = eval(data@call)))
+              }
+
+              # remove estimate for boundary[2]
+              if (at == "knots") {
+                .Object@x <- .Object@x[-length(.Object@x)]
+                .Object@y <- .Object@y[-length(.Object@y)]
+                .Object@z <- .Object@z[-length(.Object@z)]
+              }
             }
 
             check <- validObject(.Object)
@@ -121,8 +126,8 @@ setMethod("initialize", "bse",
 
 
 setValidity("bse", function(object) {
-  if (!inherits(eval(object@call), "brokenstick_export"))
-    return(paste0("eval(", object@call, ") is not an object of class 'brokenstick_export'"))
+  #if (!inherits(eval(object@call), "brokenstick_export"))
+  #  return(paste0("eval(", object@call, ") is not an object of class 'brokenstick_export'"))
   return(TRUE)
 })
 

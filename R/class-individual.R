@@ -36,7 +36,9 @@ setClass("individual",
 #' @aliases donordata.to.individual
 #' @param id the id number of the individual in specified source
 #' @param src A character indicating the source
-#' @param \dots Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}. Useful parameters are \code{model = "bsmodel"} for setting the broken stick model, or \code{call = as.call(...)} for setting proper reference standards.
+#' @param \dots Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}.
+#' Useful parameters are \code{models = "bsmodel"} for setting the broken stick model,
+#' or \code{call = as.call(...)} for setting proper reference standards.
 #' @author Stef van Buuren 2016
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples

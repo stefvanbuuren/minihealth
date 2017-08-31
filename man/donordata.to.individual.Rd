@@ -11,7 +11,9 @@ donordata.to.individual(id, src = donordata::smocc, ...)
 
 \item{src}{A character indicating the source}
 
-\item{\dots}{Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}. Useful parameters are \code{model = "bsmodel"} for setting the broken stick model, or \code{call = as.call(...)} for setting proper reference standards.}
+\item{\dots}{Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}.
+Useful parameters are \code{models = "bsmodel"} for setting the broken stick model,
+or \code{call = as.call(...)} for setting proper reference standards.}
 }
 \description{
 This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
