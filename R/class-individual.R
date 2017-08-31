@@ -68,6 +68,10 @@ setClass("individual",
 #'
 #' q
 #'
+#' # use models argument to estimate brokenstick estimates
+#' p <- donordata.to.individual(11, src = donordata::terneuzen,
+#'   models = "donordata::terneuzen_bs")
+#'
 #' @export
 donordata.to.individual <- function(id, src = donordata::smocc, ...) {
 

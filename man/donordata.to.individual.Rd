@@ -45,6 +45,10 @@ q@bs.hdc <- new("bse", data = q@hdc)
 
 q
 
+# use models argument to estimate brokenstick estimates
+p <- donordata.to.individual(11, src = donordata::terneuzen,
+  models = "donordata::terneuzen_bs")
+
 }
 \seealso{
 \code{\link{xyz-class}}, \code{\link{bse-class}}
