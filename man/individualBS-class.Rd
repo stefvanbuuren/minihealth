@@ -15,6 +15,10 @@ An S4 class to represent individual broken stick estimates
 \item{\code{wgt}}{Weight in kg (\code{bse})}
 
 \item{\code{hdc}}{Head circumference in cm (\code{bse})}
+
+\item{\code{bmi}}{Body mass index kg/m**2 (\code{bse})}
+
+\item{\code{wfh}}{Weight for height kg/m (\code{bse})}
 }}
 
 \author{

@@ -42,7 +42,7 @@ setClass("individualAN",
            wgt = new("xyz", yname = "wgt"),
            hdc = new("xyz", yname = "hdc"),
            bmi = new("xyz", yname = "bmi"),
-           wfh = new("xyz", yname = "wfh")
+           wfh = new("xyz", yname = "wfh", xname = "hgt")
          )
 )
 

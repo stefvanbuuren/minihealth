@@ -141,6 +141,9 @@ setMethod("show",
                            ", member:",
                            strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
                            "\n"))
+            if (length(object@x) == 0) object@x <- as.numeric(NA)
+            if (length(object@y) == 0) object@y <- as.numeric(NA)
+            if (length(object@z) == 0) object@z <- as.numeric(NA)
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)
