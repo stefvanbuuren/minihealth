@@ -5,7 +5,9 @@
 \alias{individualAN-class}
 \title{An S4 class to represent individual anthropometric data}
 \description{
-The \code{individualAN} class stores anthropometric measures as the collection of three \code{xyz}-class for height, weight and head circumference, respectively.
+The \code{individualAN} class stores anthropometric measures as
+the collection of \code{xyz}-class for height, weight,
+head circumference, bmi, and weight for height.
 }
 \section{Slots}{
 
@@ -15,6 +17,10 @@ The \code{individualAN} class stores anthropometric measures as the collection o
 \item{\code{wgt}}{Weight in kg (\code{xyz})}
 
 \item{\code{hdc}}{Head circumference in cm (\code{xyz})}
+
+\item{\code{bmi}}{Body mass index kg/m**2 (\code{xyz})}
+
+\item{\code{wfh}}{Weight for height kg/m (\code{xyz})}
 }}
 
 \examples{
@@ -27,13 +33,15 @@ z
 
 # calculate -2 and +2 centiles for height and head circumference
 # using the WHO Child Growth Standard for girls
-hgtref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
-                                sex = "female", yname = "hgt", sub = "")
-hdcref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
-                                sex = "female", yname = "hdc", sub = "")
+hgtref <- clopus::create.reference.call(libname = "clopus::who",
+  prefix = "who2011", sex = "female", yname = "hgt", sub = "")
+hdcref <- clopus::create.reference.call(libname = "clopus::who",
+  prefix = "who2011", sex = "female", yname = "hdc", sub = "")
 new("individualAN",
-     hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25), z = c(-2, 2, -2, 2), call = hgtref),
-     wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1), z = c(-2, 2, -2, 2), call = hdcref))
+     hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25),
+       z = c(-2, 2, -2, 2), call = hgtref),
+     wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1),
+       z = c(-2, 2, -2, 2), call = hdcref))
 }
 \seealso{
 \code{\link{xyz-class}}
