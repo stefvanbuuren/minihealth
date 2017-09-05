@@ -43,12 +43,12 @@ setClass("individual",
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
 #' require("donordata")
-#' p <- donordata.to.individual(10001)
+#' p <- donordata.to.individual(id = 10001)
 #' p
 #'
 #' # from lollypop.preterm
 #' # calculating Z-score relative to preterm growth references
-#' q <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
+#' q <- donordata.to.individual(src = "lollypop.preterm", id = 50001)
 #'
 #' # overwrite hgt, wgt and hdc slots
 #' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
@@ -69,26 +69,14 @@ setClass("individual",
 #' q
 #'
 #' # use models argument to estimate brokenstick estimates
-#' p <- donordata.to.individual(11, src = donordata::terneuzen,
+#' p <- donordata.to.individual(src = "terneuzen", id = 11,
 #'   models = "donordata::terneuzen_bs")
 #'
 #' @export
-donordata.to.individual <- function(id, src = donordata::smocc, ...) {
+donordata.to.individual <- function(src = "smocc", id, ...) {
 
-  get.child.data <- function(id, donor){
-    if (id[1] == 0) return(NULL)
-    select <- donor$child$id %in% id
-    if (all(!select)) return(NULL)
-    return(donor$child[select, , drop = FALSE])
-  }
-  get.time.data <- function(id, donor){
-    if (id[1] == 0) return(NULL)
-    select <- donor$time$id %in% id
-    if (all(!select)) return(NULL)
-    return(donor$time[select, , drop = FALSE])
-  }
-  child <- get.child.data(id, src)
-  time <- get.time.data(id, src)
+  child <- load_child_data(src = src, ids = id)
+  time <- load_time_data(src = src, ids = id)
 
   if (is.null(child) & is.null(time)) return(new("individual"))
 
@@ -97,32 +85,30 @@ donordata.to.individual <- function(id, src = donordata::smocc, ...) {
     pid <- new("individualID")
     pbg <- new("individualBG")
   } else {
-    if (is.null(child$dob)) child$dob <- NA
-    dob <- as.Date(child$dob, format = "%d-%m-%y")
-    name <- as.character(child$name)
-    # if (is.null(name) || is.na(name) || name == "") name <- paste("ID", id, sep = "-")
     pid <- new("individualID",
-               id    = as.integer(id),
-               name  = as.character(name),
-               dob   = dob)
+               src   = set.slot(child, "src", "character"),
+               id    = set.slot(child, "id", "integer"),
+               name  = set.slot(child, "name", "character"),
+               dob   = set.slot(child, "dob", "Date"))
+
     pbg <- new("individualBG",
-               sex   = as.character(child$sex),
-               etn   = as.character(child$etn),
-               ga    = as.numeric(child$ga),
-               bw    = as.numeric(child$bw),
-               mult  = as.integer(child$mult),
-               goodhealth = ifelse(as.numeric(child$goodhealth) == 1, TRUE, FALSE),
+               sex   = set.slot(child, "sex", "character"),
+               etn   = set.slot(child, "etn", "character"),
+               edu   = set.slot(child, "edu", "character"),
 
-               hgtm  = as.numeric(child$hgtm),
-               wgtm  = as.numeric(child$wgtm),
-               landm = as.character(child$etn),
-               edum  = as.character(child$edum),
-               agem  = as.character(child$agem),
-               smo   = ifelse(as.numeric(child$smo) == 1, TRUE, FALSE),
+               ga    = set.slot(child, "ga"),
+               bw    = set.slot(child, "bw"),
+               twin  = set.slot(child, "twin"),
+               agem  = set.slot(child, "agem"),
+               smo   = set.slot(child, "smo"),
 
-               hgtf  = as.numeric(child$hgtf),
-               wgtf  = as.numeric(child$wgtf),
-               eduf  = as.character(child$eduf)
+               hgtm  = set.slot(child, "hgtm"),
+               wgtm  = set.slot(child, "wgtm"),
+               hgtf  = set.slot(child, "hgtf"),
+               wgtf  = set.slot(child, "wgtf"),
+
+               bfexc06 = set.slot(child, "bfexc06"),
+               durbrst  = set.slot(child, "durbrst")
     )
   }
 
@@ -195,4 +181,22 @@ is.individual <- function(x)
   inherits(x,"individual")
 }
 
-
+set.slot <- function(data, name, type = "numeric") {
+  v <- switch(type,
+              "numeric" =   ifelse(name %in% names(data),
+                                   as.numeric(data[, name]),
+                                   NA_real_),
+              "character" = ifelse(name %in% names(data),
+                                   as.character(data[, name]),
+                                   NA_character_),
+              "integer" =   ifelse(name %in% names(data),
+                                   as.integer(data[, name]),
+                                   NA_integer_),
+              "Date" =      ifelse(name %in% names(data),
+                                   as.Date(data[, name], format = "%d-%m-%y"),
+                                   as.Date(NA, format = "%d-%m-%y"))
+  )
+  # switch "undates" Date so we need to redo
+  if (type == "Date") v <- as.Date(v, origin = "1970-01-01")
+  v
+}

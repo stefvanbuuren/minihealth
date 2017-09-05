@@ -2,7 +2,7 @@
 #'
 #' @slot id   Unique numerical individual identifier in source (\code{integer}, length 1)
 #' @slot name Name of the individual (\code{character})
-#' @slot dob  Date of birth of class (\code{date}, length 1)
+#' @slot dob  Date of birth of class (\code{Date}, length 1)
 #' @slot src  Name of data source (\code{character})
 #' @author Stef van Buuren 2016
 #' @examples

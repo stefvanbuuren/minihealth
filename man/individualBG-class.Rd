@@ -6,43 +6,38 @@
 \title{An S4 class to represent individual background variables}
 \description{
 This class stores individual time-invariant background variables,
-such as sex or birth weight. Each slot can only have
-length zero (if entry is unset or missing) or length one.
+such as sex or birth weight. Each slot has length one.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{sex}}{Either \code{"male"} or \code{"female"} (\code{character})}
+\item{\code{sex}}{Sex: \code{"male"}, \code{"female"} (\code{character})}
 
-\item{\code{etn}}{Etnicity code (\code{character})}
+\item{\code{etn}}{Etnicity: \code{"NL"}, \code{"TU"},
+\code{"MA"}, \code{"HS"}, \code{"other"} (\code{character})}
 
-\item{\code{ga}}{Gestational age in weeks (\code{numeric})}
+\item{\code{edu}}{Education: \code{"low"}, \code{"middle"}, \code{"high"}}
 
-\item{\code{bw}}{Birth weight in grammes (\code{numeric})}
+\item{\code{ga}}{Gestational age, weeks (\code{numeric})}
 
-\item{\code{mult}}{Multiplicity, 1 = singleton, 2 = twin (\code{integer})}
+\item{\code{bw}}{Birth weight, grammes (\code{numeric})}
 
-\item{\code{goodhealth}}{In good health, \code{TRUE} or \code{FALSE} (\code{logical})}
+\item{\code{twin}}{Twin: \code{0}, \code{1} (\code{numeric})}
+
+\item{\code{agem}}{Mother age, years (\code{numeric})}
+
+\item{\code{smo}}{Smoked during pregnancy, \code{0}, \code{1} (\code{numeric})}
 
 \item{\code{hgtm}}{Height of mother in cm (\code{numeric})}
 
 \item{\code{wgtm}}{Weight of mother in kg (\code{numeric})}
 
-\item{\code{landm}}{Country of birth, mother (\code{character})}
-
-\item{\code{edum}}{Education mother, \code{"low"}, \code{"middle"}, \code{"high"} (\code{character})}
-
-\item{\code{agem}}{Mother age when pregnant, \code{"(15,25]"},
-\code{"(25,36]"} or \code{"(36,45]"} (\code{character})}
-
-\item{\code{smo}}{Mother smoked during pregnancy, \code{TRUE} or \code{FALSE} (\code{logical})}
-
 \item{\code{hgtf}}{Height of father in cm (\code{numeric})}
 
 \item{\code{wgtf}}{Weight of father in kg (\code{numeric})}
 
-\item{\code{landf}}{Country of birth, father (\code{character})}
+\item{\code{bfexc06}}{Days exclusive breastfeeding, 0-6 m (\code{numeric})}
 
-\item{\code{eduf}}{Education father, \code{"low"}, \code{"middle"}, \code{"high"} (\code{character})}
+\item{\code{durbrst}}{Days mixed breastfeeding 0-6m (\code{numeric})}
 }}
 

@@ -4,12 +4,12 @@
 \alias{donordata.to.individual}
 \title{Convert single individual from donor data to class individual}
 \usage{
-donordata.to.individual(id, src = donordata::smocc, ...)
+donordata.to.individual(src = "smocc", id, ...)
 }
 \arguments{
-\item{id}{the id number of the individual in specified source}
-
 \item{src}{A character indicating the source}
+
+\item{id}{the id number of the individual in specified source}
 
 \item{\dots}{Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}.
 Useful parameters are \code{models = "bsmodel"} for setting the broken stick model,
@@ -20,12 +20,12 @@ This function takes data from the \pkg{donordata} package, extract cases identif
 }
 \examples{
 require("donordata")
-p <- donordata.to.individual(10001)
+p <- donordata.to.individual(id = 10001)
 p
 
 # from lollypop.preterm
 # calculating Z-score relative to preterm growth references
-q <- donordata.to.individual(id = 50001, src = donordata::lollypop.preterm)
+q <- donordata.to.individual(src = "lollypop.preterm", id = 50001)
 
 # overwrite hgt, wgt and hdc slots
 q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
@@ -46,7 +46,7 @@ q@bs.hdc <- new("bse", data = q@hdc)
 q
 
 # use models argument to estimate brokenstick estimates
-p <- donordata.to.individual(11, src = donordata::terneuzen,
+p <- donordata.to.individual(src = "terneuzen", id = 11,
   models = "donordata::terneuzen_bs")
 
 }
