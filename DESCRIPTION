@@ -28,6 +28,7 @@ Collate:
     'class-individualID.R'
     'class-individual.R'
     'class-cabinet.R'
+    'donordata.to.individual.R'
     'imports.R'
     'ind_df.R'
     'tests.R'

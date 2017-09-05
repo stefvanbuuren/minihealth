@@ -19,7 +19,7 @@ setClass("individualID",
            dob   = "Date",
            src   = "character"
          ), prototype = list(
-           id    = 0L,
+           id    = NA_integer_,
            name  = NA_character_,
            dob   = as.Date(NA),
            src   = NA_character_
