@@ -137,10 +137,8 @@ donordata.to.individual <- function(src, id, ...) {
                             ...))
   }
 
-  p <- new("individual", pid, pbg, pan, pbs,
+  new("individual", pid, pbg, pan, pbs,
            child = child, time = time)
-
-  return(p)
 }
 
 set.slot <- function(data, name,

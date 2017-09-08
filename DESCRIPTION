@@ -1,10 +1,10 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.30.0
+Version: 0.31.0
 Author: Stef van Buuren
 Depends: 
-    donordata (>= 1.22)
+    donordata (>= 1.23)
 Imports:
     methods,
     clopus (>= 0.32),
@@ -30,7 +30,7 @@ Collate:
     'class-cabinet.R'
     'donordata.to.individual.R'
     'imports.R'
-    'ind_df.R'
+    'individual.to.donordata.R'
     'tests.R'
 Suggests:
     testthat
