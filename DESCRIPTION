@@ -9,7 +9,8 @@ Imports:
     methods,
     clopus (>= 0.32),
     brokenstick (>= 0.56),
-    dplyr (>= 0.5.0)
+    dplyr (>= 0.5.0),
+    rlang
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.
