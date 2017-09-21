@@ -112,11 +112,11 @@ setMethod("initialize", "bse",
               }
 
               # remove estimate for boundary[2]
-              if (at == "knots") {
-                .Object@x <- .Object@x[-length(.Object@x)]
-                .Object@y <- .Object@y[-length(.Object@y)]
-                .Object@z <- .Object@z[-length(.Object@z)]
-              }
+              # if (at == "knots") {
+              #   .Object@x <- .Object@x[-length(.Object@x)]
+              #   .Object@y <- .Object@y[-length(.Object@y)]
+              #   .Object@z <- .Object@z[-length(.Object@z)]
+              # }
             }
 
             check <- validObject(.Object)
