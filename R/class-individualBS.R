@@ -14,7 +14,8 @@ setClass("individualBS",
            bs.bmi = "bse",
            bs.wfh = "bse"
          ), prototype = list(
-           bs.hgt = new("bse", data = new("xyz", yname = "hgt")),
+           bs.hgt = new("bse",
+                        data = new("xyz", yname = "hgt")),
            bs.wgt = new("bse", data = new("xyz", yname = "wgt")),
            bs.hdc = new("bse", data = new("xyz", yname = "hdc")),
            bs.bmi = new("bse", data = new("xyz", yname = "bmi")),
