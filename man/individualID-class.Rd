@@ -22,7 +22,8 @@ An S4 class to represent individual identifiers
 \examples{
 # Create a new ID for Ron and Jasper
 ron <- new("individualID", name = c("Ron", "Smith"),
-           dob = as.Date("1999-08-22"), id = as.integer(204))
+           dob = format(as.Date("1999-08-22"), "\%d-\%m-\%y"),
+           id = as.integer(204))
 jasper <- new("individualID", name = c("Jasper", "Fielding"),
            id = as.integer(220))
 }

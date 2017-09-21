@@ -17,11 +17,11 @@ This function returns slots \code{"id"}, \code{"child"} and
 \code{"time"}, or a list of these slots (if \code{type = NULL}).
 }
 \description{
-Convert object of class 'individual' to donordata
-}
-\details{
-The code assumes that slots \code{"id"}, \code{"child"} and
-\code{"time"} are up-to-data.
+This function returns the slots \code{"id"}, \code{"child"} and
+\code{"time"}, either separate or as a \code{list} from
+the \code{individual} object. The code
+assumes that slots \code{"id"}, \code{"child"} and \code{"time"}
+are up-to-data and consistent with the other slots.
 }
 \examples{
 require("donordata")
