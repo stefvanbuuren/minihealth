@@ -53,15 +53,16 @@ setClass("individualAN",
 #' @family individualAN
 setAs("individualAN", "data.frame", function(from) {
   # note: preserve only first row in case of duplicate ages
+  ynames <- c("hgt", "wgt", "hdc", "bmi", "wfh")
   hgt <- as(from@hgt, "data.frame") %>% distinct_("age", .keep_all = TRUE)
   wgt <- as(from@wgt, "data.frame") %>% distinct_("age", .keep_all = TRUE)
   hdc <- as(from@hdc, "data.frame") %>% distinct_("age", .keep_all = TRUE)
-  # bmi <- as(from@bmi, "data.frame") %>% distinct_("age", .keep_all = TRUE)
-  # wfh <- as(from@wfh, "data.frame") %>% distinct_("age", .keep_all = TRUE)
+  bmi <- as(from@bmi, "data.frame") %>% distinct_("age", .keep_all = TRUE)
+  wfh <- as(from@wfh, "data.frame") %>% distinct_("age", .keep_all = TRUE)
   m <- dplyr::full_join(hgt, wgt, by = "age")
   m <- dplyr::full_join(m, hdc, by = "age")
-  # m <- dplyr::full_join(m, bmi, by = "age")
-  # m <- dplyr::full_join(m, wfh, by = "age")
+  m <- dplyr::full_join(m, bmi, by = "age")
+  # m <- dplyr::full_join(m, wfh, by = "age")  # cannot merge by age
   dplyr::arrange(m, .data$age)
 }
 )

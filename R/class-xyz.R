@@ -189,6 +189,8 @@ setMethod("show", signature(object = "xyz" ),
 #' @name as
 #' @family xyz
 setAs("xyz", "data.frame", function(from) {
+  if (length(from@y) == 0) from@y <- rep(NA_real_, length(from@x))
+  if (length(from@z) == 0) from@z <- rep(NA_real_, length(from@x))
   df <- data.frame(x = from@x, y = from@y, z = from@z)
   names(df) <- c(from@xname, from@yname, from@zname)
   return(df)}
