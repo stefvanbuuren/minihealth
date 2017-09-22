@@ -4,10 +4,10 @@
 \alias{donordata.to.individual}
 \title{Convert single individual from donor data to class individual}
 \usage{
-donordata.to.individual(src, id, ...)
+donordata.to.individual(dnr, id, ...)
 }
 \arguments{
-\item{src}{A character indicating the source, e.g. \code{src = "smocc"}}
+\item{dnr}{A character indicating the source, e.g. \code{dnr = "smocc"}}
 
 \item{id}{the id number of the individual in specified source. If specified as a vector,
 only the first element is used.}
@@ -18,19 +18,19 @@ or \code{call = as.call(...)} for setting proper reference standards.}
 }
 \value{
 An object of class \code{individual}. If \code{id} is not found in data
-\code{src}, then the function will set only slots \code{id} and \code{src}.
+\code{dnr}, then the function will set only slots \code{id} and \code{dnr}.
 }
 \description{
 This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
 }
 \examples{
 require("donordata")
-p <- donordata.to.individual(src = "smocc", id = 10001)
+p <- donordata.to.individual(dnr = "smocc", id = 10001)
 p
 
 # from lollypop.preterm
 # calculating Z-score relative to preterm growth references
-q <- donordata.to.individual(src = "lollypop.preterm", id = 50001)
+q <- donordata.to.individual(dnr = "lollypop.preterm", id = 50001)
 
 # overwrite hgt, wgt and hdc slots
 q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
@@ -51,7 +51,7 @@ q@bs.hdc <- new("bse", data = q@hdc)
 q
 
 # use models argument to estimate brokenstick estimates
-p <- donordata.to.individual(src = "terneuzen", id = 11,
+p <- donordata.to.individual(dnr = "terneuzen", id = 11,
   models = "donordata::terneuzen_bs")
 
 }

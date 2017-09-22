@@ -100,7 +100,8 @@ setMethod("initialize", "bse",
                 if (length(.Object@z) == 0) .Object@x <- numeric(0)
                 .Object@y <- as.numeric(z2y(z = .Object@z,
                                             x = .Object@x,
-                                            ref = eval(data@call)))
+                                            ref = eval(data@call),
+                                            ...))
               } else {
                 .Object@y <- predict(object = model, y = data@y,
                                      x = data@x, at = at,
@@ -108,7 +109,8 @@ setMethod("initialize", "bse",
                 if (length(.Object@y) == 0) .Object@y <- numeric(0)
                 .Object@z <- as.numeric(y2z(y = .Object@y,
                                             x = .Object@x,
-                                            ref = eval(data@call)))
+                                            ref = eval(data@call),
+                                            ...))
               }
 
               # remove estimate for boundary[2]

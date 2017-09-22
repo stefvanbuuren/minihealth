@@ -2,24 +2,24 @@
 #'
 #' This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
 #' @aliases donordata.to.individual
-#' @param src A character indicating the source, e.g. \code{src = "smocc"}
+#' @param dnr A character indicating the source, e.g. \code{dnr = "smocc"}
 #' @param id the id number of the individual in specified source. If specified as a vector,
 #' only the first element is used.
 #' @param \dots Additional parameter passed down to \code{new("xyz",... )} and \code{new("bse",... )}.
 #' Useful parameters are \code{models = "bsmodel"} for setting the broken stick model,
 #' or \code{call = as.call(...)} for setting proper reference standards.
 #' @return An object of class \code{individual}. If \code{id} is not found in data
-#' \code{src}, then the function will set only slots \code{id} and \code{src}.
+#' \code{dnr}, then the function will set only slots \code{id} and \code{dnr}.
 #' @author Stef van Buuren 2017
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
 #' require("donordata")
-#' p <- donordata.to.individual(src = "smocc", id = 10001)
+#' p <- donordata.to.individual(dnr = "smocc", id = 10001)
 #' p
 #'
 #' # from lollypop.preterm
 #' # calculating Z-score relative to preterm growth references
-#' q <- donordata.to.individual(src = "lollypop.preterm", id = 50001)
+#' q <- donordata.to.individual(dnr = "lollypop.preterm", id = 50001)
 #'
 #' # overwrite hgt, wgt and hdc slots
 #' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
@@ -40,19 +40,19 @@
 #' q
 #'
 #' # use models argument to estimate brokenstick estimates
-#' p <- donordata.to.individual(src = "terneuzen", id = 11,
+#' p <- donordata.to.individual(dnr = "terneuzen", id = 11,
 #'   models = "donordata::terneuzen_bs")
 #'
 #' @export
-donordata.to.individual <- function(src, id, ...) {
+donordata.to.individual <- function(dnr, id, ...) {
 
   id <- id[1]
 
-  child <- load_child_data(src = src, ids = id)
-  time <- load_time_data(src = src, ids = id)
+  child <- load_child_data(dnr = dnr, ids = id)
+  time <- load_time_data(dnr = dnr, ids = id)
 
   if (nrow(child) == 0 & nrow(time) == 0) return(
-    new("individual", src = src, id = as.integer(id), ...))
+    new("individual", dnr = dnr, id = as.integer(id), ...))
 
   # information at child level
   if (is.null(child)) {
@@ -61,6 +61,7 @@ donordata.to.individual <- function(src, id, ...) {
   } else {
     pid <- new("individualID",
                src   = set.slot(child, "src", "character"),
+               dnr   = set.slot(child, "src", "character"),
                id    = set.slot(child, "id", "integer"),
                name  = set.slot(child, "name", "character"),
                dob   = set.slot(child, "dob", "character"))

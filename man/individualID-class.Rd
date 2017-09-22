@@ -17,6 +17,8 @@ An S4 class to represent individual identifiers
 \item{\code{dob}}{Date of birth of class (\code{Date}, length 1)}
 
 \item{\code{src}}{Name of data source (\code{character})}
+
+\item{\code{dnr}}{Name of donor data (\code{character})}
 }}
 
 \examples{
@@ -28,5 +30,5 @@ jasper <- new("individualID", name = c("Jasper", "Fielding"),
            id = as.integer(220))
 }
 \author{
-Stef van Buuren 2016
+Stef van Buuren 2017
 }

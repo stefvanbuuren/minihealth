@@ -4,7 +4,8 @@
 #' @slot name Name of the individual (\code{character})
 #' @slot dob  Date of birth of class (\code{Date}, length 1)
 #' @slot src  Name of data source (\code{character})
-#' @author Stef van Buuren 2016
+#' @slot dnr  Name of donor data (\code{character})
+#' @author Stef van Buuren 2017
 #' @examples
 #' # Create a new ID for Ron and Jasper
 #' ron <- new("individualID", name = c("Ron", "Smith"),
@@ -18,19 +19,20 @@ setClass("individualID",
            id    = "integer",
            name  = "character",
            dob   = "character",
-           src   = "character"
-         ), prototype = list(
+           src   = "character",
+           dnr   = "character"),
+         prototype = list(
            id    = NA_integer_,
            name  = NA_character_,
            dob   = NA_character_,
-           src   = NA_character_
-           )
+           src   = NA_character_,
+           dnr   = NA_character_)
 )
 
 validIndividualID <- function(object) {
   if(length(object@id) != 1) return("Slot id not of length 1")
   if(length(object@dob) != 1) return("Slot dob not of length 1")
   TRUE
-  }
+}
 setValidity("individualID", validIndividualID)
 
