@@ -24,7 +24,7 @@ setClass("individualID",
          prototype = list(
            id    = NA_integer_,
            name  = NA_character_,
-           dob   = NA_character_,
+           dob   = as.character(Sys.Date(), format = "%d-%m-%y"),
            src   = NA_character_,
            dnr   = NA_character_)
 )
