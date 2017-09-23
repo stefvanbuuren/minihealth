@@ -54,15 +54,15 @@ setClass("individualAN",
 setAs("individualAN", "data.frame", function(from) {
   # note: preserve only first row in case of duplicate ages
   ynames <- c("hgt", "wgt", "hdc", "bmi", "wfh")
-  hgt <- as(from@hgt, "data.frame") %>% distinct("age", .keep_all = TRUE)
-  wgt <- as(from@wgt, "data.frame") %>% distinct("age", .keep_all = TRUE)
-  hdc <- as(from@hdc, "data.frame") %>% distinct("age", .keep_all = TRUE)
-  bmi <- as(from@bmi, "data.frame") %>% distinct("age", .keep_all = TRUE)
-  wfh <- as(from@wfh, "data.frame") %>% distinct("age", .keep_all = TRUE)
+  hgt <- as(from@hgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+  wgt <- as(from@wgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+  hdc <- as(from@hdc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+  bmi <- as(from@bmi, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+  wfh <- as(from@wfh, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   m <- full_join(hgt, wgt, by = "age")
   m <- full_join(m, hdc, by = "age")
   m <- full_join(m, bmi, by = "age")
   # m <- full_join(m, wfh, by = "age")  # cannot merge by age
-  arrange(m, "age")
+  arrange(m, .data$age)
 }
 )
