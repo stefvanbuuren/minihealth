@@ -59,6 +59,7 @@ setAs("individualAN", "data.frame", function(from) {
   hdc <- as(from@hdc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   bmi <- as(from@bmi, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   # wfh <- as(from@wfh, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+
   m <- full_join(hgt, wgt, by = "age")
   m <- full_join(m, hdc, by = "age")
   m <- full_join(m, bmi, by = "age")
