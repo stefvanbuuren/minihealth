@@ -174,10 +174,13 @@ setMethod("show", signature(object = "xyz" ),
                            ", member:",
                            strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
                            "\n"))
-            if (length(object@x) == 0) object@x <- as.numeric(NA)
-            if (length(object@y) == 0) object@y <- as.numeric(NA)
-            if (length(object@z) == 0) object@z <- as.numeric(NA)
-            df <- data.frame(object@x, object@y, object@z)
+            ox <- object@x
+            oy <- object@y
+            oz <- object@z
+            if (length(ox) == 0) ox <- NA_real_
+            if (length(oy) == 0) oy <- NA_real_
+            if (length(oz) == 0) oz <- NA_real_
+            df <- data.frame(ox, oy, oz)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)
           }
