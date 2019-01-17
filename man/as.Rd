@@ -3,20 +3,15 @@
 %   R/class-individualAN.R, R/class-cabinet.R
 \name{as}
 \alias{as}
-\alias{as}
-\alias{as}
-\alias{as}
 \title{as("xyz", "data.frame")}
 \description{
-as("xyz", "data.frame")
-
-as("bse", "data.frame")
-
-as("bse", "data.frame")
-
 as() reads the data structure as used in the
 donordata package, and transforms it into a cabinet object.
 }
 \seealso{
 Other cabinet: \code{\link{list2cabinet}}
 }
+\concept{bse}
+\concept{cabinet}
+\concept{individualAN}
+\concept{xyz}

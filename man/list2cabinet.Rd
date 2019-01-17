@@ -24,3 +24,4 @@ Other cabinet: \code{\link{as}}
 \author{
 Stef van Buuren 2016
 }
+\concept{cabinet}
