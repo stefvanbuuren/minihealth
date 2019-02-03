@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.35.0
+Version: 0.35.1
 Author: Stef van Buuren
 Imports:
     donordata (>= 1.24),

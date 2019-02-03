@@ -4,9 +4,12 @@
 \alias{donordata.to.individual}
 \title{Convert single individual from donor data to class individual}
 \usage{
-donordata.to.individual(dnr, id, ...)
+donordata.to.individual(con = NULL, dnr, id, ...)
 }
 \arguments{
+\item{con}{A database connection. The default \code{con = NULL} reads the data from
+the donordata package.}
+
 \item{dnr}{A character indicating the source, e.g. \code{dnr = "smocc"}}
 
 \item{id}{the id number of the individual in specified source. If specified as a vector,

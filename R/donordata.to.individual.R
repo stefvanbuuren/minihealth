@@ -2,6 +2,8 @@
 #'
 #' This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
 #' @aliases donordata.to.individual
+#' @param con A database connection. The default \code{con = NULL} reads the data from
+#' the donordata package.
 #' @param dnr A character indicating the source, e.g. \code{dnr = "smocc"}
 #' @param id the id number of the individual in specified source. If specified as a vector,
 #' only the first element is used.
@@ -44,12 +46,12 @@
 #'   models = "donordata::terneuzen_bs")
 #'
 #' @export
-donordata.to.individual <- function(dnr, id, ...) {
+donordata.to.individual <- function(con = NULL, dnr, id, ...) {
 
   id <- id[1]
 
-  child <- load_child_data(dnr = dnr, ids = id)
-  time <- load_time_data(dnr = dnr, ids = id)
+  child <- load_child_data(con = con, dnr = dnr, ids = id)
+  time <- load_time_data(con = con, dnr = dnr, ids = id)
 
   if (nrow(child) == 0 & nrow(time) == 0) return(
     new("individual", dnr = dnr, id = as.integer(id), ...))
