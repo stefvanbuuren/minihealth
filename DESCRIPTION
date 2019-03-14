@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.36.0
+Version: 0.37.0
 Author: Stef van Buuren
 Imports:
     donordata (>= 1.24),
@@ -15,7 +15,7 @@ Description: Contains a collection of tools to store, handle and update
     individual health data.
 License: file LICENSE
 LazyData: TRUE
-Copyright: Stef van Buuren 2017
+Copyright: Stef van Buuren 2019
 Acknowledgement: Development of this package was kindly suported by the Bill &
     Melinda Gates Foundation
 RoxygenNote: 6.1.1
