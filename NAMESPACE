@@ -2,6 +2,7 @@
 
 export(donordata.to.individual)
 export(get.range)
+export(get_xyz)
 export(individual.to.donordata)
 export(is.cabinet)
 export(is.individual)

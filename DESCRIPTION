@@ -30,6 +30,7 @@ Collate:
     'class-cabinet.R'
     'donordata.to.individual.R'
     'get_range.R'
+    'get_xyz.R'
     'imports.R'
     'individual.to.donordata.R'
     'tests.R'
