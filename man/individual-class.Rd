@@ -5,8 +5,15 @@
 \alias{individual-class}
 \title{An S4 class to represent individual data}
 \description{
-A collection of object of \code{individualID}, \code{individualBG}, \code{individualAN} and \code{individualBS}, representing data of an individual.
-The type of information covers individual identifyers, fixed background variables, time-varying anthroponetric measures and time-varying broken stick estimates. The \code{new("individual")} function can automatically calculate standard deviation scores relative to a growth reference, and predictions according the a broken stick model.
+A collection of objects of \linkS4class{individualID},
+\linkS4class{individualBG}, \linkS4class{individualAN} and
+\linkS4class{individualBS}, representing data of an individual. The
+type of information covers individual identifyers, fixed background
+variables, time-varying anthroponetric measures and time-varying
+broken stick estimates. The \code{new("individual")} function can
+automatically calculate standard deviation scores relative to a
+growth reference, and predictions according the a broken stick
+model.
 }
 \section{Slots}{
 
@@ -17,7 +24,8 @@ The type of information covers individual identifyers, fixed background variable
 }}
 
 \seealso{
-\code{\link[=individualID-class]{individualID}}
+\linkS4class{individualID}, \linkS4class{individualBG},
+        \linkS4class{individualAN}, \linkS4class{individualBS}
 }
 \author{
 Stef van Buuren 2016
