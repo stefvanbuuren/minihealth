@@ -1,16 +1,20 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.38.1
+Version: 0.38.2
 Author: Stef van Buuren
 Imports:
-    donordata (>= 1.24),
+    donorloader,
     methods,
     clopus (>= 0.32),
     brokenstick (>= 0.56),
     dplyr (>= 0.5.0),
     rlang
-Remotes: stefvanbuuren/donordata,
+Suggests: 
+    donordata (>= 1.43.0),
+    testthat
+Remotes: stefvanbuuren/donorloader,
+  stefvanbuuren/donordata,
   stefvanbuuren/clopus,
   stefvanbuuren/brokenstick
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
@@ -38,5 +42,3 @@ Collate:
     'imports.R'
     'individual.to.donordata.R'
     'tests.R'
-Suggests:
-    testthat
