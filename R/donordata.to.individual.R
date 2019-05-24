@@ -16,6 +16,7 @@
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
 #' require("donordata")
+#' require("donorloader")
 #' p <- donordata.to.individual(dnr = "smocc", id = 10001)
 #' p
 #'

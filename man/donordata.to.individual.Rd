@@ -28,6 +28,7 @@ This function takes data from the \pkg{donordata} package, extract cases identif
 }
 \examples{
 require("donordata")
+require("donorloader")
 p <- donordata.to.individual(dnr = "smocc", id = 10001)
 p
 
