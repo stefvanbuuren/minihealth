@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.38.2
+Version: 0.38.3
 Author: Stef van Buuren
 Imports:
     donorloader,
@@ -19,7 +19,7 @@ Remotes: stefvanbuuren/donorloader,
   stefvanbuuren/brokenstick
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
-    individual health data.
+    individual health data.x
 License: file LICENSE
 LazyData: TRUE
 Copyright: Stef van Buuren 2019
