@@ -1,11 +1,11 @@
 #' An S4 class to represent individual identifiers
 #'
-#' @slot id   Unique numerical individual identifier in source (\code{integer}, length 1)
+#' @slot id   Unique numerical individual identifier within \code{src} (\code{integer}, length 1)
 #' @slot name Name of the individual (\code{character})
 #' @slot dob  Date of birth of class (\code{Date}, length 1)
-#' @slot src  Name of data source (\code{character})
-#' @slot dnr  Name of donor data (\code{character})
-#' @author Stef van Buuren 2017
+#' @slot src  Study name (\code{character})
+#' @slot dnr  Name of data object (\code{character})
+#' @author Stef van Buuren 2019
 #' @examples
 #' # Create a new ID for Ron and Jasper
 #' ron <- new("individualID", name = c("Ron", "Smith"),

@@ -11,7 +11,7 @@
 #' @seealso \code{\link{xyz-class}}
 #' @examples
 #' # create object with height and weight measures
-#' # add Z-scores calculate according to Dutch 1997 references
+#' # do not calculate Z-scores since reference is undefined
 #' z <- new("individualAN",
 #'      hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
 #'      wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
@@ -26,9 +26,8 @@
 #' new("individualAN",
 #'      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25),
 #'        z = c(-2, 2, -2, 2), call = hgtref),
-#'      wgt = new("xyz", yname = "wgt", x = c(0, 0, 1, 1),
+#'      hdc = new("xyz", yname = "wgt", x = c(0, 0, 1, 1),
 #'        z = c(-2, 2, -2, 2), call = hdcref))
-
 #' @author Stef van Buuren 2016
 setClass("individualAN",
          slots = c(
