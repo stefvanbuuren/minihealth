@@ -12,7 +12,7 @@
 #' or \code{call = as.call(...)} for setting proper reference standards.
 #' @return An object of class \code{individual}. If \code{id} is not found in data
 #' \code{dnr}, then the function will set only slots \code{id} and \code{dnr}.
-#' @author Stef van Buuren 2017 x
+#' @author Stef van Buuren 2017
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
 #' require("donordata")

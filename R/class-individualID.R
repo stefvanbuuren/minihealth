@@ -5,7 +5,7 @@
 #' @slot dob  Date of birth of class (\code{Date}, length 1)
 #' @slot src  Name of data source (\code{character})
 #' @slot dnr  Name of donor data (\code{character})
-#' @author Stef van Buuren 2017 x
+#' @author Stef van Buuren 2017
 #' @examples
 #' # Create a new ID for Ron and Jasper
 #' ron <- new("individualID", name = c("Ron", "Smith"),

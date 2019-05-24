@@ -19,7 +19,7 @@ Remotes: stefvanbuuren/donorloader,
   stefvanbuuren/brokenstick
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
-    individual health data.x
+    individual health data.
 License: file LICENSE
 LazyData: TRUE
 Copyright: Stef van Buuren 2019

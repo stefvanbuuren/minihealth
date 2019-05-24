@@ -63,5 +63,5 @@ p <- donordata.to.individual(dnr = "terneuzen", id = 11,
 \code{\link{xyz-class}}, \code{\link{bse-class}}
 }
 \author{
-Stef van Buuren 2017 x
+Stef van Buuren 2017
 }
