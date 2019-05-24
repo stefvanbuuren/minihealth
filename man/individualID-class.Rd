@@ -30,5 +30,5 @@ jasper <- new("individualID", name = c("Jasper", "Fielding"),
            id = as.integer(220))
 }
 \author{
-Stef van Buuren 2017
+Stef van Buuren 2017 x
 }
