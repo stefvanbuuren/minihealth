@@ -3,7 +3,6 @@
 #' @slot id   Unique numerical individual identifier in source (\code{integer}, length 1)
 #' @slot name Name of the individual (\code{character})
 #' @slot dob  Date of birth of class (\code{Date}, length 1)
-#' @slot src  Name of data source (\code{character})
 #' @slot dnr  Name of donor data (\code{character})
 #' @author Stef van Buuren 2017
 #' @examples
@@ -19,13 +18,11 @@ setClass("individualID",
            id    = "integer",
            name  = "character",
            dob   = "character",
-           src   = "character",
            dnr   = "character"),
          prototype = list(
            id    = NA_integer_,
            name  = NA_character_,
            dob   = as.character(Sys.Date(), format = "%d-%m-%y"),
-           src   = NA_character_,
            dnr   = NA_character_)
 )
 

@@ -62,8 +62,7 @@ donordata.to.individual <- function(con = NULL, dnr, id, ...) {
     pbg <- new("individualBG")
   } else {
     pid <- new("individualID",
-               src   = set.slot(child, "src", "character"),
-               dnr   = set.slot(child, "src", "character"),
+               dnr   = set.slot(child, "dnr", "character"),
                id    = set.slot(child, "id", "integer"),
                name  = set.slot(child, "name", "character"),
                dob   = set.slot(child, "dob", "character"))

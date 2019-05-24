@@ -16,8 +16,6 @@ An S4 class to represent individual identifiers
 
 \item{\code{dob}}{Date of birth of class (\code{Date}, length 1)}
 
-\item{\code{src}}{Name of data source (\code{character})}
-
 \item{\code{dnr}}{Name of donor data (\code{character})}
 }}
 
