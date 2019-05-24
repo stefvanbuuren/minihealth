@@ -10,15 +10,15 @@ An S4 class to represent individual identifiers
 \section{Slots}{
 
 \describe{
-\item{\code{id}}{Unique numerical individual identifier in source (\code{integer}, length 1)}
+\item{\code{id}}{Unique numerical individual identifier within \code{src} (\code{integer}, length 1)}
 
 \item{\code{name}}{Name of the individual (\code{character})}
 
 \item{\code{dob}}{Date of birth of class (\code{Date}, length 1)}
 
-\item{\code{src}}{Name of data source (\code{character})}
+\item{\code{src}}{Study name (\code{character})}
 
-\item{\code{dnr}}{Name of donor data (\code{character})}
+\item{\code{dnr}}{Name of data object (\code{character})}
 }}
 
 \examples{
@@ -30,5 +30,5 @@ jasper <- new("individualID", name = c("Jasper", "Fielding"),
            id = as.integer(220))
 }
 \author{
-Stef van Buuren 2017
+Stef van Buuren 2019
 }
