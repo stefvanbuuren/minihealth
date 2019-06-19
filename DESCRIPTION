@@ -1,8 +1,9 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.38.4
-Author: Stef van Buuren
+Version: 0.39.0
+Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
+    email = "stef.vanbuuren@tno.nl")
 Imports:
     donorloader,
     methods,
@@ -20,9 +21,8 @@ Remotes: stefvanbuuren/donorloader,
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.
-License: file LICENSE
+License: MIT + file LICENSE
 LazyData: TRUE
-Copyright: Stef van Buuren 2019
 Acknowledgement: Development of this package was kindly suported by the Bill &
     Melinda Gates Foundation
 Encoding: UTF-8
