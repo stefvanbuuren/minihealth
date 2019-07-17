@@ -56,6 +56,7 @@ convert_bds_individual <- function(txt = NULL, ...) {
             # 510, passief roken, 1 = Nee, 2 = niet als..
 
             # agem (63 geboortedatum moeder, 62==2)
+            agem = extract_agep(d, which_parent = "02"),
 
             # etn (71?)
             # etn = as.character(b[b$Bdsnummer == 71, 2])
@@ -64,12 +65,6 @@ convert_bds_individual <- function(txt = NULL, ...) {
             # edu (66 opleiding moeder, 62==2)
 
   )
-
-  extract_field <- function(d, f = 245) {
-    z <- d$Contactmomenten[[2]]
-    as.numeric(unlist(lapply(z, function(x, f2 = f) x[x$Bdsnummer == f2, 2])))
-  }
-
 
   time <-
     data.frame(
@@ -138,3 +133,28 @@ convert_bds_individual <- function(txt = NULL, ...) {
   new("individual", pid, pbg, pan, pbs)
 }
 
+extract_dob <- function(d) {
+  b <- d$ClientGegevens$Elementen
+  ymd(b[b$Bdsnummer == 20, 2])
+}
+
+extract_agep <- function(d, which_parent = "02") {
+  # returns age of parent in completed years
+  # which_parent: "01" = father, "02" = mother
+  dob <- extract_dob(d)
+  p <- d$ClientGegevens$Groepen[[1]]
+  for (i in 1L:length(p)) {
+    pp <- p[[i]]
+    parent <- pp[pp$Bdsnummer == 62, "Waarde"]
+    if (parent == which_parent) {
+      dobp <- ymd(pp[pp$Bdsnummer == 63, 2])
+      agep <- as.numeric(trunc(difftime(dob, dobp, "days")/365.25))
+      return(agep)
+    }
+  }
+}
+
+extract_field <- function(d, f = 245) {
+  z <- d$Contactmomenten[[2]]
+  as.numeric(unlist(lapply(z, function(x, f2 = f) x[x$Bdsnummer == f2, 2])))
+}
