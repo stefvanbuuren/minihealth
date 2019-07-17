@@ -18,33 +18,33 @@
 #' b <- convert_individual_bds(ind)
 #' @export
 convert_individual_bds <- function(ind = NULL, ...) {
+  if (!is.individual(ind)) stop("Object not of class `individual`.")
   bds <- list(
     Referentie      = slot(ind, "name"),
     OrganisatieCode = 0L,
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
   )
-  bds
+  jsonlite::toJSON(bds)
 }
 
 as_bds_clientdata <- function(ind) {
-  if (!is.individual(ind)) stop("Object not of class `individual`.")
 
   x <- list(
     Elementen = data.frame(
       Bdsnummer = as.integer(c(19, 20, 82, 91, 110, 238, 240)),
       Waarde = NA_character_,
       stringsAsFactors = FALSE),
-    Groepen = list(
-      data.frame(
-        Bdsnummer = as.integer(c(63, 71, 62)),
-        Waarde = c(NA_character_, NA_character_, "01"),
-        stringsAsFactors = FALSE),
-      data.frame(
-        Bdsnummer = as.integer(c(63, 71, 62)),
-        Waarde = c(NA_character_, NA_character_, "02"),
-        stringsAsFactors = FALSE)
-    )
+    Groepen = data.frame(
+      rbind(
+        list(Elementen = data.frame(
+          Bdsnummer = as.integer(c(63, 71, 62)),
+          Waarde = c(NA_character_, NA_character_, "01"),
+          stringsAsFactors = FALSE)),
+        list(Elementen = data.frame(
+          Bdsnummer = as.integer(c(63, 71, 62)),
+          Waarde = c(encode_agep(ind), NA_character_, "02"),
+          stringsAsFactors = FALSE))))
   )
 
   x$Elementen[x$Elementen$Bdsnummer == 19L, 2L] <-
@@ -73,10 +73,6 @@ as_bds_clientdata <- function(ind) {
   x$Elementen[x$Elementen$Bdsnummer == 240L, 2L] <-
     as.character(slot(ind, "hgtf") * 10)
 
-  # approximate mother's dob
-  x$Groepen[[2]][x$Groepen[[2]]$Bdsnummer == 63L, "Waarde"] <-
-    encode_agep(ind)
-
   x
 }
 
@@ -91,6 +87,39 @@ encode_agep <- function(ind, which_parent = "02") {
   dobm
 }
 
-as_bds_contacts <- function(ind) {NULL}
 
+as_bds_contacts <- function(ind) {
+  # this function produces a JSON string with data coded according
+  # to the BDS schema
+
+  # extract measurements
+  z <- new("individualAN", hgt = ind@hgt, wgt = ind@wgt, hdc = ind@hdc,
+           bmi = ind@bmi, wfh = ind@wfh)
+  z <- as(z, "data.frame")[, c("age", "hgt", "wgt", "hdc")]
+
+  # calculate measurement dates
+  dob <- as.Date(slot(ind, "dob"), format = "%d-%m-%y")
+  days <- round(z$age * 365.25)
+  z$age <- format(dob + days, format = "%Y%m%d")
+
+  # set proper units
+  z$hgt <- z$hgt * 10
+  z$wgt <- z$wgt * 1000
+  z$hdc <- z$hdc * 10
+  colnames(z) <- c("time", "235", "245", "252")
+
+  # reshuffle
+  z <- tidyr::gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
+    dplyr::mutate(Bdsnummer = as.integer(.data$Bdsnummer)) %>%
+    dplyr::arrange(.data$time, .data$Bdsnummer)
+  # NOTE: here we should delete rows with missing values
+
+  f <- as.factor(z$time)
+  z <- split(z[, c("Bdsnummer", "Waarde")], f)
+
+  data.frame(
+    Tijdstip = names(z),
+    Elementen = I(z),
+    stringsAsFactors = FALSE)
+}
 
