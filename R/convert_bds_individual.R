@@ -47,11 +47,11 @@ convert_bds_individual <- function(txt = NULL, ...) {
             # in grammen, conform BSD
             bw = as.numeric(b[b$Bdsnummer == 110, 2]),
 
-            # in mm, conform BSD
-            hgtm = as.numeric(b[b$Bdsnummer == 238, 2]),
+            # in mm, conform BSD, convert to cm
+            hgtm = as.numeric(b[b$Bdsnummer == 238, 2]) / 10,
 
-            # in mm, conform BSD
-            hgtf = as.numeric(b[b$Bdsnummer == 240, 2]),
+            # in mm, conform BSD, convert to cm
+            hgtf = as.numeric(b[b$Bdsnummer == 240, 2]) / 10,
 
             # 510, passief roken, 1 = Nee, 2 = niet als..
 
