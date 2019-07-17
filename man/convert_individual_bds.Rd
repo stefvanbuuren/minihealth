@@ -4,10 +4,10 @@
 \alias{convert_individual_bds}
 \title{Convert data of class individual to bds format}
 \usage{
-convert_individual_bds(x = NULL, ...)
+convert_individual_bds(ind = NULL, ...)
 }
 \arguments{
-\item{x}{Object of class \code{individual}}
+\item{ind}{Object of class \code{individual}}
 
 \item{\dots}{Additional parameters. Currently ignored.}
 }
@@ -25,8 +25,8 @@ Functions \code{convert_bds_individual()} and
 }
 \examples{
 data("installed.cabinets", package = "jamestest")
-x <- installed.cabinets[[2]][[1]]
-b <- convert_individual_bds(x)
+ind <- installed.cabinets[[2]][[1]]
+b <- convert_individual_bds(ind)
 }
 \seealso{
 \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
