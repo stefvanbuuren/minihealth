@@ -15,12 +15,14 @@ Imports:
     rlang
 Suggests: 
     donordata (>= 1.43.0),
+    jamestest,
     testthat
 Remotes: 
     stefvanbuuren/brokenstick,
     stefvanbuuren/clopus,
     stefvanbuuren/donorloader,
-    stefvanbuuren/donordata
+    stefvanbuuren/donordata,
+    stefvanbuuren/jamestest
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.
@@ -40,6 +42,7 @@ Collate:
     'class-individual.R'
     'class-cabinet.R'
     'convert_bds_individual.R'
+    'convert_individual_bds.R'
     'donordata.to.individual.R'
     'get_range.R'
     'get_xyz.R'
