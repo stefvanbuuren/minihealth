@@ -20,12 +20,17 @@
 convert_individual_bds <- function(ind = NULL, ...) {
   if (!is.individual(ind)) stop("Object not of class `individual`.")
   bds <- list(
-    Referentie      = as.character(slot(ind, "name")),
+    Referentie      = as_bds_reference(ind),
     OrganisatieCode = 0L,
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
   )
   jsonlite::toJSON(bds)
+}
+
+as_bds_reference <- function(ind) {
+  if (length(slot(ind, "name")) < 1L | is.na(slot(ind, "name"))) return("-")
+  else slot(ind, "name")
 }
 
 as_bds_clientdata <- function(ind) {
