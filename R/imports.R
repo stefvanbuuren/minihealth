@@ -4,7 +4,7 @@
 #'                             is.reference
 #' @importFrom donorloader     load_child_data load_time_data
 #' @importFrom dplyr           full_join arrange distinct %>% mutate
-#' @importFrom jsonlite        fromJSON
+#' @importFrom jsonlite        fromJSON toJSON validate
 #' @importFrom lubridate       ymd dmy
 #' @importFrom rlang           .data
 #' @importFrom stats           predict

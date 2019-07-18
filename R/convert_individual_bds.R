@@ -8,7 +8,8 @@
 #' \code{convert_individual_bds()} are inverse operations.
 #' @param ind Object of class \code{individual}
 #' @param \dots Additional parameters. Currently ignored.
-#' @return Data in bds format as JSON
+#' @return Data in bds format as JSON, or \code{NULL} for invalid
+#' JSON
 #' @author Stef van Buuren 2019
 #' @seealso \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
 #'          \code{\link[jsonlite]{toJSON}}
@@ -25,11 +26,13 @@ convert_individual_bds <- function(ind = NULL, ...) {
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
   )
-  jsonlite::toJSON(bds)
+  result <- toJSON(bds)
+  if (validate(result)) return(result)
+  NULL
 }
 
 as_bds_reference <- function(ind) {
-  if (length(slot(ind, "name")) < 1L | is.na(slot(ind, "name"))) return("-")
+  if (length(slot(ind, "name")) < 1L | is.na(slot(ind, "name"))) return('')
   else slot(ind, "name")
 }
 

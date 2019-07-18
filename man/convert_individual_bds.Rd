@@ -12,7 +12,8 @@ convert_individual_bds(ind = NULL, ...)
 \item{\dots}{Additional parameters. Currently ignored.}
 }
 \value{
-Data in bds format as JSON
+Data in bds format as JSON, or \code{NULL} for invalid
+JSON
 }
 \description{
 This function takes data from an object of class
