@@ -20,7 +20,7 @@
 convert_individual_bds <- function(ind = NULL, ...) {
   if (!is.individual(ind)) stop("Object not of class `individual`.")
   bds <- list(
-    Referentie      = slot(ind, "name"),
+    Referentie      = as.character(slot(ind, "name")),
     OrganisatieCode = 0L,
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
