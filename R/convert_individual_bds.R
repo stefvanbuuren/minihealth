@@ -26,7 +26,7 @@ convert_individual_bds <- function(ind = NULL, ...) {
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
   )
-  result <- toJSON(bds)
+  result <- toJSON(bds, auto_unbox = TRUE, pretty = TRUE)
   if (validate(result)) return(result)
   NULL
 }
@@ -118,7 +118,8 @@ as_bds_contacts <- function(ind) {
 
   # reshuffle
   z <- tidyr::gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
-    dplyr::mutate(Bdsnummer = as.integer(.data$Bdsnummer)) %>%
+    dplyr::mutate(Bdsnummer = as.integer(.data$Bdsnummer),
+                  Waarde = as.character(.data$Waarde)) %>%
     dplyr::arrange(.data$time, .data$Bdsnummer)
   # NOTE: here we should delete rows with missing values
 
