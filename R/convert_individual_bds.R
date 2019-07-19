@@ -26,7 +26,7 @@ convert_individual_bds <- function(ind = NULL, ...) {
     ClientGegevens  = as_bds_clientdata(ind),
     Contactmomenten = as_bds_contacts(ind)
   )
-  result <- toJSON(bds, auto_unbox = TRUE, pretty = TRUE)
+  result <- toJSON(bds, auto_unbox = TRUE)
   if (validate(result)) return(result)
   NULL
 }
