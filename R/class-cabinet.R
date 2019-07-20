@@ -129,14 +129,14 @@ setAs("list", "cabinet", function(from) list2cabinet(from))
 
 #' Convert donordata object to cabinet object
 #'
-#' This function calls the \code{donordata.to.individual} function to
+#' This function calls the \code{donordata_to_individual} function to
 #' transform data of each \code{id} into an object of \code{individual} S4 class,
 #' and then collects all individuals into an object of \code{cabinet} S4 class.
 #' @param from Longitudinal data in the \code{list} format as used by the \code{donordata} package
-#' @param \dots Argument passed down to \code{donordata.to.individual}
+#' @param \dots Argument passed down to \code{donordata_to_individual}
 #' @family cabinet
 #'@author Stef van Buuren 2016
-#'@seealso \code{\link{donordata.to.individual}}
+#'@seealso \code{\link{donordata_to_individual}}
 #' @export
 list2cabinet <- function(from, ...) {
   if (length(from) != 3) stop("Data type not from donordata")
@@ -145,7 +145,7 @@ list2cabinet <- function(from, ...) {
   cab <- new("cabinet", n = length(ids))
 
   for (i in 1:length(cab))
-    cab[[i]] <- donordata.to.individual(id = ids[i], ...)
+    cab[[i]] <- donordata_to_individual(id = ids[i], ...)
   cab@ids <- sapply(cab, slot, "id")
   cab@n <- length(cab@.Data)
 

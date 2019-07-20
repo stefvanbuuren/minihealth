@@ -9,15 +9,15 @@ list2cabinet(from, ...)
 \arguments{
 \item{from}{Longitudinal data in the \code{list} format as used by the \code{donordata} package}
 
-\item{\dots}{Argument passed down to \code{donordata.to.individual}}
+\item{\dots}{Argument passed down to \code{donordata_to_individual}}
 }
 \description{
-This function calls the \code{donordata.to.individual} function to
+This function calls the \code{donordata_to_individual} function to
 transform data of each \code{id} into an object of \code{individual} S4 class,
 and then collects all individuals into an object of \code{cabinet} S4 class.
 }
 \seealso{
-\code{\link{donordata.to.individual}}
+\code{\link{donordata_to_individual}}
 
 Other cabinet: \code{\link{as}}
 }

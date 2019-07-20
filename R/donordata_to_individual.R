@@ -1,7 +1,6 @@
 #' Convert single individual from donor data to class individual
 #'
 #' This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
-#' @aliases donordata.to.individual
 #' @param con A database connection. The default \code{con = NULL} reads the data from
 #' the donordata package.
 #' @param dnr A character indicating the source, e.g. \code{dnr = "smocc"}
@@ -17,12 +16,12 @@
 #' @examples
 #' require("donordata")
 #' require("donorloader")
-#' p <- donordata.to.individual(dnr = "smocc", id = 10001)
+#' p <- donordata_to_individual(dnr = "smocc", id = 10001)
 #' p
 #'
 #' # from lollypop.preterm
 #' # calculating Z-score relative to preterm growth references
-#' q <- donordata.to.individual(dnr = "lollypop.preterm", id = 50001)
+#' q <- donordata_to_individual(dnr = "lollypop.preterm", id = 50001)
 #'
 #' # overwrite hgt, wgt and hdc slots
 #' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
@@ -43,11 +42,11 @@
 #' q
 #'
 #' # use models argument to estimate brokenstick estimates
-#' p <- donordata.to.individual(dnr = "terneuzen", id = 11,
+#' p <- donordata_to_individual(dnr = "terneuzen", id = 11,
 #'   models = "donordata::terneuzen_bs")
 #'
 #' @export
-donordata.to.individual <- function(con = NULL, dnr, id, ...) {
+donordata_to_individual <- function(con = NULL, dnr, id, ...) {
 
   id <- id[1]
 

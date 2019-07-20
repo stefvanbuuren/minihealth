@@ -14,12 +14,12 @@
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
 #' require("donordata")
-#' p <- donordata.to.individual(dnr = "smocc", id = 10001)
+#' p <- donordata_to_individual(dnr = "smocc", id = 10001)
 #' p
-#' q <- individual.to.donordata(p)
+#' q <- individual_to_donordata(p)
 #' q
 #' @export
-individual.to.donordata <- function(x, type = NULL)
+individual_to_donordata <- function(x, type = NULL)
 {
   if (!is.individual(x)) stop("Object not of S4 class 'individual'.")
 

@@ -2,10 +2,10 @@
 
 export(convert_bds_individual)
 export(convert_individual_bds)
-export(donordata.to.individual)
+export(donordata_to_individual)
 export(get_range)
 export(get_xyz)
-export(individual.to.donordata)
+export(individual_to_donordata)
 export(is.cabinet)
 export(is.individual)
 export(list2cabinet)
