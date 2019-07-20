@@ -26,8 +26,7 @@ convert_bds_individual <- function(txt = NULL, ...) {
   pid <- new("individualID",
             id = 0L,
             name = d$Referentie,
-            dob = as.character(ymd(b[b$Bdsnummer == 20, 2]),
-                               format = "%d-%m-%y"),
+            dob = ymd(b[b$Bdsnummer == 20, 2]),
             src = as.character(d$OrganisatieCode),
             dnr = NA_character_)
 

@@ -67,7 +67,7 @@ donordata.to.individual <- function(con = NULL, dnr, id, ...) {
                dnr   = set.slot(child, "src", "character"),
                id    = set.slot(child, "id", "integer"),
                name  = set.slot(child, "name", "character"),
-               dob   = set.slot(child, "dob", "character"))
+               dob   = set.slot(child, "dob", "Date"))
 
     pbg <- new("individualBG",
                sex   = set.slot(child, "sex", "character"),
@@ -166,6 +166,6 @@ set.slot <- function(data, name,
   if (type == "numeric") return(as.numeric(data[, name]))
   if (type == "character") return(as.character(data[, name]))
   if (type == "integer") return(as.integer(data[, name]))
-  if (type == "Date") return(as.Date(data[, name], format = "%d-%m-%y"))
+  if (type == "Date") return(ymd(data[, name]))
   NA
 }
