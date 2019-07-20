@@ -113,7 +113,7 @@ donordata.to.individual <- function(con = NULL, dnr, id, ...) {
                          ...),
                bmi = new("xyz", yname = "bmi",
                          x = as.numeric(time$age),
-                         y = as.numeric(time$bmi),
+                         y = as.numeric(time$wgt/(time$hgt/100)^2),
                          sex = pbg@sex,
                          ...),
                wfh = new("xyz", yname = "wfh",
@@ -166,6 +166,6 @@ set.slot <- function(data, name,
   if (type == "numeric") return(as.numeric(data[, name]))
   if (type == "character") return(as.character(data[, name]))
   if (type == "integer") return(as.integer(data[, name]))
-  if (type == "Date") return(ymd(data[, name]))
+  if (type == "Date") return(dmy(data[, name]))
   NA
 }
