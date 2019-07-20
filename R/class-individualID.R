@@ -24,14 +24,17 @@ setClass("individualID",
          prototype = list(
            id    = NA_integer_,
            name  = NA_character_,
-           dob   = as.character(Sys.Date(), format = "%d-%m-%y"),
+           dob   = NA_character_, # as.character(Sys.Date(), format = "%d-%m-%y"),
            src   = NA_character_,
            dnr   = NA_character_)
 )
 
 validIndividualID <- function(object) {
-  if(length(object@id) != 1) return("Slot id not of length 1")
-  if(length(object@dob) != 1) return("Slot dob not of length 1")
+  if(length(object@id) != 1) return("Slot `id` not of length 1")
+  if(length(object@dob) != 1) return("Slot `dob` not of length 1")
+  if (!is.na(object@dob))
+    if (is.na(as.Date(object@dob, format="%y-%m-%d")))
+        return ("Slot `dob` not formatted as `%y-%m-%d`")
   TRUE
 }
 setValidity("individualID", validIndividualID)
