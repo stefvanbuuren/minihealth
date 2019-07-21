@@ -67,7 +67,7 @@ convert_bds_individual <- function(txt = NULL, ...) {
 
   time <-
     data.frame(
-      age = round((ymd(d$Contactmomenten[[1]]) - dmy(pid@dob)) / 365.25, 4),
+      age = round((ymd(d$Contactmomenten[[1]]) - ymd(pid@dob)) / 365.25, 4),
       hgt = extract_field(d, 235) / 10,
       wgt = extract_field(d, 245) / 1000,
       hdc = extract_field(d, 252) / 10,
@@ -155,5 +155,6 @@ extract_agep <- function(d, which_parent = "02") {
 
 extract_field <- function(d, f = 245) {
   z <- d$Contactmomenten[[2]]
-  as.numeric(unlist(lapply(z, function(x, f2 = f) x[x$Bdsnummer == f2, 2])))
+  as.numeric(unlist(lapply(z, function(x, f2 = f)
+    ifelse("Waarde" %in% names(x), x[x$Bdsnummer == f2, "Waarde"], NA))))
 }

@@ -6,6 +6,9 @@
 #'
 #' Functions \code{convert_bds_individual()} and
 #' \code{convert_individual_bds()} are inverse operations.
+#'
+#' If the slot \code{slot(ind, "dob")} is not set, the conversion
+#' uses the artificial birth date \code{01 Jan 2000}.
 #' @param ind Object of class \code{individual}
 #' @param \dots Additional parameters. Currently ignored.
 #' @return Data in bds format as JSON, or \code{NULL} for invalid
@@ -15,7 +18,7 @@
 #'          \code{\link[jsonlite]{toJSON}}
 #' @examples
 #' data("installed.cabinets", package = "jamestest")
-#' ind <- installed.cabinets[[2]][[1]]
+#' ind <- installed.cabinets[[3]][[8]]
 #' b <- convert_individual_bds(ind)
 #' @export
 convert_individual_bds <- function(ind = NULL, ...) {
@@ -62,7 +65,7 @@ as_bds_clientdata <- function(ind) {
            NA_character_)
 
   x$Elementen[x$Elementen$Bdsnummer == 20L, 2L] <-
-    format(as.Date(slot(ind, "dob"), format = "%d-%m-%y"), format = "%Y%m%d")
+    format(as.Date(get_dob(ind), format = "%d-%m-%y"), format = "%Y%m%d")
 
   x$Elementen[x$Elementen$Bdsnummer == 82L, 2L] <-
     as.character(slot(ind, "ga"))
@@ -89,7 +92,7 @@ encode_agep <- function(ind, which_parent = "02") {
   # calculated from mother's age in years and child dob
   # note: not exact!
   # which_parent: "01" = father, "02" = mother
-  dob <- as.Date(slot(ind, "dob"), format = "%d-%m-%y")
+  dob  <- as.Date(get_dob(ind), format = "%d-%m-%y")
   aged <- (slot(ind, "agem") + 0.5) * 365.25
   dobm <- format(dob - aged, format = "%Y%m%d")
   dobm
@@ -106,7 +109,7 @@ as_bds_contacts <- function(ind) {
   z <- as(z, "data.frame")[, c("age", "hgt", "wgt", "hdc")]
 
   # calculate measurement dates
-  dob <- as.Date(slot(ind, "dob"), format = "%d-%m-%y")
+  dob <- as.Date(get_dob(ind), format = "%d-%m-%y")
   days <- round(z$age * 365.25)
   z$age <- format(dob + days, format = "%Y%m%d")
 
@@ -115,6 +118,9 @@ as_bds_contacts <- function(ind) {
   z$wgt <- z$wgt * 1000
   z$hdc <- z$hdc * 10
   colnames(z) <- c("time", "235", "245", "252")
+
+  # remove duplicate rows
+  z <- z %>% distinct(.data$time, .keep_all = TRUE)
 
   # reshuffle
   z <- tidyr::gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
@@ -132,3 +138,7 @@ as_bds_contacts <- function(ind) {
     stringsAsFactors = FALSE)
 }
 
+get_dob <- function(ind) {
+  if (is.na(slot(ind, "dob"))) return("01-01-00")
+  slot(ind, "dob")
+}
