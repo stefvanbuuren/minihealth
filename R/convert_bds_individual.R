@@ -24,109 +24,115 @@ convert_bds_individual <- function(txt = NULL, ...) {
 
   # is this child or message number?
   pid <- new("individualID",
-            id = 0L,
-            name = d$Referentie,
-            dob = ymd(b[b$Bdsnummer == 20, 2]),
-            src = as.character(d$OrganisatieCode),
-            dnr = NA_character_)
+             id = 0L,
+             name = d$Referentie,
+             dob = ymd(b[b$Bdsnummer == 20, 2]),
+             src = as.character(d$OrganisatieCode),
+             dnr = NA_character_)
 
   pbg <- new("individualBG",
 
-            sex = switch(b[b$Bdsnummer == 19, 2],
-                         "1" = "male",
-                         "2" = "female",
-                         NA_character_),
+             sex = switch(b[b$Bdsnummer == 19, 2],
+                          "1" = "male",
+                          "2" = "female",
+                          NA_character_),
 
-            # weken, volgens BDS in dagen
-            ga = as.numeric(b[b$Bdsnummer == 82, 2]),
+             # weken, volgens BDS in dagen
+             ga = as.numeric(b[b$Bdsnummer == 82, 2]),
 
-            # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
-            smo = as.numeric(b[b$Bdsnummer == 91, 2]) - 1,
+             # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
+             smo = as.numeric(b[b$Bdsnummer == 91, 2]) - 1,
 
-            # in grammen, conform BSD
-            bw = as.numeric(b[b$Bdsnummer == 110, 2]),
+             # in grammen, conform BSD
+             bw = as.numeric(b[b$Bdsnummer == 110, 2]),
 
-            # in mm, conform BSD, convert to cm
-            hgtm = as.numeric(b[b$Bdsnummer == 238, 2]) / 10,
+             # in mm, conform BSD, convert to cm
+             hgtm = as.numeric(b[b$Bdsnummer == 238, 2]) / 10,
 
-            # in mm, conform BSD, convert to cm
-            hgtf = as.numeric(b[b$Bdsnummer == 240, 2]) / 10,
+             # in mm, conform BSD, convert to cm
+             hgtf = as.numeric(b[b$Bdsnummer == 240, 2]) / 10,
 
-            # 510, passief roken, 1 = Nee, 2 = niet als..
+             # 510, passief roken, 1 = Nee, 2 = niet als..
 
-            # agem (63 geboortedatum moeder, 62==2)
-            agem = extract_agep(d, which_parent = "02"),
+             # agem (63 geboortedatum moeder, 62==2)
+             agem = extract_agep(d, which_parent = "02"),
 
-            # etn (71?)
-            # etn = as.character(b[b$Bdsnummer == 71, 2])
-            etn = "NL"
+             # etn (71?)
+             # etn = as.character(b[b$Bdsnummer == 71, 2])
+             etn = "NL"
 
-            # edu (66 opleiding moeder, 62==2)
+             # edu (66 opleiding moeder, 62==2)
 
   )
 
-  time <-
-    data.frame(
-      age = round((ymd(d$Contactmomenten[[1]]) - ymd(pid@dob)) / 365.25, 4),
-      hgt = extract_field(d, 235) / 10,
-      wgt = extract_field(d, 245) / 1000,
-      hdc = extract_field(d, 252) / 10,
-      stringsAsFactors = FALSE)
-  time$bmi <- time$wgt / (time$hgt / 100)^2
+  if (length(d$Contactmomenten) == 0L) {
+    time <- data.frame(age = numeric(), hgt = numeric(), wgt = numeric(),
+                       hdc = numeric(), bmi = numeric())
+  }
+  else {
+    time <-
+      data.frame(
+        age = round((ymd(d$Contactmomenten[[1]]) - ymd(pid@dob)) / 365.25, 4),
+        hgt = extract_field(d, 235) / 10,
+        wgt = extract_field(d, 245) / 1000,
+        hdc = extract_field(d, 252) / 10,
+        stringsAsFactors = FALSE)
+    time$bmi <- time$wgt / (time$hgt / 100)^2
+  }
 
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
   } else {
     pan <- new("individualAN",
-             hgt = new("xyz", yname = "hgt",
-                       x = as.numeric(time$age),
-                       y = as.numeric(time$hgt),
-                       sex = pbg@sex),
-             wgt = new("xyz", yname = "wgt",
-                       x = as.numeric(time$age),
-                       y = as.numeric(time$wgt),
-                       sex = pbg@sex),
-             hdc = new("xyz", yname = "hdc",
-                       x = as.numeric(time$age),
-                       y = as.numeric(time$hdc),
-                       sex = pbg@sex),
-             bmi = new("xyz", yname = "bmi",
-                       x = as.numeric(time$age),
-                       y = as.numeric(time$bmi),
-                       sex = pbg@sex),
-             wfh = new("xyz", yname = "wfh",
-                       xname = "hgt",
-                       x = as.numeric(time$hgt),
-                       y = as.numeric(time$wgt),
-                       sex = pbg@sex))
+               hgt = new("xyz", yname = "hgt",
+                         x = as.numeric(time$age),
+                         y = as.numeric(time$hgt),
+                         sex = pbg@sex),
+               wgt = new("xyz", yname = "wgt",
+                         x = as.numeric(time$age),
+                         y = as.numeric(time$wgt),
+                         sex = pbg@sex),
+               hdc = new("xyz", yname = "hdc",
+                         x = as.numeric(time$age),
+                         y = as.numeric(time$hdc),
+                         sex = pbg@sex),
+               bmi = new("xyz", yname = "bmi",
+                         x = as.numeric(time$age),
+                         y = as.numeric(time$bmi),
+                         sex = pbg@sex),
+               wfh = new("xyz", yname = "wfh",
+                         xname = "hgt",
+                         x = as.numeric(time$hgt),
+                         y = as.numeric(time$wgt),
+                         sex = pbg@sex))
     pbs <- new("individualBS",
-           bs.hgt = new("bse", yname = "hgt",
-                        data = pan@hgt,
-                        at = "knots",
-                        sex = pbg@sex,
-                        ...),
-           bs.wgt = new("bse", yname = "wgt",
-                        data = pan@wgt,
-                        at = "knots",
-                        sex = pbg@sex,
-                        ...),
-           bs.hdc = new("bse", yname = "hdc",
-                        data = pan@hdc,
-                        at = "knots",
-                        sex = pbg@sex,
-                        ...),
-           bs.bmi = new("bse", yname = "bmi",
-                        data = pan@bmi,
-                        at = "knots",
-                        sex = pbg@sex,
-                        ...),
-           bs.wfh = new("bse", yname = "wfh",
-                        xname = "hgt",
-                        data = pan@wfh,
-                        at = "knots",
-                        sex = pbg@sex,
-                        ...))
+               bs.hgt = new("bse", yname = "hgt",
+                            data = pan@hgt,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...),
+               bs.wgt = new("bse", yname = "wgt",
+                            data = pan@wgt,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...),
+               bs.hdc = new("bse", yname = "hdc",
+                            data = pan@hdc,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...),
+               bs.bmi = new("bse", yname = "bmi",
+                            data = pan@bmi,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...),
+               bs.wfh = new("bse", yname = "wfh",
+                            xname = "hgt",
+                            data = pan@wfh,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...))
   }
 
   new("individual", pid, pbg, pan, pbs)

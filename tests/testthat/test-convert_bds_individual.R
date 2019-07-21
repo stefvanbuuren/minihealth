@@ -1,10 +1,14 @@
-data("installed.cabinets", package = "jamestest")
-ind <- installed.cabinets[[3]][[5]]
-js <- minihealth::convert_individual_bds(ind)
+context("convert_bds_individual")
 
-ind2 <- convert_bds_individual(js)
+empty <- new("individual")
+js <- minihealth::convert_individual_bds(empty)
 
-library(jamesclient)
-fn <- file.path(path.package("jamesclient"), "testdata", "client3.json")
+test_that("handles the empty individual object",
+          expect_true(is.individual(convert_bds_individual(js)))
+)
 
-ind2 <- convert_bds_individual(fn)
+
+#library(jamesclient)
+#fn <- file.path(path.package("jamesclient"), "testdata", "client3.json")
+#data("installed.cabinets", package = "jamestest")
+# ind2 <- convert_bds_individual(fn)
