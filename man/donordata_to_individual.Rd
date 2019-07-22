@@ -2,9 +2,12 @@
 % Please edit documentation in R/donordata_to_individual.R
 \name{donordata_to_individual}
 \alias{donordata_to_individual}
+\alias{donordata.to.individual}
 \title{Convert single individual from donor data to class individual}
 \usage{
 donordata_to_individual(con = NULL, dnr, id, ...)
+
+donordata.to.individual(con = NULL, dnr, id, ...)
 }
 \arguments{
 \item{con}{A database connection. The default \code{con = NULL} reads the data from
@@ -25,6 +28,10 @@ An object of class \code{individual}. If \code{id} is not found in data
 }
 \description{
 This function takes data from the \pkg{donordata} package, extract cases identified by \code{id} and save as a an object of class \code{individual}. The function automatically calculates standard deviation scores and broken stick conditional means per visit.
+}
+\note{
+\code{donordata.to.individual()} is deprecated, but exported
+for legacy reasons
 }
 \examples{
 require("donordata")

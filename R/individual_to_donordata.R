@@ -28,3 +28,11 @@ individual_to_donordata <- function(x, type = NULL)
                                  time = slot(x, "time")))
   slot(x, match.arg(type, c("id", "child", "time")))
 }
+
+#' @rdname individual_to_donordata
+#' @note \code{individual.to.donordata()} is deprecated, but exported
+#' for legacy reasons
+#' @export
+individual.to.donordata <- function(x, type = NULL) {
+  individual_to_donordata(x = x, type = type)
+}

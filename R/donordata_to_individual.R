@@ -168,3 +168,12 @@ set.slot <- function(data, name,
   if (type == "Date") return(dmy(data[, name]))
   NA
 }
+
+
+#' @rdname donordata_to_individual
+#' @note \code{donordata.to.individual()} is deprecated, but exported
+#' for legacy reasons
+#' @export
+donordata.to.individual <- function(con = NULL, dnr, id, ...) {
+  donordata_to_individual(con = con, dnr = dnr, id = id, ...)
+}

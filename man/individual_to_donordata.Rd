@@ -2,9 +2,12 @@
 % Please edit documentation in R/individual_to_donordata.R
 \name{individual_to_donordata}
 \alias{individual_to_donordata}
+\alias{individual.to.donordata}
 \title{Convert object of class 'individual' to donordata}
 \usage{
 individual_to_donordata(x, type = NULL)
+
+individual.to.donordata(x, type = NULL)
 }
 \arguments{
 \item{x}{An object of class \code{individual}.}
@@ -22,6 +25,10 @@ This function returns the slots \code{"id"}, \code{"child"} and
 the \code{individual} object. The code
 assumes that slots \code{"id"}, \code{"child"} and \code{"time"}
 are up-to-data and consistent with the other slots.
+}
+\note{
+\code{individual.to.donordata()} is deprecated, but exported
+for legacy reasons
 }
 \examples{
 require("donordata")
