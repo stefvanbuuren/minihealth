@@ -5,19 +5,24 @@
 \alias{individual.to.donordata}
 \title{Convert object of class 'individual' to donordata}
 \usage{
-individual_to_donordata(x, type = NULL)
+individual_to_donordata(x, elements = c("list", "child", "time"))
 
 individual.to.donordata(x, type = NULL)
 }
 \arguments{
 \item{x}{An object of class \code{individual}.}
 
-\item{type}{The type of slot. This one of \code{"id"}, \code{"child"} and
-\code{"time"}. The default \code{type = NULL} return a list of all three slots.}
+\item{elements}{Requested list elements. Can be \code{"child"},
+\code{"time"} or \code{"list"}. The default \code{"list"}
+returns a list of both elements.}
+
+\item{type}{Same as \code{elements}}
 }
 \value{
-This function returns slots \code{"id"}, \code{"child"} and
-\code{"time"}, or a list of these slots (if \code{type = NULL}).
+If \code{elements == "list"}, the function returns
+a list of \code{"child"} and \code{"time"}. The function
+returns a \code{"tibble"} for the choices \code{"child"} and
+\code{"time"}.
 }
 \description{
 This function returns the slots \code{"id"}, \code{"child"} and
@@ -41,5 +46,5 @@ q
 \code{\link{xyz-class}}, \code{\link{bse-class}}
 }
 \author{
-Stef van Buuren 2017
+Stef van Buuren 2019
 }
