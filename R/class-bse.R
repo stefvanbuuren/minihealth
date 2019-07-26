@@ -26,6 +26,8 @@ NULL
 #'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
 #'@examples
+#'library(donordata)
+#'data("smocc_bs", package = "donordata")
 #'# first specify three height measures
 #'d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
 #'d1
@@ -53,7 +55,8 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    at = "x", models = "donordata::smocc_bs",
+                    at = "x",
+                    models = "smocc_bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
 

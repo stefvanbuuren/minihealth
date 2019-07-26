@@ -14,6 +14,8 @@
 #' @seealso \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
 #'          \code{\link[jsonlite]{fromJSON}}
 #' @examples
+#' library(donordata)
+#' data("smocc_bs", package = "donordata")
 #' fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
 #' p <- convert_bds_individual(fn)
 #' @export

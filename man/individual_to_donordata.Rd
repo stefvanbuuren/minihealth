@@ -36,7 +36,8 @@ are up-to-data and consistent with the other slots.
 for legacy reasons
 }
 \examples{
-require("donordata")
+data("smocc", package = "donordata")
+data("smocc_bs", package = "donordata")
 p <- donordata_to_individual(dnr = "smocc", id = 10001)
 p
 q <- individual_to_donordata(p)

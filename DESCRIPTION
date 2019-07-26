@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.43.0
+Version: 0.44.0
 Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl")
 Imports:
@@ -16,7 +16,7 @@ Imports:
     tidyr
 Suggests: 
     curl,
-    donordata (>= 1.43.0),
+    donordata (>= 1.45.0),
     jamestest,
     testthat
 Remotes: 

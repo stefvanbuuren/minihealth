@@ -32,7 +32,7 @@ anouk <- donordata_to_individual(dnr = dnr, id = ids[6])
 
 # terneuzen
 dnr <- "terneuzen"
-ids <- as.integer(donordata::terneuzen$child$id[seq(100, 1000, by = 100)])
+ids <- as.integer(terneuzen$child$id[seq(100, 1000, by = 100)])
 names <- c("T 163", "T 1017",  "T 1413", "T 2035",  "T 2602",
            "T 3254", "T 4207",  "T 5002", "T 5270", "T 6021")
 

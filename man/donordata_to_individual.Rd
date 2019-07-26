@@ -36,6 +36,12 @@ for legacy reasons
 \examples{
 require("donordata")
 require("donorloader")
+data("smocc", package = "donordata")
+data("smocc_bs", package = "donordata")
+data("lollypop.preterm", package = "donordata")
+data("terneuzen", package = "donordata")
+data("terneuzen_bs", package = "donordata")
+
 p <- donordata_to_individual(dnr = "smocc", id = 10001)
 p
 
@@ -63,7 +69,7 @@ q
 
 # use models argument to estimate brokenstick estimates
 p <- donordata_to_individual(dnr = "terneuzen", id = 11,
-  models = "donordata::terneuzen_bs")
+  models = "terneuzen_bs")
 
 }
 \seealso{
