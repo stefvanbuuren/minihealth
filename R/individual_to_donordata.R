@@ -54,7 +54,7 @@ individual_to_donordata <- function(x, element = NULL) {
   time <- tibble(
     src  = slot(x, "src"),
     id   = as.numeric(slot(x, "id")),
-    rec  = 1L:nrow(hgt.df),
+    rec  = ifelse(nrow(hgt.df) >= 1L, 1L:nrow(hgt.df), integer(0)),
     nrec = nrow(hgt.df),
     dob  = format(slot(x, "dob"), format = "%d-%m-%y"),
     dom  = format(slot(x, "dob")  + round(hgt.df$age * 365.25), format = "%d-%m-%y"),
