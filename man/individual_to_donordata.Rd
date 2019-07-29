@@ -36,8 +36,9 @@ are up-to-data and consistent with the other slots.
 for legacy reasons
 }
 \examples{
-data("smocc", package = "donordata")
-data("smocc_bs", package = "donordata")
+library(donorloader)
+smocc <- load_data(dnr = "smocc")
+smocc_bs <- load_data(dnr = "smocc_bs")
 p <- donordata_to_individual(dnr = "smocc", id = 10001)
 p
 q <- individual_to_donordata(p)

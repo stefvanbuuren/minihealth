@@ -16,8 +16,9 @@
 #' @author Stef van Buuren 2019
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
-#' data("smocc", package = "donordata")
-#' data("smocc_bs", package = "donordata")
+#' library(donorloader)
+#' smocc <- load_data(dnr = "smocc")
+#' smocc_bs <- load_data(dnr = "smocc_bs")
 #' p <- donordata_to_individual(dnr = "smocc", id = 10001)
 #' p
 #' q <- individual_to_donordata(p)

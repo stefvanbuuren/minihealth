@@ -14,13 +14,12 @@
 #' @author Stef van Buuren 2017
 #' @seealso \code{\link{xyz-class}}, \code{\link{bse-class}}
 #' @examples
-#' require("donordata")
 #' require("donorloader")
-#' data("smocc", package = "donordata")
-#' data("smocc_bs", package = "donordata")
-#' data("lollypop.preterm", package = "donordata")
-#' data("terneuzen", package = "donordata")
-#' data("terneuzen_bs", package = "donordata")
+#' smocc <- load_data(dnr = "smocc")
+#' smocc_bs <- load_data(dnr = "smocc_bs")
+#' lollypop.preterm <- load_data(dnr = "lollypop.preterm")
+#' terneuzen <- load_data(dnr = "terneuzen")
+#' terneuzen_bs <- load_data(dnr = "terneuzen_bs")
 #'
 #' p <- donordata_to_individual(dnr = "smocc", id = 10001)
 #' p
@@ -56,8 +55,8 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
 
   id <- id[1]
 
-  child <- load_child_data(con = con, dnr = dnr, ids = id)
-  time <- load_time_data(con = con, dnr = dnr, ids = id)
+  child <- load_data(con = con, dnr = dnr, element = "child", ids = id)
+  time <- load_data(con = con, dnr = dnr, element = "time", ids = id)
 
   if (nrow(child) == 0 & nrow(time) == 0) return(
     new("individual", dnr = dnr, id = as.integer(id), ...))

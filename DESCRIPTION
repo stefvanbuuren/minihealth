@@ -1,13 +1,13 @@
 Package: minihealth
 Type: Package
 Title: Mini dossier for individual health data
-Version: 0.44.0
+Version: 0.45.0
 Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl")
 Imports:
     brokenstick (>= 0.56),
     clopus (>= 0.32),
-    donorloader,
+    donorloader (>= 0.6.0),
     dplyr (>= 0.5.0),
     jsonlite,
     lubridate,
@@ -16,14 +16,12 @@ Imports:
     tidyr
 Suggests: 
     curl,
-    donordata (>= 1.45.0),
     jamestest,
     testthat
 Remotes: 
     stefvanbuuren/brokenstick,
     stefvanbuuren/clopus,
     stefvanbuuren/donorloader,
-    stefvanbuuren/donordata,
     stefvanbuuren/jamestest
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update

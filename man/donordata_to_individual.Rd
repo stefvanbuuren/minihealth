@@ -34,13 +34,12 @@ This function takes data from the \pkg{donordata} package, extract cases identif
 for legacy reasons
 }
 \examples{
-require("donordata")
 require("donorloader")
-data("smocc", package = "donordata")
-data("smocc_bs", package = "donordata")
-data("lollypop.preterm", package = "donordata")
-data("terneuzen", package = "donordata")
-data("terneuzen_bs", package = "donordata")
+smocc <- load_data(dnr = "smocc")
+smocc_bs <- load_data(dnr = "smocc_bs")
+lollypop.preterm <- load_data(dnr = "lollypop.preterm")
+terneuzen <- load_data(dnr = "terneuzen")
+terneuzen_bs <- load_data(dnr = "terneuzen_bs")
 
 p <- donordata_to_individual(dnr = "smocc", id = 10001)
 p

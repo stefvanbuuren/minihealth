@@ -26,8 +26,8 @@ NULL
 #'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
 #'@examples
-#'library(donordata)
-#'data("smocc_bs", package = "donordata")
+#'library(donorloader)
+#'smocc_bs <- load_data(dnr = "smocc_bs")
 #'# first specify three height measures
 #'d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
 #'d1
@@ -75,7 +75,7 @@ setMethod("initialize", "bse",
             if (!missing(call)) slot(.Object, "call") <- as.call(call)
             # else, create new call from models and yname arguments
             else {
-              expr <- parse(text = paste0(models, '[["', data@yname, '"]]'))
+              expr <- parse(text = paste0("load_data(dnr='", models,"', element='", data@yname, "')"))
               call <- call("eval", expr)
               # call <- call("[[", as.name(models), data@yname)
               slot(.Object, "call") <- call

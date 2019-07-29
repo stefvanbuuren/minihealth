@@ -54,7 +54,8 @@ z[["sally"]]@name; z[["sally"]]@sex
 
 \dontrun{
 # convert all 1933 children of SMOCC in `individual` objects
-library("donordata")
+library("donorloader")
+smocc <- load_data(dnr = "smocc")
 cab <- as(smocc, "cabinet")
 smoccdemo <- cab[1:10]
 

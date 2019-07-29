@@ -9,5 +9,5 @@
 # as.POSIXct(ifelse(is.null(zz), NA, zz), format = "%d-%m-%y", tz = "UTC")
 
 # no data
-new("bse", data = new("xyz", x = as.numeric(NA), y = as.numeric(NA)))
+# new("bse", data = new("xyz", x = as.numeric(NA), y = as.numeric(NA)))
 

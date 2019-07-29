@@ -47,7 +47,8 @@ NULL
 #'
 #'\dontrun{
 #'# convert all 1933 children of SMOCC in `individual` objects
-#'library("donordata")
+#'library("donorloader")
+#'smocc <- load_data(dnr = "smocc")
 #'cab <- as(smocc, "cabinet")
 #'smoccdemo <- cab[1:10]
 #'
@@ -139,7 +140,7 @@ setAs("list", "cabinet", function(from) list2cabinet(from))
 #'@seealso \code{\link{donordata_to_individual}}
 #' @export
 list2cabinet <- function(from, ...) {
-  if (length(from) != 3) stop("Data type not from donordata")
+  if (length(from) != 2) stop("Data type not from donordata")
   ids <- from[[2]]$id
   n <- length(ids)
   cab <- new("cabinet", n = length(ids))

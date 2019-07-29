@@ -24,8 +24,8 @@ values specified in the \code{data} argument of the
 }
 
 \examples{
-library(donordata)
-data("smocc_bs", package = "donordata")
+library(donorloader)
+smocc_bs <- load_data(dnr = "smocc_bs")
 # first specify three height measures
 d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
 d1
