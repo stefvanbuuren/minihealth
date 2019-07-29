@@ -6,9 +6,9 @@
 #' assumes that slots \code{"id"}, \code{"child"} and \code{"time"}
 #' are up-to-data and consistent with the other slots.
 #' @param x An object of class \code{individual}.
-#' @param elements Requested list elements. Can be \code{"child"},
-#'\code{"time"} or \code{"list"}. The default \code{"list"}
-#'returns a list of both elements.
+#' @param element Requested list elements. Can be \code{"child"},
+#'\code{"time"}. The default \code{NULL} returns a list of both
+#'elements.
 #' @return If \code{elements == "list"}, the function returns
 #' a list of \code{"child"} and \code{"time"}. The function
 #' returns a \code{"tibble"} for the choices \code{"child"} and
@@ -24,10 +24,12 @@
 #' q <- individual_to_donordata(p)
 #' q
 #' @export
-individual_to_donordata <- function(x, elements = c("list", "child", "time")) {
+individual_to_donordata <- function(x, element = NULL) {
   if (!is.individual(x)) stop("Object not of S4 class 'individual'.")
 
-  elements <- match.arg(elements)
+  if (is.null(element)) element <- ""
+  else element <- match.arg(element, c("child", "time"))
+
   child <- tibble(
     src  = slot(x, "src"),
     id   = as.numeric(slot(x, "id")),
@@ -42,7 +44,7 @@ individual_to_donordata <- function(x, elements = c("list", "child", "time")) {
     smo  = slot(x, "smo"),
     hgtm = slot(x, "hgtm"),
     hgtf = slot(x, "hgtf"))
-  if (elements == "child") return(child)
+  if (element == "child") return(child)
 
   hdc.df <- as(slot(x, "hdc"), "data.frame")
   hgt.df <- as(slot(x, "hgt"), "data.frame")
@@ -70,15 +72,8 @@ individual_to_donordata <- function(x, elements = c("list", "child", "time")) {
     bmi  = bmi.df$bmi,
     bmi.z = bmi.df$bmi.z)
 
-  if (elements == "time") return(time)
-  list(child = child, time = time)
-}
+  if (element == "time") return(time)
 
-#' @rdname individual_to_donordata
-#' @param type Same as \code{elements}
-#' @note \code{individual.to.donordata()} is deprecated, but exported
-#' for legacy reasons
-#' @export
-individual.to.donordata <- function(x, type = NULL) {
-  individual_to_donordata(x = x, elements = type)
+  # if NULL, return list with both elements
+  list(child = child, time = time)
 }

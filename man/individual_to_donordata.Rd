@@ -2,21 +2,16 @@
 % Please edit documentation in R/individual_to_donordata.R
 \name{individual_to_donordata}
 \alias{individual_to_donordata}
-\alias{individual.to.donordata}
 \title{Convert object of class 'individual' to donordata}
 \usage{
-individual_to_donordata(x, elements = c("list", "child", "time"))
-
-individual.to.donordata(x, type = NULL)
+individual_to_donordata(x, element = NULL)
 }
 \arguments{
 \item{x}{An object of class \code{individual}.}
 
-\item{elements}{Requested list elements. Can be \code{"child"},
-\code{"time"} or \code{"list"}. The default \code{"list"}
-returns a list of both elements.}
-
-\item{type}{Same as \code{elements}}
+\item{element}{Requested list elements. Can be \code{"child"},
+\code{"time"}. The default \code{NULL} returns a list of both
+elements.}
 }
 \value{
 If \code{elements == "list"}, the function returns
@@ -30,10 +25,6 @@ This function returns the slots \code{"id"}, \code{"child"} and
 the \code{individual} object. The code
 assumes that slots \code{"id"}, \code{"child"} and \code{"time"}
 are up-to-data and consistent with the other slots.
-}
-\note{
-\code{individual.to.donordata()} is deprecated, but exported
-for legacy reasons
 }
 \examples{
 library(donorloader)
