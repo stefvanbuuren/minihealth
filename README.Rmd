@@ -1,0 +1,160 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# minihealth
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The `minihealth` package is a central component of 
+[JAMES](https://github.com/stefvanbuuren/james). The package
+
+- Defines S4 classes `xyz`, `bse`, `individual` and `cabinet` for analysing individual growth data; 
+- Translates `individual`, `donordata` and `bds` formats into each other;
+- Extracts data and ranges from `individual` objects.
+
+## Installation
+
+You can install the development version `minihealth` by
+
+```{r eval = FALSE}
+install.packages("remotes")
+remotes::install_github("stefvanbuuren/minihealth")
+```
+
+There is no release on CRAN.
+
+## Example 1: Automatic Z-score calculation
+
+The S4 class `xyz` stores three variables useful for anthropemetric data: 
+
+- `x`: usually age, but can also be height (in weight-for-height);
+- `y`: measurement, e.g. height or weight;
+- `z`: Z-score of `y` conditional on `x`.
+
+Here are some examples for automatic Z-score calculation:
+
+```{r xyz1}
+library(minihealth)
+
+# specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
+new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+
+# at the minimum, specify sex for automatic Z-score calculation
+new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
+
+# specify weight (in kg) at same ages
+d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), 
+          sex = "male", yname = "wgt")
+d1
+
+# Obtain reference table used to calculate Z-scores in d3
+eval(d1@call)
+```
+
+It is also possible to perform the reverse calculation, where `z` 
+is given and `y` is calculated.
+
+```{r xyz2}
+# Standard weight centiles at age 0.5 year of Dutch boys
+new("xyz", x = rep(0.5, 5), z = -2:2, sex = "male", yname = "wgt")
+
+# Extend to grid of ages: 0y, 0.5y and 1y
+new("xyz", x = rep(c(0, 0.5, 1), each = 5), z = rep(-2:2, 3), 
+    sex = "male", yname = "wgt")
+```
+
+See the help ("?`xyz-class`") and the 
+[clopus](https://github.com/stefvanbuuren/clopus) package for more examples.
+
+## Example 2: Automatic brokenstick estimation
+
+```{r}
+# specify three height measures
+boy <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), 
+           sex = "male")
+boy
+
+# calculate broken stick estimates at observed ages
+new("bse", data = boy)
+
+# calculate broken stick estimates at all break points
+new("bse", data = boy, at = "knots")
+```
+
+See the help ("?`bse-class`") and the 
+[brokenstick](https://github.com/stefvanbuuren/brokenstick) package for more examples.
+
+## Example 3: Bundle all measures by individual
+
+The S4 class `individual` bundles four different types of information, 
+each of which is coded by its own class:
+
+- `individualID`: ID information, like name, date of birth;
+- `individualBG`: Background, like sex, gestional age or etnicity;
+- `individualAN`: Bundles person's anthrometric data, like `hgt` and `wgt`;
+- `individualBS`: Bundles person's brokenstick estimates.
+
+Creating an instance of class `individual` can be done by hand in two 
+steps. First, create one or more of the four subclasses, and then  
+tie these together, as follows:
+
+```{r individual}
+pid <- new("individualID", name = c("Rob", "Dorchester"),
+           dob = as.Date("2014-08-22", "%Y-%m-%d"), 
+           id = as.integer(204))
+pbg <- new("individualBG", sex = "male", hgtf = 185)
+pan <- new("individualAN",
+           hgt = new("xyz", 
+                     x = c(0, 0.2, 0.5), 
+                     y = c(51.0, 54.1, 63.4), 
+                     sex = pbg@sex),
+           wgt = new("xyz", 
+                     x = c(0, 0.5), 
+                     y = c(3.2, 7.0), 
+                     yname = "wgt", 
+                     sex = pbg@sex))
+pbs <- new("individualBS",
+           bs.hgt = new("bse", yname = "hgt",
+                        data = pan@hgt,
+                        at = "knots",
+                        sex = pbg@sex),
+           bs.wgt = new("bse", yname = "wgt", 
+                        data = pan@wgt, 
+                        at = "knots",
+                        sex = pbg@sex))
+rob <- new("individual", pid, pbg, pan, pbs)
+```
+
+
+Doing this sequence by hand is somewhat inconvenient. 
+Fortunately, there are two functions that convert other formats
+into an object of class `individual`:
+
+- `donordata_to_individual()` takes data in `donordata` format, and converts it into `individual` format;
+- `convert_bds_individual()` takes data in `bds` format, and converts it into `individual` format;
+
+See the respective documentation for more detail. Both functions have 
+inverse (but lossy) transformations.
+
+
+## Miscellaneous functionality
+
+- A `cabinet` is a collection of multiple objects of class `individual`;
+- `as(d1, "data.frame")` extracts the data frame from objects of class `xyz`;
+- `get_xyz(rob, "hgt")` extracts the data frame from objects of class `individual`;
+- `get_range(rob)` extract the age range from objects of class `individual`.
+
+
+
