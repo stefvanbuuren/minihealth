@@ -29,7 +29,7 @@ There is no release on CRAN.
 
 ## Example 1: Automatic Z-score calculation
 
-The S4 class `xyz` stores three variables useful for anthropemetric
+The S4 class `xyz` stores three variables useful for anthropometric
 data:
 
   - `x`: usually age, but can also be height (in weight-for-height);
