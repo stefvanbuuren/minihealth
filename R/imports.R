@@ -7,7 +7,6 @@
 #'                             tibble
 #' @importFrom jsonlite        fromJSON toJSON validate
 #' @importFrom lubridate       ymd dmy
-#' @importFrom rlang           .data
 #' @importFrom stats           predict
 #' @importFrom tidyr           gather
 NULL

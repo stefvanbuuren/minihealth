@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini Dossier for Individual Health Data
-Version: 0.45.1
+Version: 0.45.2
 Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl")
 Imports:
@@ -12,7 +12,6 @@ Imports:
     jsonlite,
     lubridate,
     methods,
-    rlang,
     tidyr
 Suggests: 
     curl,
