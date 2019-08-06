@@ -123,10 +123,10 @@ as_bds_contacts <- function(ind) {
   z <- z %>% distinct(.data$time, .keep_all = TRUE)
 
   # reshuffle
-  z <- tidyr::gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
-    dplyr::mutate(Bdsnummer = as.integer(.data$Bdsnummer),
+  z <- gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
+    mutate(Bdsnummer = as.integer(.data$Bdsnummer),
                   Waarde = as.character(.data$Waarde)) %>%
-    dplyr::arrange(.data$time, .data$Bdsnummer)
+    arrange(.data$time, .data$Bdsnummer)
   # NOTE: here we should delete rows with missing values
 
   f <- as.factor(z$time)
