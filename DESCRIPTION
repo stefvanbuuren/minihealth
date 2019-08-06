@@ -1,6 +1,6 @@
 Package: minihealth
 Type: Package
-Title: Mini dossier for individual health data
+Title: Mini Dossier for Individual Health Data
 Version: 0.45.0
 Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl")
@@ -26,10 +26,10 @@ Remotes:
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.
-License: MIT + file LICENSE
+License: AGPL-3 + file LICENSE
 LazyData: TRUE
-Acknowledgement: Development of this package was kindly suported by the Bill &
-    Melinda Gates Foundation
+Acknowledgement: Development of this package was kindly suported by the
+    Bill & Melinda Gates Foundation
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
