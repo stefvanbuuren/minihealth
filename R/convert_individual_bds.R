@@ -137,8 +137,3 @@ as_bds_contacts <- function(ind) {
     Elementen = I(z),
     stringsAsFactors = FALSE)
 }
-
-get_dob <- function(ind) {
-  if (is.na(slot(ind, "dob"))) return("01-01-00")
-  slot(ind, "dob")
-}

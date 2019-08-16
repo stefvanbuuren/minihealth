@@ -44,6 +44,7 @@ Collate:
     'convert_bds_individual.R'
     'convert_individual_bds.R'
     'donordata_to_individual.R'
+    'get_dob.R'
     'get_range.R'
     'get_xyz.R'
     'imports.R'
