@@ -1,9 +1,11 @@
 Package: minihealth
 Type: Package
 Title: Mini Dossier for Individual Health Data
-Version: 0.46.0
+Version: 0.47.0
 Authors@R: person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl")
+Depends: 
+    R (>= 2.10)
 Imports:
     brokenstick (>= 0.59.1),
     clopus (>= 0.37.0),
@@ -49,4 +51,5 @@ Collate:
     'get_xyz.R'
     'imports.R'
     'individual_to_donordata.R'
+    'table34.R'
     'tests.R'
