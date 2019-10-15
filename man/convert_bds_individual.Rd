@@ -19,7 +19,7 @@ as.call(...)} for setting proper reference standards.}
 An object of class \linkS4class{individual}.
 }
 \description{
-This function takes data from a json source and saves as a an object
+This function takes data from a json source and saves it as a an object
 of class \linkS4class{individual}. The function automatically calculates
 standard deviation scores and broken stick conditional means per visit.
 }
