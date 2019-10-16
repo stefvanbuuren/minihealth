@@ -40,7 +40,7 @@ convert_bds_individual <- function(txt = NULL, ...) {
                           NA_character_),
 
              # weken, volgens BDS in dagen
-             ga = as.numeric(b[b$Bdsnummer == 82, 2]),
+             ga = extract_ga(b),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
              smo = as.numeric(b[b$Bdsnummer == 91, 2]) - 1,
@@ -165,4 +165,11 @@ extract_field <- function(d, f = 245) {
   z <- d$Contactmomenten[[2]]
   as.numeric(unlist(lapply(z, function(x, f2 = f)
     ifelse("Waarde" %in% names(x), x[x$Bdsnummer == f2, "Waarde"], NA))))
+}
+
+extract_ga <- function(b) {
+  ga <- as.numeric(b[b$Bdsnummer == 82, 2])
+  # convert days to weeks
+  if (!is.na(ga) & ga > 50) ga <- trunc(ga / 7)
+  ga
 }
