@@ -40,7 +40,7 @@ convert_bds_individual <- function(txt = NULL, ...) {
                           NA_character_),
 
              # weken, volgens BDS in dagen
-             ga = extract_ga(b),
+             ga = as.numeric(extract_ga(b)),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
              smo = as.numeric(b[b$Bdsnummer == 91, 2]) - 1,
