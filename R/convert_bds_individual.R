@@ -168,7 +168,6 @@ extract_field <- function(d, f = 245) {
 }
 
 extract_ga <- function(b) {
-  browser()
   ga <- as.numeric(b[b$Bdsnummer == 82, 2])
   # convert days to weeks
   if (!is.na(ga) & ga > 50) ga <- trunc(ga / 7)
