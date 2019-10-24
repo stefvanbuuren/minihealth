@@ -5,7 +5,7 @@
 #' JSON data matches the schema.
 #' @param txt a JSON string, URL or file to be compared to the schema.
 #' @param verbose include an error message when validation fails.
-#' @return A \code{boolean} with optional \code{error} attribute.
+#' @return A \code{boolean} with optional \code{errors} attribute.
 #' @author Arjan Huizing 2019
 #' @export
 validate_bds_individual <- function(txt = NULL, verbose = TRUE){
@@ -25,7 +25,7 @@ validate_bds_individual <- function(txt = NULL, verbose = TRUE){
       user.warning[i, "Supplied.class"] <- ifelse(is.null(warnings[i,1]$data$Waarde),
                                           NA, class(warnings[i,1]$data$Waarde))
     }
-    attr(valid, "error") <- user.warning
+    attr(valid, "errors") <- user.warning
     return(valid)
   }
 }
