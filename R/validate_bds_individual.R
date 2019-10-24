@@ -6,13 +6,14 @@
 #' @param txt a JSON string, URL or file to be compared to the schema.
 #' @param verbose include an error message when validation fails.
 #' @return A \code{boolean} with optional \code{errors} attribute.
+#' @importFrom jsonvalidate json_validate
+#' @importFrom dplyr "%>%" filter select
 #' @author Arjan Huizing 2019
 #' @export
 validate_bds_individual <- function(txt = NULL, verbose = TRUE){
 
-  bds_schema <- file.path(path.package("minihealth"), "data", "bds_schema")
-  valid <- jsonvalidate::json_validate(txt, schema = bds_schema,
-                                       engine = "ajv", verbose = verbose)
+  bds_schema <- file.path(path.package("minihealth"), "json", "bds_schema")
+  valid <- jsonvalidate::json_validate(txt, bds_schema, engine = "ajv", verbose = verbose)
 
   if(valid | !verbose){
     return(valid)
