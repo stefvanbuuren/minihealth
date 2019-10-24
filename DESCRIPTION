@@ -15,7 +15,8 @@ Imports:
     lubridate,
     methods,
     rlang (>= 0.4.0),
-    tidyr (>= 0.8.3)
+    tidyr (>= 0.8.3),
+    jsonvalidate
 Suggests: 
     curl,
     groeidiagrammen,
@@ -53,3 +54,4 @@ Collate:
     'individual_to_donordata.R'
     'table34.R'
     'tests.R'
+    'validate_bds_individual.R'
