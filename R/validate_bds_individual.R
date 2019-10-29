@@ -5,14 +5,15 @@
 #' JSON data matches the schema.
 #' @param txt a JSON string, URL or file to be compared to the schema.
 #' @param verbose include an error message when validation fails.
+#' @param schema the schema to evaluate by. options are "default" and "string".
 #' @return A \code{boolean} with optional \code{errors} attribute.
-#' @importFrom jsonvalidate json_validate
-#' @importFrom dplyr "%>%" filter select
 #' @author Arjan Huizing 2019
 #' @export
-validate_bds_individual <- function(txt = NULL, verbose = TRUE){
+validate_bds_individual <- function(txt = NULL, verbose = TRUE, schema = "default"){
 
-  bds_schema <- file.path(path.package("minihealth"), "json", "bds_schema")
+  bds_schema <- switch(schema,
+                       "default" = file.path(path.package("minihealth"), "json", "bds_schema.json"),
+                       "string" = file.path(path.package("minihealth"), "json", "bds_schema_str.json"))
   valid <- jsonvalidate::json_validate(txt, bds_schema, engine = "ajv", verbose = verbose)
 
   if(valid | !verbose){
@@ -30,8 +31,8 @@ validate_bds_individual <- function(txt = NULL, verbose = TRUE){
       user.warning[i, "Bdsnummer"] <- warnings[i,1]$data$Bdsnummer
       user.warning[i, "Waarde"] <- ifelse(is.null(warnings[i,1]$data$Waarde),
                                           NA, as.character(warnings[i,1]$data$Waarde))
-      user.warning[i, "Supplied.class"] <- ifelse(is.null(warnings[i,1]$data$Waarde),
-                                          NA, class(warnings[i,1]$data$Waarde))
+      user.warning[i, "Mode"] <- ifelse(is.null(warnings[i,1]$data$Waarde),
+                                          NA, mode(warnings[i,1]$data$Waarde))
     }
 
     attr(valid, "errors") <- user.warning

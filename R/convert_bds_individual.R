@@ -21,8 +21,22 @@
 #' @export
 convert_bds_individual <- function(txt = NULL, ...) {
 
+  # json schema validation
+  if(!validate_bds_individual(txt, verbose = FALSE)){
+
+    # use string schema as fall-back
+    fallback <- validate_bds_individual(txt, verbose = FALSE, schema = "string")
+    if(!fallback){
+      # Return some kind of error or warning?
+    }
+  }
+
   d <- fromJSON(txt, ...)
   b <- d$ClientGegevens$Elementen
+
+  if(exists("fallback")){
+    # batch convert all relevant bds numbers?
+  } # from here on assume all bds numbers are correct format.. ?
 
   # is this child or message number?
   pid <- new("individualID",
