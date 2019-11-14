@@ -31,40 +31,6 @@
             "Bdsnummer":240,
             "Waarde":"1900"
          }
-      ],
-      "Groepen":[
-         {
-            "Elementen":[
-               {
-                  "Bdsnummer":63,
-                  "Waarde":"19950704"
-               },
-               {
-                  "Bdsnummer":71,
-                  "Waarde":"6030"
-               },
-               {
-                  "Bdsnummer":62,
-                  "Waarde":"01"
-               }
-            ]
-         },
-         {
-            "Elementen":[
-               {
-                  "Bdsnummer":63,
-                  "Waarde":"19901202"
-               },
-               {
-                  "Bdsnummer":71,
-                  "Waarde":"6030"
-               },
-               {
-                  "Bdsnummer":62,
-                  "Waarde":"02"
-               }
-            ]
-         }
       ]
    },
    "Contactmomenten":[

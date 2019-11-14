@@ -1,19 +1,20 @@
-test1.json  Missing "Referentie" field
-test2.json  Missing "OrganisatieCode" field
-test3.json  "OrganisatieCode" is a string
-test4.json  Missing "ClientGegevens" field
-test5.json  Missing "ContactMomenten" field
-test6.json  Missing "Referentie" and "OrganisatieCode" field
-test7.json  Invalid "OrganisatieCode" number
-test8.json  Bdsnummer 19 missing
-test9.json  Bdsnummer 20 missing
-test10.json  Bdsnummer 82 missing
-test11.json  Bdsnummer 91 missing
-test12.json  Bdsnummer 110 missing
-test13.json  Empty file
-test14.json  Bdsnummer 19 numeric
-test15.json  Bdsnummer 20 numeric
-test16.json  Bdsnummer 82 numeric
-test17.json  Bdsnummer 91 numeric
-test18.json  Bdsnummer 110 numeric
-test19.json  Missing "Groepen" field
+test1.json  Copy of client3.json
+test2.json  Missing "Referentie" field
+test3.json  Missing "OrganisatieCode" field
+test4.json  "OrganisatieCode" is a string
+test5.json  Missing "ClientGegevens" field
+test6.json  Missing "ContactMomenten" field
+test7.json  Missing "Referentie" and "OrganisatieCode" field
+test8.json  Invalid "OrganisatieCode" number
+test9.json  Bdsnummer 19 missing
+test10.json  Bdsnummer 20 missing
+test11.json  Bdsnummer 82 missing
+test12.json  Bdsnummer 91 missing
+test13.json  Bdsnummer 110 missing
+test14.json  Empty file
+test15.json  Bdsnummer 19 numeric
+test16.json  Bdsnummer 20 numeric
+test17.json  Bdsnummer 82 numeric
+test18.json  Bdsnummer 91 numeric
+test19.json  Bdsnummer 110 numeric
+test20.json  Missing "Groepen" field
