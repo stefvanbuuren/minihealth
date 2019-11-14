@@ -12,7 +12,6 @@
 
 <meta name="author" content="Stef van Buuren (TNO), Annemieke Beuker (Allegro Sultum)" />
 
-<meta name="date" content="2019-10-11" />
 
 <title>Input format</title>
 
@@ -365,7 +364,7 @@ summary {
 
 <h1 class="title toc-ignore">Input format</h1>
 <h4 class="author">Stef van Buuren (TNO), Annemieke Beuker (Allegro Sultum)</h4>
-<h4 class="date">10/11/2019</h4>
+<h4 class="date">Nov 14, 2019</h4>
 
 </div>
 
@@ -419,28 +418,34 @@ summary {
 <tr class="header">
 <th>Name</th>
 <th>Description</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Clientgegevens</td>
-<td>Class with basic data on child</td>
+<td>Class with basic child data</td>
+<td>Y</td>
 </tr>
 <tr class="even">
 <td>Contactmomenten</td>
 <td>Class with data per visit</td>
+<td>Y</td>
 </tr>
 <tr class="odd">
 <td>InstrumentCode</td>
-<td>String identifying the instrument (not used)</td>
+<td>Integer identifying the instrument</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td>OrganisatieCode</td>
-<td>String identifying the care organisation</td>
+<td>Integer identifying the care organisation</td>
+<td>Y</td>
 </tr>
 <tr class="odd">
 <td>Referentie</td>
 <td>String identifying the request</td>
+<td>Y</td>
 </tr>
 </tbody>
 </table>
@@ -483,16 +488,19 @@ summary {
 <tr class="header">
 <th>Name</th>
 <th>Description</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Elementen</td>
 <td>Class with BDS-elements</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td>Groepen</td>
 <td>Class with groups of BDS-elements</td>
+<td>N</td>
 </tr>
 </tbody>
 </table>
@@ -511,24 +519,29 @@ summary {
 <tr class="header">
 <th>Name</th>
 <th>Description</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Bdsnummer</td>
-<td>Number identifying the BDS-field</td>
+<td>Integer identifying the BDS-field</td>
+<td>Y</td>
 </tr>
 <tr class="even">
 <td>InternNummer</td>
-<td>Number identifying internal field (not used)</td>
+<td>Integer identifying internal field</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td>Waarde</td>
 <td>Value of the BDS-field</td>
+<td>Y</td>
 </tr>
 <tr class="even">
 <td>Waardeomschrijving</td>
-<td>Descriptive label for value (not used)</td>
+<td>Descriptive label for value</td>
+<td>N</td>
 </tr>
 </tbody>
 </table>
@@ -571,20 +584,24 @@ summary {
 <tr class="header">
 <th>Name</th>
 <th>Description</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Elementen</td>
 <td>Class with BDS-elements</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td>Groepen</td>
 <td>Class with groups of BDS-elements</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td>Tijdstip</td>
 <td>Date of visit</td>
+<td>Y</td>
 </tr>
 </tbody>
 </table>
@@ -600,6 +617,7 @@ summary {
 <th align="left">Description</th>
 <th align="left">Code</th>
 <th align="left">Value</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
@@ -608,253 +626,305 @@ summary {
 <td align="left">Sex of child</td>
 <td align="left">0</td>
 <td align="left">Unknown</td>
+<td>Y</td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">1</td>
 <td align="left">Male</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">2</td>
 <td align="left">Female</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">3</td>
 <td align="left">Not specified</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right">20</td>
 <td align="left">Date of birth</td>
 <td align="left">text</td>
 <td align="left">yyyymmdd</td>
+<td>Y</td>
 </tr>
 <tr class="even">
 <td align="right">62</td>
 <td align="left">Caretaker relation</td>
 <td align="left">01</td>
 <td align="left">biological father</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">02</td>
 <td align="left">biological mother</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">03</td>
 <td align="left">male partner, stepfather</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">04</td>
 <td align="left">female partner, stepmother</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">05</td>
 <td align="left">adoptive father</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">06</td>
 <td align="left">adoptive mother</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">07</td>
 <td align="left">foster father</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">08</td>
 <td align="left">foster mother</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">98</td>
 <td align="left">other</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right">63</td>
 <td align="left">Caretaker date of birth</td>
 <td align="left">text</td>
 <td align="left">yyyymmdd</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right">66</td>
 <td align="left">Caretaker education</td>
 <td align="left">01</td>
 <td align="left">no primary school</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">02</td>
 <td align="left">primary school, special ed</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">03</td>
 <td align="left">VSO-MLK/IVBO/VMBO-LWOO</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">04</td>
 <td align="left">LBO/VBO/VMBO-BBL&amp;KBL</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">05</td>
 <td align="left">MAVO/VMBO-GL&amp;TL</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">06</td>
 <td align="left">MBO</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">07</td>
 <td align="left">HAVO/VWO</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">08</td>
 <td align="left">HBO/HTS/HEAO</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">09</td>
 <td align="left">WO</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">98</td>
 <td align="left">Other</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">00</td>
 <td align="left">Unknown</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right">71</td>
 <td align="left">Caretaker birth country</td>
 <td align="left">numeric</td>
 <td align="left"><a href="https://publicaties.rvig.nl/Landelijke_tabellen/Landelijke_tabellen_32_t_m_60_excl_tabel_35/Landelijke_Tabellen_32_t_m_60_in_csv_formaat">4-digit code, Table 34</a></td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right">82</td>
 <td align="left">Gestational age</td>
 <td align="left">numeric</td>
 <td align="left">in days</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right">91</td>
 <td align="left">Smoking during pregnancy</td>
 <td align="left">1</td>
 <td align="left">yes</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">2</td>
 <td align="left">no</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">99</td>
 <td align="left">unknown</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right">110</td>
 <td align="left">Birth weight</td>
 <td align="left">numeric</td>
 <td align="left">in grammes</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right">235</td>
 <td align="left">Length/height</td>
 <td align="left">numeric</td>
 <td align="left">in millimeters</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right">245</td>
 <td align="left">Body weight</td>
 <td align="left">numeric</td>
 <td align="left">in grammes</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right">252</td>
 <td align="left">Head circumference</td>
 <td align="left">numeric</td>
 <td align="left">in millimeters</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right">238</td>
 <td align="left">Height biological mother</td>
 <td align="left">numeric</td>
 <td align="left">in millimeters</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right">240</td>
 <td align="left">Height biological father</td>
 <td align="left">numeric</td>
 <td align="left">in millimeters</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td align="right">510</td>
 <td align="left">Passive smoking</td>
 <td align="left">01</td>
 <td align="left">No smoking in house</td>
+<td>N</td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">02</td>
 <td align="left">Never with child</td>
+<td></td>
 </tr>
 <tr class="even">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">03</td>
 <td align="left">Not in last 7 days</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td align="right"></td>
 <td align="left"></td>
 <td align="left">04</td>
 <td align="left">Yes</td>
+<td></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="error-checking" class="section level2">
 <h2>Error checking</h2>
-<p>A missing or out-of-range code on the following variables will return an error message with code</p>
+<p>There are two JSON schema against which JAMES will validate the input data. These are:</p>
+<ul>
+<li><code>bds_schema.json</code>, a data format that implements the object model as closely as possible;</li>
+<li><code>bds_schema_str.json</code>, a data format implementing a simplified version of <code>bds_schema.json</code> that accepts strings as values for BDS-elements.</li>
+</ul>
+<p>The preferred JSON schema is <code>bds_schema.json</code>. The <code>bds_schema_str.json</code> is supported for legacy reasons. We will deprecate it at some point.</p>
+<p>The JSON validator</p>
+<ul>
+<li>Checks whether all required elements of <code>Epremdossier</code> and its sub-elements are present;</li>
+<li>Checks for missing values or out-of-range values;</li>
+<li>If applicable, returns a summary table of identified discrepancies.</li>
+</ul>
 </div>
 
 

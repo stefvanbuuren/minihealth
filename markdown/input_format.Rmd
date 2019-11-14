@@ -1,7 +1,7 @@
 ---
 title: "Input format"
 author: "Stef van Buuren (TNO), Annemieke Beuker (Allegro Sultum)"
-date: "10/11/2019"
+date: "Nov 14, 2019"
 output: html_document
 ---
 
@@ -35,21 +35,22 @@ EPremDossier  | Instance       | Class
 
 #### Public properties
 
-Name            | Description
---------------- | -------------
-Clientgegevens  | Class with basic data on child
-Contactmomenten | Class with data per visit
-InstrumentCode  | String identifying the instrument (not used)
-OrganisatieCode | String identifying the care organisation
-Referentie      | String identifying the request
+Name            | Description                                   | Required
+--------------- | --------------------------------------------- | -----
+Clientgegevens  | Class with basic child data                   | Y
+Contactmomenten | Class with data per visit                     | Y
+InstrumentCode  | Integer identifying the instrument            | N
+OrganisatieCode | Integer identifying the care organisation     | Y
+Referentie      | String identifying the request                | Y
+
 
 ### EPremGroep Class
 
 #### Object model 
 
 EPremGroep    | Instance       | Class
-------------- | -------------- | ------------ 
-         ->   | Elementen      | EPremElement 
+------------- | -------------- | ------------
+         ->   | Elementen      | EPremElement
          ->   | Groepen        | EPremGroep
 
 #### Syntax `C#`
@@ -58,10 +59,10 @@ EPremGroep    | Instance       | Class
 
 #### Public properties
 
-Name            | Description
---------------- | -------------
-Elementen       | Class with BDS-elements
-Groepen         | Class with groups of BDS-elements
+Name            | Description                        | Required
+--------------- | ---------------------------------- | --------
+Elementen       | Class with BDS-elements            | N
+Groepen         | Class with groups of BDS-elements  | N
 
 ### EPremElement Class
 
@@ -71,12 +72,12 @@ Groepen         | Class with groups of BDS-elements
 
 #### Public properties
 
-Name               | Description
------------------- | -------------
-Bdsnummer          | Number identifying the BDS-field
-InternNummer       | Number identifying internal field (not used)
-Waarde             | Value of the BDS-field
-Waardeomschrijving | Descriptive label for value (not used)
+Name               | Description                                   | Required
+------------------ | --------------------------------------------- | ------
+Bdsnummer          | Integer identifying the BDS-field             | Y
+InternNummer       | Integer identifying internal field            | N
+Waarde             | Value of the BDS-field                        | Y
+Waardeomschrijving | Descriptive label for value                   | N
 
 ### EPremContactmoment Class
 
@@ -93,22 +94,22 @@ EPremContactmoment  | Instance       | Class
 
 #### Public properties
 
-Name            | Description
---------------- | -------------
-Elementen       | Class with BDS-elements
-Groepen         | Class with groups of BDS-elements
-Tijdstip        | Date of visit
+Name            | Description                        | Required
+--------------- | ---------------------------------- | --------
+Elementen       | Class with BDS-elements            |    N 
+Groepen         | Class with groups of BDS-elements  |    N
+Tijdstip        | Date of visit                      |    Y
 
 ## BDS-elements
 
-| BDS   | Description             | Code   | Value                     |
-| -----:|:----------------------- |:------ |:------------------------- |
-| 19    | Sex of child            | 0      | Unknown                   |
+| BDS   | Description             | Code   | Value                     | Required
+| -----:|:----------------------- |:------ |:------------------------- | --------
+| 19    | Sex of child            | 0      | Unknown                   | Y
 |       |                         | 1      | Male                      |
 |       |                         | 2      | Female                    |
 |       |                         | 3      | Not specified             |
-| 20    | Date of birth           | text   | yyyymmdd                  |
-| 62    | Caretaker relation      | 01     | biological father         |
+| 20    | Date of birth           | text   | yyyymmdd                  | Y
+| 62    | Caretaker relation      | 01     | biological father         | N
 |       |                         | 02     | biological mother         |
 |       |                         | 03     | male partner, stepfather  |
 |       |                         | 04     | female partner, stepmother|
@@ -117,8 +118,8 @@ Tijdstip        | Date of visit
 |       |                         | 07     | foster father             |
 |       |                         | 08     | foster mother             |
 |       |                         | 98     | other                     |
-| 63    | Caretaker date of birth | text   | yyyymmdd                  |
-| 66    | Caretaker education     | 01     | no primary school         |
+| 63    | Caretaker date of birth | text   | yyyymmdd                  | N
+| 66    | Caretaker education     | 01     | no primary school         | N
 |       |                         | 02     | primary school, special ed|
 |       |                         | 03     | VSO-MLK/IVBO/VMBO-LWOO    |
 |       |                         | 04     | LBO/VBO/VMBO-BBL&KBL      |
@@ -129,23 +130,37 @@ Tijdstip        | Date of visit
 |       |                         | 09     | WO                        |
 |       |                         | 98     | Other                     |
 |       |                         | 00     | Unknown                   |
-| 71    | Caretaker birth country | numeric| [4-digit code, Table 34](https://publicaties.rvig.nl/Landelijke_tabellen/Landelijke_tabellen_32_t_m_60_excl_tabel_35/Landelijke_Tabellen_32_t_m_60_in_csv_formaat)|
-| 82    | Gestational age         | numeric| in days                   |
-| 91    | Smoking during pregnancy| 1      | yes                       |
+| 71    | Caretaker birth country | numeric| [4-digit code, Table 34](https://publicaties.rvig.nl/Landelijke_tabellen/Landelijke_tabellen_32_t_m_60_excl_tabel_35/Landelijke_Tabellen_32_t_m_60_in_csv_formaat)| N 
+| 82    | Gestational age         | numeric| in days                   | N
+| 91    | Smoking during pregnancy| 1      | yes                       | N
 |       |                         | 2      | no                        |
 |       |                         | 99     | unknown                   |
-| 110   | Birth weight            | numeric| in grammes                |
-| 235   | Length/height           | numeric| in millimeters            |
-| 245   | Body weight             | numeric| in grammes                |
-| 252   | Head circumference      | numeric| in millimeters            |
-| 238   | Height biological mother| numeric| in millimeters            |
-| 240   | Height biological father| numeric| in millimeters            |
-| 510   | Passive smoking         | 01     | No smoking in house       |
+| 110   | Birth weight            | numeric| in grammes                | N
+| 235   | Length/height           | numeric| in millimeters            | N
+| 245   | Body weight             | numeric| in grammes                | N
+| 252   | Head circumference      | numeric| in millimeters            | N
+| 238   | Height biological mother| numeric| in millimeters            | N
+| 240   | Height biological father| numeric| in millimeters            | N
+| 510   | Passive smoking         | 01     | No smoking in house       | N
 |       |                         | 02     | Never with child          |
 |       |                         | 03     | Not in last 7 days        |
 |       |                         | 04     | Yes                       |
 
 ## Error checking
 
-A missing or out-of-range code on the following variables will return an error message with code
+There are two JSON schema against which JAMES will validate the input data. These are: 
+
+- `bds_schema.json`, a data format that implements the object model as closely as possible;
+- `bds_schema_str.json`, a data format implementing a simplified version of `bds_schema.json` that accepts strings as values for BDS-elements.
+
+The preferred JSON schema is `bds_schema.json`. The `bds_schema_str.json` is supported for legacy reasons. We will deprecate it at some point.
+
+The JSON validator
+
+- Checks whether all required elements of `Epremdossier` and its sub-elements are present;
+- Checks for missing values or out-of-range values;
+- If applicable, returns a summary table of identified discrepancies.
+
+
+
 
