@@ -25,11 +25,11 @@
 convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), ...) {
   schema <- match.arg(schema)
 
-  # check JSON syntax: direct to caller
+  # PHASE 1: check JSON syntax: direct to caller
   err <- catch_cnd(d <- fromJSON(txt, ...))
   if (!is.null(err)) abort(conditionMessage(err))
 
-  # JSON schema validation: direct to caller and end user
+  # PHASE 2: JSON schema validation: direct to caller and end user
   valid <- validate_bds_individual(txt, schema)
 
   if (!valid) {

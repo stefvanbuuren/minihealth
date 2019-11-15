@@ -30,6 +30,11 @@ test_that("test14.json return error message",
           expect_error(convert_bds_individual(jtf[14]), "premature EOF")
 )
 
+# test_that("minimal file test21.json turns into S4-object",
+#           expect_s4_class(convert_bds_individual(jtf[21]), "individual")
+# )
+
+
 
 #library(jamesclient)
 #fn <- file.path(path.package("jamesclient"), "testdata", "client3.json")
