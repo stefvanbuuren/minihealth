@@ -33,12 +33,14 @@ validate_bds_individual <- function(txt = NULL, verbose = TRUE,
     # convert from list to data.frame
     user.warning <- data.frame()
     for(i in seq_along(warnings)) {
-      user.warning[i, "Bdsnummer"] <- warnings[i, 1]$data$Bdsnummer
-      user.warning[i, "Waarde"] <- ifelse(is.null(warnings[i, 1]$data$Waarde),
+      user.warning[i, "bdsnummer"] <- warnings[i, 1]$data$Bdsnummer
+      user.warning[i, "supplied"] <- ifelse(is.null(warnings[i, 1]$data$Waarde),
                                           NA, as.character(warnings[i, 1]$data$Waarde))
-      user.warning[i, "Mode"] <- ifelse(is.null(warnings[i, 1]$data$Waarde),
+      user.warning[i, "supplied type"] <- ifelse(is.null(warnings[i, 1]$data$Waarde),
                                           NA, mode(warnings[i, 1]$data$Waarde))
     }
+    user.warning <- merge(user.warning, bds_lexicon, by = "bdsnummer") %>%
+      select(bdsnummer, description, expected, supplied, `supplied type`)
 
     attr(valid, "errors") <- user.warning
     return(valid)

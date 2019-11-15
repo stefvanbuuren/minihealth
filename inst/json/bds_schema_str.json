@@ -3,6 +3,11 @@
   "$id": "http://groeidiagrammen.nl/schema/EPremDossier_string.json",
   "type": "object",
   "title": "EPremDossier",
+  "required": [
+    "Referentie",
+    "OrganisatieCode",
+    "ClientGegevens"
+  ],
   "properties": {
     "Referentie": {
       "title": "Request identification",
@@ -13,7 +18,7 @@
     "OrganisatieCode": {
       "title": "Care organisation code",
       "$id": "#/properties/OrganisatieCode",
-      "anyOf": [{"type": "integer"}, {"type": "string"}]
+      "type": "integer"
     },
     "ClientGegevens": {
       "title": "Child data object",
@@ -48,7 +53,7 @@
               "anyOf": [
               {"properties": {
                     "Bdsnummer": {"const": 19},
-                    "Waarde": {"enum": ["0", "1", "2", "3", 0, 1, 2, 3]}
+                    "Waarde": {"enum": ["0", "1", "2", "3"]}
                     }
                 },
                 {"properties": {
@@ -83,7 +88,7 @@
                 },
                 {"properties": {
                     "Bdsnummer": {"const": 91},
-                    "Waarde": {"enum": ["1", "2", "99", 1, 2, 99]}
+                    "Waarde": {"enum": ["1", "2", "99"]}
                     }
                 },
                 {"properties": {
