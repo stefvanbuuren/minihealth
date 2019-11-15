@@ -1,0 +1,16 @@
+{
+   "Referentie":"fa308134-069e-49ce-9847-ccdae380ed6f",
+   "OrganisatieCode":1234,
+   "ClientGegevens":{
+      "Elementen":[
+         {
+            "Bdsnummer":19,
+            "Waarde":"2"
+         },
+         {
+            "Bdsnummer":20,
+            "Waarde":"20181011"
+         }
+         ]
+   }
+}

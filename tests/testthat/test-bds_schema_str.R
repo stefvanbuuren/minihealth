@@ -3,7 +3,7 @@ context("bds_schema_str")
 # bds_schema <- file.path(path.package("minihealth"), "json", "bds_schema_str.json")
 
 # testfiles: for interactive use only
-# jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:20, ".json"))
+jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
 
 # testfiles: R CMD CHECK
 jtf <- file.path("data", paste0("test", 1:20, ".json"))
@@ -53,3 +53,8 @@ test_that("test19.json passes bds_schema_str.json",
 )
 
 # validate_bds_individual(jtf[20], schema = "string")
+
+test_that("test21.json (minimal) passes bds_schema_str.json",
+          expect_true(validate_bds_individual(jtf[21], schema = "string"))
+)
+

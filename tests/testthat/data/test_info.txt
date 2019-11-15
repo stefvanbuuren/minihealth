@@ -18,3 +18,4 @@ test17.json  Bdsnummer 82 numeric
 test18.json  Bdsnummer 91 numeric
 test19.json  Bdsnummer 110 numeric
 test20.json  Missing "Groepen" field
+test21.json  Minimal JSON file
