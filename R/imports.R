@@ -8,7 +8,7 @@
 #' @importFrom jsonlite        fromJSON toJSON validate
 #' @importFrom jsonvalidate    json_validate
 #' @importFrom lubridate       ymd dmy
-#' @importFrom rlang           .data
+#' @importFrom rlang           .data abort catch_cnd
 #' @importFrom stats           predict
 #' @importFrom tidyr           gather
 #'

@@ -52,6 +52,7 @@ Collate:
     'get_xyz.R'
     'imports.R'
     'individual_to_donordata.R'
+    'parse_valid.R'
     'table34.R'
     'tests.R'
     'validate_bds_individual.R'

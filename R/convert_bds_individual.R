@@ -4,6 +4,9 @@
 #' of class \linkS4class{individual}. The function automatically calculates
 #' standard deviation scores and broken stick conditional means per visit.
 #' @param txt a JSON string, URL or file
+#' @param schema A string that selects the JSON validation schema. The
+#' default selects \code{"json/bds_schema.json"}. The specification
+#' \code{schema = "string"} selects \code{"json/bds_schema_str.json"}.
 #' @param \dots Additional parameter passed down to
 #'   \code{fromJSON(txt, ...)}, \code{new("xyz",... )} and
 #'   \code{new("bse",... )}. Useful parameters are \code{models =
@@ -19,24 +22,22 @@
 #' fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
 #' p <- convert_bds_individual(fn)
 #' @export
-convert_bds_individual <- function(txt = NULL, ...) {
+convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), ...) {
+  schema <- match.arg(schema)
 
-  # json schema validation
-  if(!validate_bds_individual(txt, verbose = FALSE)){
+  # check JSON syntax: direct to caller
+  err <- catch_cnd(d <- fromJSON(txt, ...))
+  if (!is.null(err)) abort(conditionMessage(err))
 
-    # use string schema as fall-back
-    fallback <- validate_bds_individual(txt, verbose = FALSE, schema = "string")
-    if(!fallback){
-      # Return some kind of error or warning?
-    }
+  # JSON schema validation: direct to caller and end user
+  valid <- validate_bds_individual(txt, schema)
+
+  if (!valid) {
+    mess <- parse_valid(valid)
+    # abort if required parts are missing
   }
 
-  d <- fromJSON(txt, ...)
   b <- d$ClientGegevens$Elementen
-
-  if(exists("fallback")){
-    # batch convert all relevant bds numbers?
-  } # from here on assume all bds numbers are correct format.. ?
 
   # is this child or message number?
   pid <- new("individualID",

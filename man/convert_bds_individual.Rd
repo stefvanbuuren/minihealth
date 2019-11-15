@@ -4,10 +4,15 @@
 \alias{convert_bds_individual}
 \title{Convert json BSD data for single individual to class individual}
 \usage{
-convert_bds_individual(txt = NULL, ...)
+convert_bds_individual(txt = NULL, schema = c("default", "string"),
+  ...)
 }
 \arguments{
 \item{txt}{a JSON string, URL or file}
+
+\item{schema}{A string that selects the JSON validation schema. The
+default selects \code{"json/bds_schema.json"}. The specification
+\code{schema = "string"} selects \code{"json/bds_schema_str.json"}.}
 
 \item{\dots}{Additional parameter passed down to
 \code{fromJSON(txt, ...)}, \code{new("xyz",... )} and

@@ -17,8 +17,8 @@ test_that("test1.json (client3.json) passes bds_schema_str.json",
 # validate_bds_individual(jtf[4], schema = "string")
 # validate_bds_individual(jtf[5], schema = "string")
 # validate_bds_individual(jtf[6], schema = "string")
-# validate_bds_individual(jtf[7], schema = "string")
-# validate_bds_individual(jtf[8], schema = "string")
+#validate_bds_individual(jtf[7], schema = "string")
+#validate_bds_individual(jtf[8], schema = "string")
 
 test_that("test9.json passes bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[9], schema = "string"))
