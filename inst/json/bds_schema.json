@@ -3,11 +3,6 @@
   "$id": "http://groeidiagrammen.nl/schema/EPremDossier.json",
   "type": "object",
   "title": "EPremDossier",
-  "required": [
-    "Referentie",
-    "OrganisatieCode",
-    "ClientGegevens"
-  ],
   "properties": {
     "Referentie": {
       "title": "Request identification",
@@ -18,7 +13,7 @@
     "OrganisatieCode": {
       "title": "Care organisation code",
       "$id": "#/properties/OrganisatieCode",
-      "type": "integer"
+      "anyOf": [{"type": "integer"}, {"type": "string"}]
     },
     "ClientGegevens": {
       "title": "Child data object",
