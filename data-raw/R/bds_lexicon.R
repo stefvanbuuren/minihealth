@@ -1,5 +1,5 @@
-#' Create the BDS lexicon
-#' @export
+# Create the BDS lexicon
+
 create_bds_lexicon <- function(){
  bds_lexicon <- data.frame(
             bdsnummer = c(19, 20, 62, 63, 66, 71, 82, 91, 110, 235, 245, 252,
