@@ -38,7 +38,7 @@ EPremDossier  | Instance       | Class
 Name            | Description                                   | Required
 --------------- | --------------------------------------------- | -----
 Clientgegevens  | Class with basic child data                   | Y
-Contactmomenten | Class with data per visit                     | Y
+Contactmomenten | Class with data per visit                     | N
 InstrumentCode  | Integer identifying the instrument            | N
 OrganisatieCode | Integer identifying the care organisation     | Y
 Referentie      | String identifying the request                | Y
@@ -61,7 +61,7 @@ EPremGroep    | Instance       | Class
 
 Name            | Description                        | Required
 --------------- | ---------------------------------- | --------
-Elementen       | Class with BDS-elements            | N
+Elementen       | Class with BDS-elements            | Y
 Groepen         | Class with groups of BDS-elements  | N
 
 ### EPremElement Class
@@ -96,7 +96,7 @@ EPremContactmoment  | Instance       | Class
 
 Name            | Description                        | Required
 --------------- | ---------------------------------- | --------
-Elementen       | Class with BDS-elements            |    N 
+Elementen       | Class with BDS-elements            |    Y 
 Groepen         | Class with groups of BDS-elements  |    N
 Tijdstip        | Date of visit                      |    Y
 
