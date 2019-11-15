@@ -6,7 +6,7 @@ context("bds_schema_str")
 jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
 
 # testfiles: R CMD CHECK
-jtf <- file.path("data", paste0("test", 1:20, ".json"))
+jtf <- file.path("data", paste0("test", 1:21, ".json"))
 
 test_that("test1.json (client3.json) passes bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[1], schema = "string"))
