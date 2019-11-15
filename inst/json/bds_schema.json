@@ -6,8 +6,7 @@
   "required": [
     "Referentie",
     "OrganisatieCode",
-    "ClientGegevens",
-    "Contactmomenten"
+    "ClientGegevens"
   ],
   "properties": {
     "Referentie": {
@@ -26,8 +25,7 @@
       "$id": "#/properties/ClientGegevens",
       "type": "object",
       "required": [
-        "Elementen",
-        "Groepen"
+        "Elementen"
       ],
       "properties": {
         "Elementen": {
