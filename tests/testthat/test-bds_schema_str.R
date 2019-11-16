@@ -74,4 +74,3 @@ test_that("test20.json (missing Groepen) passes bds_schema_str.json",
 test_that("minimal test21.json passes bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[21], schema = "string"))
 )
-
