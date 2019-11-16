@@ -12,9 +12,9 @@ parse_valid <- function(valid) {
   # For required errors
   if("required" %in% warnings$keyword){
     errors[["required"]] <- warnings %>%
-      filter(keyword == "required") %>%
-      select(message) %>%
-      unname
+      filter(.data$keyword == "required") %>%
+      select(.data$message) %>%
+      unname()
   }
 
   # For anyOf errors
@@ -34,8 +34,8 @@ parse_valid <- function(valid) {
                                                  NA, mode(val.err[i, 1]$data$Waarde))
     }
 
-    errors[["supplied"]] <- merge(user.warning, bds_lexicon, by = "bdsnummer") %>%
-      select(bdsnummer, description, expected, supplied, `supplied type`)
+    errors[["supplied"]] <- merge(user.warning, minihealth::bds_lexicon, by = "bdsnummer") %>%
+      select(one_of(c("bdsnummer", "description", "expected", "supplied", "supplied type")))
   }
 
   # For type errors outside of bdsnumber values
