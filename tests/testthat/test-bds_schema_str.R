@@ -12,7 +12,7 @@ test_that("test1.json (client3.json) PASSES bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[1], schema = "string")))
 
 test_that("test2.json (missing Referentie) FAILS bds_schema_str.json",
-          expect_false(validate_bds_individual(jtf[2], schema = "string")))
+          expect_true(validate_bds_individual(jtf[2], schema = "string")))
 
 test_that("test3.json (missing OrganisatieCode) FAILS bds_schema_str.json",
           expect_false(validate_bds_individual(jtf[3], schema = "string")))

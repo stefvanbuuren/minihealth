@@ -4,7 +4,6 @@
   "type": "object",
   "title": "EPremDossier",
   "required": [
-    "Referentie",
     "OrganisatieCode",
     "ClientGegevens"
   ],

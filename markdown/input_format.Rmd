@@ -41,7 +41,7 @@ Clientgegevens  | Class with basic child data                   | Y
 Contactmomenten | Class with data per visit                     | N
 InstrumentCode  | Integer identifying the instrument            | N
 OrganisatieCode | Integer identifying the care organisation     | Y
-Referentie      | String identifying the request                | Y
+Referentie      | String identifying the request                | N
 
 
 ### EPremGroep Class
