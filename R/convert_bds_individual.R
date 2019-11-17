@@ -42,7 +42,7 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   # is this child or message number?
   pid <- new("individualID",
              id = 0L,
-             name = d$Referentie,
+             name = as.character(d$Referentie),
              dob = ymd(b[b$Bdsnummer == 20, 2]),
              src = as.character(d$OrganisatieCode),
              dnr = NA_character_)
