@@ -33,11 +33,9 @@ test_that("test7.json (Missing Referentie & OrganisatieCode) FAILS bds_schema_st
 #test_that("test8.json (Invalid OrganisatieCode number) FAILS bds_schema_str.json",
 #          expect_false(validate_bds_individual(jtf[8], schema = "string")))
 
-# currently gives TRUE
 test_that("test9.json (Bdsnummer 19 missing) FAILS bds_schema_str.json",
           expect_false(validate_bds_individual(jtf[9], schema = "string")))
 
-# currently gives TRUE
 test_that("test10.json (Bdsnummer 20 missing) FAILS bds_schema_str.json",
           expect_false(validate_bds_individual(jtf[10], schema = "string")))
 

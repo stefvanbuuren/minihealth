@@ -1,47 +1,29 @@
-
 parse_valid <- function(valid) {
 
-  # default message
-  errors <- list(required = "All required fields present",
-                 supplied = "All supplied values supported")
+  mess <- list(required = character(0),
+               supplied = character(0))
+  if (valid) return(mess)
 
   # extract error information
-  warnings <- valid %>%
-    attr("error")
+  w <- attr(valid, "error")
 
   # For required errors
-  if("required" %in% warnings$keyword){
-    errors[["required"]] <- warnings %>%
-      filter(.data$keyword == "required") %>%
-      select(.data$message) %>%
-      unname()
-  }
+  mess$required <- w[w$keyword == "required", "message"]
 
   # For anyOf errors
-  if("anyOf" %in% warnings$keyword){
-    val.err <- warnings %>%
-      filter(.data$keyword %in% "anyOf") %>%
-      select(.data$data) %>%
-      simplify2array()
-
-    # convert from list to data.frame
+  val.err <- t(simplify2array(w[w$keyword == "anyOf", "data"]))
+  if (ncol(val.err) >= 1L) {
     user.warning <- data.frame()
-    for(i in seq_along(val.err)) {
-      user.warning[i, "bdsnummer"] <- val.err[i, 1]$data$Bdsnummer
-      user.warning[i, "supplied"] <- ifelse(is.null(val.err[i, 1]$data$Waarde),
-                                            NA, as.character(val.err[i, 1]$data$Waarde))
-      user.warning[i, "supplied type"] <- ifelse(is.null(val.err[i, 1]$data$Waarde),
-                                                 NA, mode(val.err[i, 1]$data$Waarde))
+    for (i in 1L:nrow(val.err)) {
+      user.warning[i, "bdsnummer"] <- val.err[i, 1L][[1L]]
+      user.warning[i, "supplied"] <- ifelse(is.null(val.err[i, 2L][[1L]]),
+                                            NA, as.character(val.err[i, 2L][[1L]]))
+      user.warning[i, "supplied type"] <- ifelse(is.null(val.err[i, 2L][[1L]]),
+                                                 NA, mode(val.err[i, 2L][[1L]]))
     }
-
-    errors[["supplied"]] <- merge(user.warning, minihealth::bds_lexicon, by = "bdsnummer") %>%
+    mess$supplied <- merge(user.warning, minihealth::bds_lexicon, by = "bdsnummer") %>%
       select(one_of(c("bdsnummer", "description", "expected", "supplied", "supplied type")))
   }
 
-  # For type errors outside of bdsnumber values
-  # to be added.
-
-  # Add errors as attribute
-  attr(valid, "errors") <- errors
-  return(valid)
+  mess
 }
