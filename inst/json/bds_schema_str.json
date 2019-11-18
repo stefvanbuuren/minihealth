@@ -24,13 +24,24 @@
       "$id": "#/properties/ClientGegevens",
       "type": "object",
       "required": [
-        "Elementen"
+        "Elementen",
+        
       ],
       "properties": {
         "Elementen": {
           "title": "Elementen",
           "$id": "#/properties/ClientGegevens/properties/Elementen",
           "type": "array",
+          "allOf": [
+            {"contains": {
+            	"properties": {"Bdsnummer": {"const": 19}}
+          				}
+            },
+            {"contains": {
+            	"properties": {"Bdsnummer": {"const": 20}}
+          				}
+            }
+          ],
           "items": {
             "$id": "#/properties/ClientGegevens/properties/Elementen/items",
             "type": "object",
@@ -142,7 +153,9 @@
             ],
             "properties": {
               "Elementen": {
-                "$ref": "#/properties/ClientGegevens/properties/Elementen"
+                "items": {
+                	"$ref": "#/properties/ClientGegevens/properties/Elementen/items"
+                }
               }
             }
           }
@@ -169,7 +182,9 @@
             "pattern": "^([0-9]{8})$"
           },
           "Elementen": {
-            "$ref": "#/properties/ClientGegevens/properties/Elementen"
+            "items": {
+            "$ref": "#/properties/ClientGegevens/properties/Elementen/items"
+            }
           }
         }
       }
