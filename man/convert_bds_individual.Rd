@@ -32,7 +32,7 @@ standard deviation scores and broken stick conditional means per visit.
 library(donorloader)
 smocc_bs <- load_data(dnr = "smocc_bs")
 fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
-p <- convert_bds_individual(fn)
+p <- convert_bds_individual(fn, schema = "string")
 }
 \seealso{
 \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},

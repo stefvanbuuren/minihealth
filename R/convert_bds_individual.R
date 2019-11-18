@@ -20,7 +20,7 @@
 #' library(donorloader)
 #' smocc_bs <- load_data(dnr = "smocc_bs")
 #' fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
-#' p <- convert_bds_individual(fn)
+#' p <- convert_bds_individual(fn, schema = "string")
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), ...) {
   schema <- match.arg(schema)

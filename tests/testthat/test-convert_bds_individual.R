@@ -9,8 +9,8 @@ js <- minihealth::convert_individual_bds(empty)
 # )
 
 # we should get rid of the error below
-test_that("handles the empty individual object",
-          expect_error(convert_bds_individual(js),"should have required property 'Waarde'"))
+#test_that("handles the empty individual object",
+#          expect_error(convert_bds_individual(js),"should have required property 'Waarde'"))
 
 
 # testfiles: for interactive use only
@@ -20,14 +20,15 @@ jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".js
 jtf <- file.path("data", paste0("test", 1:21, ".json"))
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
-          expect_s4_class(convert_bds_individual(jtf[1]), "individual")
+          expect_s4_class(convert_bds_individual(jtf[1], schema = "string"), "individual")
 )
 
 test_that("test2.json (missing Referentie) PASSES",
-          expect_s4_class(convert_bds_individual(jtf[2]), "individual"))
+          expect_s4_class(convert_bds_individual(jtf[2], schema = "string"), "individual"))
 
 test_that("test3.json (missing OrganisatieCode) FAILS",
-          expect_error(convert_bds_individual(jtf[3]), "should have required property 'OrganisatieCode'"))
+          expect_error(convert_bds_individual(jtf[3], schema = "string"),
+                       "should have required property 'OrganisatieCode'"))
 
 # test_that("test4.json (wrong type) FAILS",
 #           expect_false(convert_bds_individual(jtf[4]), "individual"))
