@@ -56,9 +56,8 @@ test_that("test10.json (Bdsnummer 20 missing) FAILS",
           expect_error(convert_bds_individual(jtf[10], schema = "string"),
                        "Required BDS number(s) missing: 20", fixed = TRUE))
 
-# test_that("test11.json (Bdsnummer 82 missing) PASSES",
-#           expect_s4_class(convert_bds_individual(jtf[11], schema = "string"), "individual"))
-
+test_that("test11.json (Bdsnummer 82 missing) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[11], schema = "string"), "individual"))
 
 test_that("test14.json return error message",
           expect_error(convert_bds_individual(jtf[14]), "premature EOF"))

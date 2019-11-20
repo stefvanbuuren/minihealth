@@ -183,6 +183,7 @@ extract_field <- function(d, f = 245) {
 
 extract_ga <- function(b) {
   ga <- as.numeric(b[b$Bdsnummer == 82, 2])
+  if (length(ga) == 0L) ga <- NA_real_
   # convert days to weeks
   if (!is.na(ga) & ga > 50) ga <- trunc(ga / 7)
   ga
