@@ -66,7 +66,13 @@ test_that("test13.json (Bdsnummer 110 missing) PASSES",
           expect_s4_class(convert_bds_individual(jtf[13], schema = "string"), "individual"))
 
 test_that("test14.json return error message",
-          expect_error(convert_bds_individual(jtf[14]), "premature EOF"))
+          expect_error(convert_bds_individual(jtf[14], schema = "string"), "premature EOF"))
+
+test_that("test15.json (Bdsnummer 19 numeric) FAILS",
+          expect_error(convert_bds_individual(jtf[15], schema = "string"),
+                       "Misspecified BDS values found, see `supplied` for details"))
+
+
 
 # test_that("minimal file test21.json turns into S4-object",
 #           expect_s4_class(convert_bds_individual(jtf[21]), "individual")

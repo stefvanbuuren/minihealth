@@ -42,31 +42,31 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   pid <- new("individualID",
              id = 0L,
              name = as.character(d$Referentie),
-             dob = ymd(b[b$Bdsnummer == 20, 2]),
+             dob = extract_dob(d),
              src = as.character(d$OrganisatieCode),
              dnr = NA_character_)
 
   pbg <- new("individualBG",
 
-             sex = switch(b[b$Bdsnummer == 19, 2],
+             sex = switch(b[b$Bdsnummer == 19L, 2L],
                           "1" = "male",
                           "2" = "female",
                           NA_character_),
 
              # weken, volgens BDS in dagen
-             ga = as.numeric(extract_ga(b)),
+             ga = extract_field2(d, 82L, "ClientGegevens", "Elementen"),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
-             smo = extract_field2(d, 91, "ClientGegevens", "Elementen") - 1,
+             smo = extract_field2(d, 91L, "ClientGegevens", "Elementen") - 1L,
 
              # in grammen, conform BSD
-             bw = extract_field2(d, 110, "ClientGegevens", "Elementen"),
+             bw = extract_field2(d, 110L, "ClientGegevens", "Elementen"),
 
              # in mm, conform BSD, convert to cm
-             hgtm = as.numeric(b[b$Bdsnummer == 238, 2]) / 10,
+             hgtm = extract_field2(d, 238L, "ClientGegevens", "Elementen") / 10,
 
              # in mm, conform BSD, convert to cm
-             hgtf = as.numeric(b[b$Bdsnummer == 240, 2]) / 10,
+             hgtf = extract_field2(d, 240L, "ClientGegevens", "Elementen") / 10,
 
              # 510, passief roken, 1 = Nee, 2 = niet als..
 
@@ -78,7 +78,6 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
              etn = "NL"
 
              # edu (66 opleiding moeder, 62==2)
-
   )
 
   if (length(d$Contactmomenten) == 0L) {

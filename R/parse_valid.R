@@ -23,7 +23,7 @@ parse_valid <- function(valid) {
   # For misspecified BDS values
   if("anyOf" %in% w$keyword){
     mess$required <-
-      c(mess$required, "Some BDS values may be misspecified, see `supplied` for details")
+      c(mess$required, "Misspecified BDS values found, see `supplied` for details")
 
     # For misspecified values - return supplied and accepted values
     val.err <- t(simplify2array(w[w$keyword == "anyOf", "data"]))
@@ -33,13 +33,12 @@ parse_valid <- function(valid) {
         user.warning[i, "bdsnummer"] <- val.err[i, 1L][[1L]]
         user.warning[i, "supplied"] <- ifelse(is.null(val.err[i, 2L][[1L]]),
                                               NA, as.character(val.err[i, 2L][[1L]]))
-        user.warning[i, "supplied type"] <- ifelse(is.null(val.err[i, 2L][[1L]]),
+        user.warning[i, "supplied_type"] <- ifelse(is.null(val.err[i, 2L][[1L]]),
                                                    NA, mode(val.err[i, 2L][[1L]]))
       }
       mess$supplied <- merge(user.warning, minihealth::bds_lexicon, by = "bdsnummer") %>%
-        select(one_of(c("bdsnummer", "description", "expected", "supplied", "supplied type")))
+        select(one_of(c("bdsnummer", "description", "expected", "supplied", "supplied_type")))
     }
-
   }
 
 
