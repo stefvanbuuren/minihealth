@@ -57,10 +57,10 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
              ga = as.numeric(extract_ga(b)),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
-             smo = as.numeric(b[b$Bdsnummer == 91, 2]) - 1,
+             smo = extract_field2(d, 91, "ClientGegevens", "Elementen") - 1,
 
              # in grammen, conform BSD
-             bw = as.numeric(b[b$Bdsnummer == 110, 2]),
+             bw = extract_field2(d, 110, "ClientGegevens", "Elementen"),
 
              # in mm, conform BSD, convert to cm
              hgtm = as.numeric(b[b$Bdsnummer == 238, 2]) / 10,
@@ -186,5 +186,12 @@ extract_ga <- function(b) {
   if (length(ga) == 0L) ga <- NA_real_
   # convert days to weeks
   if (!is.na(ga) & ga > 50) ga <- trunc(ga / 7)
-  ga
+  as.numeric(ga)
 }
+
+extract_field2 <- function(d, f, l1, l2) {
+  b <- d[[l1]][[l2]]
+  v <- b[b$Bdsnummer == f, "Waarde"]
+  ifelse (length(v) == 0L, NA_real_, as.numeric(v))
+}
+
