@@ -13,6 +13,22 @@
          {
             "Bdsnummer":82,
             "Waarde":"50"
+         },
+         {
+            "Bdsnummer":91,
+            "Waarde":"2"
+         },
+         {
+            "Bdsnummer":110,
+            "Waarde":"1500"
+         },
+         {
+            "Bdsnummer":238,
+            "Waarde":"1670"
+         },
+         {
+            "Bdsnummer":240,
+            "Waarde":"1900"
          }
          ],
             "Groepen":[
@@ -49,5 +65,41 @@
             ]
          }
       ]
-   }
+   },
+      "Contactmomenten":[
+      {
+         "Tijdstip":"20181111",
+         "Elementen":[
+            {
+               "Bdsnummer":235,
+               "Waarde":"380"
+            },
+            {
+               "Bdsnummer":245,
+               "Waarde":"1250"
+            },
+            {
+               "Bdsnummer":252,
+               "Waarde":null
+            }
+         ]
+      },
+      {
+         "Tijdstip":"20190131",
+         "Elementen":[
+            {
+               "Bdsnummer":235,
+               "Waarde":"435"
+            },
+            {
+               "Bdsnummer":245,
+               "Waarde":"2100"
+            },
+            {
+               "Bdsnummer":252,
+               "Waarde":"305"
+            }
+         ]
+      }
+   ]
 }

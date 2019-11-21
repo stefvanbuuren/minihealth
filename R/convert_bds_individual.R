@@ -43,14 +43,7 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   }
 
   # PHASE 3: Range checks
-  e <- catch_cnd(ymd(extract_field2(d, 20L, "ClientGegevens", "Elementen")))
-  if (!is.null(e)) abort("Invalid date of birth (BDS 20)")
-
-  e <- catch_cnd(ymd(extract_field3(d, 63L, "ClientGegevens", "Groepen", "Elementen")))
-  if (!is.null(e)) message("Invalid date of birth mother (BDS 63)")
-
-  ga <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
-  if (!is.na(ga) & (ga < 50 | ga > 350)) message("Gestational age (in days) outside range 50-350 (BDS 82)")
+  r <- check_ranges(d)
 
   b <- d$ClientGegevens$Elementen
 
@@ -70,19 +63,19 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
                           NA_character_),
 
              # weken, volgens BDS in dagen
-             ga = extract_field2(d, 82L, "ClientGegevens", "Elementen"),
+             ga = r$ga,
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
              smo = extract_field2(d, 91L, "ClientGegevens", "Elementen") - 1L,
 
              # in grammen, conform BSD
-             bw = extract_field2(d, 110L, "ClientGegevens", "Elementen"),
+             bw = r$bw,
 
-             # in mm, conform BSD, convert to cm
-             hgtm = extract_field2(d, 238L, "ClientGegevens", "Elementen") / 10,
+             # convert to cm
+             hgtm = r$hgtm / 10,
 
-             # in mm, conform BSD, convert to cm
-             hgtf = extract_field2(d, 240L, "ClientGegevens", "Elementen") / 10,
+             # convert to cm
+             hgtf = r$hgtf / 10,
 
              # 510, passief roken, 1 = Nee, 2 = niet als..
 
@@ -103,10 +96,10 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   else {
     time <-
       data.frame(
-        age = round((ymd(d$Contactmomenten[[1]]) - ymd(pid@dob)) / 365.25, 4),
-        hgt = extract_field(d, 235) / 10,
-        wgt = extract_field(d, 245) / 1000,
-        hdc = extract_field(d, 252) / 10,
+        age = round((r$dom - r$dob) / 365.25, 4L),
+        hgt = r$hgt / 10,
+        wgt = r$wgt / 1000,
+        hdc = r$hdc / 10,
         stringsAsFactors = FALSE)
     time$bmi <- time$wgt / (time$hgt / 100)^2
   }
@@ -191,8 +184,8 @@ extract_agep <- function(d, which_parent = "02") {
   }
 }
 
-extract_field <- function(d, f = 245) {
-  z <- d$Contactmomenten[[2]]
+extract_field <- function(d, f = 245L) {
+  z <- d$Contactmomenten[[2L]]
   as.numeric(unlist(lapply(z, function(x, f2 = f)
     ifelse("Waarde" %in% names(x), x[x$Bdsnummer == f2, "Waarde"], NA))))
 }

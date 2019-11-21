@@ -29,8 +29,7 @@ jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:22, ".js
 jtf <- file.path("data", paste0("test", 1:22, ".json"))
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
-          expect_s4_class(convert_bds_individual(jtf[1], schema = "string"), "individual")
-)
+          expect_s4_class(convert_bds_individual(jtf[1], schema = "string"), "individual"))
 
 test_that("test2.json (missing Referentie) PASSES",
           expect_s4_class(convert_bds_individual(jtf[2], schema = "string"), "individual"))
@@ -99,8 +98,6 @@ test_that("test20.json (missing Groepen) PASSES",
 
 test_that("test21.json (minimal data) PASSES",
           expect_s4_class(convert_bds_individual(jtf[21], schema = "string"), "individual"))
-
-
 
 test_that("test22.json (range checking) PASSES",
           expect_s4_class(convert_bds_individual(jtf[22], schema = "string"), "individual"))

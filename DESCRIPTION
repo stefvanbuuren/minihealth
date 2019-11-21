@@ -36,6 +36,7 @@ Acknowledgement: Development of this package was kindly suported by the
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
+    'check_ranges.R'
     'class-xyz.R'
     'class-bse.R'
     'class-individualBS.R'
