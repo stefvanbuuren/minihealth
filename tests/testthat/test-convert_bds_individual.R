@@ -3,14 +3,10 @@ context("convert_bds_individual")
 empty <- new("individual")
 js <- minihealth::convert_individual_bds(empty)
 
-# preferred action
+# test the empty object
 test_that("handles the empty individual object",
-           expect_true(is.individual(convert_bds_individual(js))))
-
-# we should get rid of the error below
-#test_that("handles the empty individual object",
-#          expect_error(convert_bds_individual(js),"should have required property 'Waarde'"))
-
+           expect_error(is.individual(convert_bds_individual(js, schema = "string")),
+          "should have required property 'Elementen'"))
 
 # testfiles: for interactive use only
 jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))

@@ -62,32 +62,18 @@ as_bds_clientdata <- function(ind) {
           stringsAsFactors = FALSE))))
   )
 
-  x$Elementen[x$Elementen$Bdsnummer == 19L, 2L] <-
-    switch(slot(ind, "sex"),
-           "male" = "1",
-           "female" = "2",
-           NA_character_)
+  x$Elementen[1L, 2L] <- switch(slot(ind, "sex"), "male" = "1", "female" = "2", NA_character_)
+  x$Elementen[2L, 2L] <- format(as.Date(slot(ind, "dob"), format = "%d-%m-%y"), format = "%Y%m%d")
+  x$Elementen[3L, 2L] <- as.character(slot(ind, "ga"))
+  x$Elementen[4L, 2L] <- as.character(slot(ind, "smo") + 1L)
+  x$Elementen[5L, 2L] <- as.character(slot(ind, "bw"))
+  x$Elementen[6L, 2L] <- as.character(slot(ind, "hgtm") * 10)
+  x$Elementen[7L, 2L] <- as.character(slot(ind, "hgtf") * 10)
 
-  x$Elementen[x$Elementen$Bdsnummer == 20L, 2L] <-
-    format(as.Date(get_dob(ind), format = "%d-%m-%y"), format = "%Y%m%d")
+  keep <- !is.na(x$Elementen[, 2L])
+  if (!any(keep)) x$Elementen <- NULL
 
-  x$Elementen[x$Elementen$Bdsnummer == 82L, 2L] <-
-    as.character(slot(ind, "ga"))
-
-  x$Elementen[x$Elementen$Bdsnummer == 91L, 2L] <-
-    as.character(slot(ind, "smo") + 1L)
-
-  x$Elementen[x$Elementen$Bdsnummer == 110L, 2L] <-
-    as.character(slot(ind, "bw"))
-
-  # height mother mm
-  x$Elementen[x$Elementen$Bdsnummer == 238L, 2L] <-
-    as.character(slot(ind, "hgtm") * 10)
-
-  # height father mm
-  x$Elementen[x$Elementen$Bdsnummer == 240L, 2L] <-
-    as.character(slot(ind, "hgtf") * 10)
-
+  if (is.na((x$Groepen[2, ])[[1]][1,2])) x$Groepen <- NULL
   x
 }
 
@@ -132,7 +118,7 @@ as_bds_contacts <- function(ind) {
   # reshuffle
   z <- gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
     mutate(Bdsnummer = as.integer(.data$Bdsnummer),
-                  Waarde = as.character(.data$Waarde)) %>%
+           Waarde = as.character(.data$Waarde)) %>%
     arrange(.data$time, .data$Bdsnummer)
   # NOTE: here we should delete rows with missing values
 
