@@ -4,13 +4,14 @@
 \alias{validate_bds_individual}
 \title{Validate JSON file}
 \usage{
-validate_bds_individual(txt = NULL, schema = "default",
-  verbose = TRUE)
+validate_bds_individual(txt = NULL, schema = NULL, verbose = TRUE)
 }
 \arguments{
-\item{txt}{a JSON string, URL or file to be compared to the schema.}
+\item{txt}{A JSON string, URL or file to be compared to the schema.}
 
-\item{schema}{the schema to evaluate by. options are "default" and "string".}
+\item{schema}{A JSON string, URL or file with the schema to evaluate
+by. The default (\code{NULL}) loads the built-in schema
+\code{"bds_schema_str.json"}.}
 
 \item{verbose}{include an error message when validation fails.}
 }

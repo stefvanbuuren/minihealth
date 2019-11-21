@@ -4,15 +4,13 @@
 \alias{convert_bds_individual}
 \title{Convert json BSD data for single individual to class individual}
 \usage{
-convert_bds_individual(txt = NULL, schema = c("default", "string"),
-  ...)
+convert_bds_individual(txt = NULL, schema = NULL, ...)
 }
 \arguments{
 \item{txt}{a JSON string, URL or file}
 
-\item{schema}{A string that selects the JSON validation schema. The
-default selects \code{"json/bds_schema.json"}. The specification
-\code{schema = "string"} selects \code{"json/bds_schema_str.json"}.}
+\item{schema}{A JSON string, URL or file that selects the JSON validation
+schema.}
 
 \item{\dots}{Additional parameter passed down to
 \code{fromJSON(txt, ...)}, \code{new("xyz",... )} and
@@ -32,7 +30,7 @@ standard deviation scores and broken stick conditional means per visit.
 library(donorloader)
 smocc_bs <- load_data(dnr = "smocc_bs")
 fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
-p <- convert_bds_individual(fn, schema = "string")
+p <- convert_bds_individual(fn)
 }
 \seealso{
 \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},

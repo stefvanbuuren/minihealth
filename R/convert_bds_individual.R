@@ -4,9 +4,8 @@
 #' of class \linkS4class{individual}. The function automatically calculates
 #' standard deviation scores and broken stick conditional means per visit.
 #' @param txt a JSON string, URL or file
-#' @param schema A string that selects the JSON validation schema. The
-#' default selects \code{"json/bds_schema.json"}. The specification
-#' \code{schema = "string"} selects \code{"json/bds_schema_str.json"}.
+#' @param schema A JSON string, URL or file that selects the JSON validation
+#' schema.
 #' @param \dots Additional parameter passed down to
 #'   \code{fromJSON(txt, ...)}, \code{new("xyz",... )} and
 #'   \code{new("bse",... )}. Useful parameters are \code{models =
@@ -20,10 +19,9 @@
 #' library(donorloader)
 #' smocc_bs <- load_data(dnr = "smocc_bs")
 #' fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
-#' p <- convert_bds_individual(fn, schema = "string")
+#' p <- convert_bds_individual(fn)
 #' @export
-convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), ...) {
-  schema <- match.arg(schema)
+convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
   # PHASE 1: check JSON syntax: hard stop, signal "syntax error" to caller
   err <- catch_cnd(d <- fromJSON(txt, ...))
