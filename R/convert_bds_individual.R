@@ -35,7 +35,7 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
 
   # error handling
   if (length(mess$required) > 0L) {
-    if (grepl("required", mess$required) | grepl("should", mess$required))
+    if (any(grepl("required", mess$required)) | any(grepl("should", mess$required)))
       # throw error if required elements are missing
       stop(message = mess$required)
     else
