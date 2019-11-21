@@ -1,12 +1,26 @@
 context("convert_bds_individual")
 
 empty <- new("individual")
-js <- minihealth::convert_individual_bds(empty)
+js1 <- minihealth::convert_individual_bds(empty)
 
 # test the empty object
 test_that("handles the empty individual object",
-           expect_error(is.individual(convert_bds_individual(js, schema = "string")),
+           expect_error(is.individual(convert_bds_individual(js1, schema = "string")),
           "should have required property 'Elementen'"))
+
+minimal <- new("individual", sex = "male", dob = as.Date("20181231", "%Y%m%d"))
+js2 <- minihealth::convert_individual_bds(minimal)
+
+# test the minimal object
+test_that("handles the minimal individual object",
+          expect_s4_class(convert_bds_individual(js2, schema = "string"), "individual"))
+
+# test the below minimal (without sex field)
+below <- new("individual", dob = as.Date("20181231", "%Y%m%d"))
+js3 <- minihealth::convert_individual_bds(below)
+test_that("handles the below minimal object",
+          expect_error(convert_bds_individual(js3, schema = "string"),
+             "required BDS number(s) missing: 19", fixed = TRUE))
 
 # testfiles: for interactive use only
 jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))

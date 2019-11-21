@@ -72,6 +72,7 @@ as_bds_clientdata <- function(ind) {
 
   keep <- !is.na(x$Elementen[, 2L])
   if (!any(keep)) x$Elementen <- NULL
+  else x$Elementen <- x$Elementen[keep, ]
 
   if (is.na((x$Groepen[2, ])[[1]][1,2])) x$Groepen <- NULL
   x
