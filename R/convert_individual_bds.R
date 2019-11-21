@@ -23,19 +23,23 @@
 #' @export
 convert_individual_bds <- function(ind = NULL, ...) {
   if (!is.individual(ind)) stop("Object not of class `individual`.")
+
+  # required elements
   bds <- list(
-    Referentie      = as_bds_reference(ind),
     OrganisatieCode = 0L,
-    ClientGegevens  = as_bds_clientdata(ind),
-    Contactmomenten = as_bds_contacts(ind)
-  )
+    ClientGegevens  = as_bds_clientdata(ind))
+
+  # optional elements
+  bds$Referentie <- as_bds_reference(ind)
+  bds$Contactmomenten <- as_bds_contacts(ind)
+
   result <- toJSON(bds, auto_unbox = TRUE)
   if (validate(result)) return(result)
   NULL
 }
 
 as_bds_reference <- function(ind) {
-  if (length(slot(ind, "name")) < 1L | is.na(slot(ind, "name"))) return('')
+  if (length(slot(ind, "name")) < 1L | is.na(slot(ind, "name"))) return(NULL)
   else slot(ind, "name")
 }
 
@@ -107,6 +111,9 @@ as_bds_contacts <- function(ind) {
   z <- new("individualAN", hgt = ind@hgt, wgt = ind@wgt, hdc = ind@hdc,
            bmi = ind@bmi, wfh = ind@wfh)
   z <- as(z, "data.frame")[, c("age", "hgt", "wgt", "hdc")]
+
+  # return NULL if there are no measurements
+  if (nrow(z) == 0L) return(NULL)
 
   # calculate measurement dates
   dob <- as.Date(get_dob(ind), format = "%d-%m-%y")

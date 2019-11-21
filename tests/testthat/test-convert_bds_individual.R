@@ -4,9 +4,8 @@ empty <- new("individual")
 js <- minihealth::convert_individual_bds(empty)
 
 # preferred action
-# test_that("handles the empty individual object",
-#           expect_true(is.individual(convert_bds_individual(js)))
-# )
+test_that("handles the empty individual object",
+           expect_true(is.individual(convert_bds_individual(js))))
 
 # we should get rid of the error below
 #test_that("handles the empty individual object",
@@ -88,9 +87,8 @@ test_that("test19.json (Bdsnummer 110 numeric) PASSES",
 test_that("test20.json (missing Groepen) PASSES",
            expect_s4_class(convert_bds_individual(jtf[20], schema = "string"), "individual"))
 
-# test_that("minimal test21.json passes bds_schema_str.json",
-#           expect_true(validate_bds_individual(jtf[21], schema = "string"))
-# )
+test_that("test21.json (minimal data) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[21], schema = "string"), "individual"))
 
 
 # test_that("minimal file test21.json turns into S4-object",
