@@ -85,9 +85,9 @@ test_that("test18.json (Bdsnummer 91 numeric) FAILS",
 test_that("test19.json (Bdsnummer 110 numeric) PASSES",
           expect_s4_class(convert_bds_individual(jtf[19], schema = "string"), "individual"))
 
-# test_that("test20.json (missing Groepen) PASSES",
-#           expect_s4_class(convert_bds_individual(jtf[20], schema = "string"), "individual"))
-#
+test_that("test20.json (missing Groepen) PASSES",
+           expect_s4_class(convert_bds_individual(jtf[20], schema = "string"), "individual"))
+
 # test_that("minimal test21.json passes bds_schema_str.json",
 #           expect_true(validate_bds_individual(jtf[21], schema = "string"))
 # )

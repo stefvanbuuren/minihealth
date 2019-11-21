@@ -170,6 +170,7 @@ extract_agep <- function(d, which_parent = "02") {
   # which_parent: "01" = father, "02" = mother
   dob <- extract_dob(d)
   p <- d$ClientGegevens$Groepen[[1]]
+  if (is.null(p)) return(NA_real_)
   for (i in 1L:length(p)) {
     pp <- p[[i]]
     parent <- pp[pp$Bdsnummer == 62, "Waarde"]
