@@ -33,8 +33,15 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   valid <- validate_bds_individual(txt, schema)
   mess <- parse_valid(valid)
 
-  # hard stop, signal "missing required" field to caller
-  if (length(mess$required) > 0L) abort(mess$required)
+  # error handling
+  if (length(mess$required) > 0L) {
+    if (grepl("required", mess$required) | grepl("should", mess$required))
+      # throw error if required elements are missing
+      stop(message = mess$required)
+    else
+      # inform user about ill-formed BDS elements
+      message(message = toJSON(mess$supplied))
+  }
 
   b <- d$ClientGegevens$Elementen
 

@@ -50,11 +50,11 @@ test_that("test8.json returns error message",
 
 test_that("test9.json (Bdsnummer 19 missing) FAILS",
           expect_error(convert_bds_individual(jtf[9], schema = "string"),
-                       "Required BDS number(s) missing: 19", fixed = TRUE))
+                       "required BDS number(s) missing: 19", fixed = TRUE))
 
 test_that("test10.json (Bdsnummer 20 missing) FAILS",
           expect_error(convert_bds_individual(jtf[10], schema = "string"),
-                       "Required BDS number(s) missing: 20", fixed = TRUE))
+                       "required BDS number(s) missing: 20", fixed = TRUE))
 
 test_that("test11.json (Bdsnummer 82 missing) PASSES",
           expect_s4_class(convert_bds_individual(jtf[11], schema = "string"), "individual"))
@@ -68,10 +68,29 @@ test_that("test13.json (Bdsnummer 110 missing) PASSES",
 test_that("test14.json return error message",
           expect_error(convert_bds_individual(jtf[14], schema = "string"), "premature EOF"))
 
-test_that("test15.json (Bdsnummer 19 numeric) FAILS",
-          expect_error(convert_bds_individual(jtf[15], schema = "string"),
-                       "Misspecified BDS values found, see `supplied` for details"))
+test_that("test15.json (Bdsnummer 19 numeric) PASSES with message",
+          expect_message(convert_bds_individual(jtf[15], schema = "string"),
+                       '[{"bdsnummer":19,"description":"Sex of child","expected":"one of: 0, 1, 2, 3","supplied":"2","supplied_type":"numeric"},{"bdsnummer":62,"description":"Caretaker relation","expected":"one of: 01, 02, 03, 04, 05, 06, 07, 08, 98","supplied":"1","supplied_type":"numeric"}]'))
 
+test_that("test16.json (Bdsnummer 20 numeric) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[16], schema = "string"), "individual"))
+
+test_that("test17.json (Bdsnummer 82 numeric) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[17], schema = "string"), "individual"))
+
+test_that("test18.json (Bdsnummer 91 numeric) FAILS",
+          expect_message(convert_bds_individual(jtf[18], schema = "string"),
+                         '[{"bdsnummer":91,"description":"Smoking during pregnancy","expected":"one of: 1, 2, 99","supplied":"1","supplied_type":"numeric"}]'))
+
+test_that("test19.json (Bdsnummer 110 numeric) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[19], schema = "string"), "individual"))
+
+# test_that("test20.json (missing Groepen) PASSES",
+#           expect_s4_class(convert_bds_individual(jtf[20], schema = "string"), "individual"))
+#
+# test_that("minimal test21.json passes bds_schema_str.json",
+#           expect_true(validate_bds_individual(jtf[21], schema = "string"))
+# )
 
 
 # test_that("minimal file test21.json turns into S4-object",

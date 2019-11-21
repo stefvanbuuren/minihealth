@@ -11,19 +11,21 @@ parse_valid <- function(valid) {
   mess$required <- w[w$keyword == "required", "message"]
 
   # type errors
-  if(any(!grepl("Elementen", w[w$keyword == "type", "dataPath"]))) mess$required <-
-    c(w[w$keyword == "required", "message"],
-    paste(w[w$keyword == "type" & !grepl("Elementen", w$dataPath),
-            c("dataPath", "message")], collapse = " "))
+  if(any(!grepl("Elementen", w[w$keyword == "type", "dataPath"])))
+    mess$required <- c(w[w$keyword == "required", "message"],
+                       paste(w[w$keyword == "type" & !grepl("Elementen", w$dataPath),
+                               c("dataPath", "message")], collapse = " "))
 
   # For missing BDS numbers that are required
-  if("contains" %in% w$keyword) mess$required <-
-    c(mess$required, paste("Required BDS number(s) missing:",
-                           unlist(w[w$keyword == "contains", "schema"])))
+  if("contains" %in% w$keyword)
+    mess$required <- c(mess$required,
+                       paste("required BDS number(s) missing:",
+                             unlist(w[w$keyword == "contains", "schema"])))
+
   # For misspecified BDS values
-  if("anyOf" %in% w$keyword){
-    mess$required <-
-      c(mess$required, "Misspecified BDS values found, see `supplied` for details")
+  if("anyOf" %in% w$keyword) {
+    mess$required <- c(mess$required,
+                       "misspecified BDS values found, see `supplied` for details")
 
     # For misspecified values - return supplied and accepted values
     val.err <- t(simplify2array(w[w$keyword == "anyOf", "data"]))
@@ -40,8 +42,5 @@ parse_valid <- function(valid) {
         select(one_of(c("bdsnummer", "description", "expected", "supplied", "supplied_type")))
     }
   }
-
-
-
   mess
 }

@@ -24,8 +24,7 @@
       "$id": "#/properties/ClientGegevens",
       "type": "object",
       "required": [
-        "Elementen",
-        
+        "Elementen"
       ],
       "properties": {
         "Elementen": {
