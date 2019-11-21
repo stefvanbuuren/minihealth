@@ -82,7 +82,7 @@
                 },
                 {"properties": {
                     "Bdsnummer": {"const": 82},
-                    "Waarde": {"type": "number", "minimum": 0, "maximum": 99}
+                    "Waarde": {"type": "number", "minimum": 50, "maximum": 350}
                     }
                 },
                 {"properties": {

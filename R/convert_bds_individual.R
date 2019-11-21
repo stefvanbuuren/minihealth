@@ -33,7 +33,6 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
   valid <- validate_bds_individual(txt, schema)
   mess <- parse_valid(valid)
 
-  # error handling
   if (length(mess$required) > 0L) {
     if (any(grepl("required", mess$required)) | any(grepl("should", mess$required)))
       # throw error if required elements are missing
@@ -42,6 +41,16 @@ convert_bds_individual <- function(txt = NULL, schema = c("default", "string"), 
       # inform user about ill-formed BDS elements
       message(message = toJSON(mess$supplied))
   }
+
+  # PHASE 3: Range checks
+  e <- catch_cnd(ymd(extract_field2(d, 20L, "ClientGegevens", "Elementen")))
+  if (!is.null(e)) abort("Invalid date of birth (BDS 20)")
+
+  e <- catch_cnd(ymd(extract_field3(d, 63L, "ClientGegevens", "Groepen", "Elementen")))
+  if (!is.null(e)) message("Invalid date of birth mother (BDS 63)")
+
+  ga <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
+  if (!is.na(ga) & (ga < 50 | ga > 350)) message("Gestational age (in days) outside range 50-350 (BDS 82)")
 
   b <- d$ClientGegevens$Elementen
 
@@ -202,3 +211,12 @@ extract_field2 <- function(d, f, l1, l2) {
   ifelse (length(v) == 0L, NA_real_, as.numeric(v))
 }
 
+extract_field3 <- function(d, f, l1, l2, l3, which_parent = "02") {
+  p <- d[[l1]][[l2]][[l3]]
+  if (is.null(p)) return(NA)
+  for (i in 1L:length(p)) {
+    pp <- p[[i]]
+    parent <- pp[pp$Bdsnummer == 62L, "Waarde"]
+    if (parent == which_parent) return(pp[pp$Bdsnummer == f, 2L])
+  }
+}

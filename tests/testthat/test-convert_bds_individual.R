@@ -23,10 +23,10 @@ test_that("handles the below minimal object",
              "required BDS number(s) missing: 19", fixed = TRUE))
 
 # testfiles: for interactive use only
-jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
+jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:22, ".json"))
 
 # testfiles: R CMD CHECK
-jtf <- file.path("data", paste0("test", 1:21, ".json"))
+jtf <- file.path("data", paste0("test", 1:22, ".json"))
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
           expect_s4_class(convert_bds_individual(jtf[1], schema = "string"), "individual")
@@ -99,6 +99,12 @@ test_that("test20.json (missing Groepen) PASSES",
 
 test_that("test21.json (minimal data) PASSES",
           expect_s4_class(convert_bds_individual(jtf[21], schema = "string"), "individual"))
+
+
+
+test_that("test22.json (range checking) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[22], schema = "string"), "individual"))
+
 
 
 # test_that("minimal file test21.json turns into S4-object",
