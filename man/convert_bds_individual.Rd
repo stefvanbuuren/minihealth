@@ -29,7 +29,7 @@ standard deviation scores and broken stick conditional means per visit.
 \examples{
 library(donorloader)
 smocc_bs <- load_data(dnr = "smocc_bs")
-fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
+fn <- system.file("testdata", "client3.json", package = "minihealth")
 p <- convert_bds_individual(fn)
 }
 \seealso{

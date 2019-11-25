@@ -1,7 +1,7 @@
 #' Validate JSON file
 #'
-#' This function takes data from a JSON source and compares it to a JSON schema
-#' object. A \code{boolean} is returned indicating whether or not the provided
+#' This  function takes data from a JSON source and compares it to a JSON schema
+#' object.  A \code{boolean} is returned indicating whether or not the provided
 #' JSON data matches the schema.
 #' @param txt A JSON string, URL or file to be compared to the schema.
 #' @param schema A JSON string, URL or file with the schema to evaluate
@@ -14,7 +14,7 @@
 validate_bds_individual <- function(txt = NULL, schema = NULL,
                                     verbose = TRUE) {
   if (is.null(schema))
-    schema <- file.path(path.package("minihealth"), "json", "bds_schema_str.json")
+    schema <- system.file("json", "bds_schema_str.json", package = "minihealth")
 
   json_validate(txt, schema, engine = "ajv", verbose = verbose)
 }

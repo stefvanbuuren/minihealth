@@ -105,12 +105,12 @@ test_that("test22.json (range checking) PASSES",
 
 
 # test_that("minimal file test21.json turns into S4-object",
-#           expect_s4_class(convert_bds_individual(jtf[21]), "individual")
+#           expect_s4_class(convert_bds_individual(jtf[21]),  "individual")
 # )
 
 
 
 #library(jamesclient)
-#fn <- file.path(path.package("jamesclient"), "testdata", "client3.json")
+#fn <- system.file("testdata", "client3.json", package = "jamesclient")
 #data("installed.cabinets", package = "jamestest")
 # ind2 <- convert_bds_individual(fn)

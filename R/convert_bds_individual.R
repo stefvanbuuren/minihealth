@@ -11,14 +11,14 @@
 #'   \code{new("bse",... )}. Useful parameters are \code{models =
 #'   "bsmodel"} for setting the broken stick model, or \code{call =
 #'   as.call(...)} for setting proper reference standards.
-#' @return An object of class \linkS4class{individual}.
+#' @return An  object of class \linkS4class{individual}.
 #' @author Stef van Buuren 2019
 #' @seealso \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
 #'          \code{\link[jsonlite]{fromJSON}}
 #' @examples
 #' library(donorloader)
 #' smocc_bs <- load_data(dnr = "smocc_bs")
-#' fn <- file.path(path.package("minihealth"), "testdata", "client3.json")
+#' fn <- system.file("testdata", "client3.json", package = "minihealth")
 #' p <- convert_bds_individual(fn)
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {

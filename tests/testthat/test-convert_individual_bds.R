@@ -1,5 +1,5 @@
 # library(minihealth)
-# fn <- paste0("file://", file.path(path.package("minihealth"), "testdata", "client3.json"))
+# fn <- system.file( "testdata", "client3.json", package = "minihealth")
 # con <- curl::curl(fn, open = "r")
 # txt <- readLines(con)
 # d <- jsonlite::fromJSON(txt)

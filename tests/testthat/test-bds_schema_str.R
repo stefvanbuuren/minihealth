@@ -1,6 +1,6 @@
 context("bds_schema_str")
 
-# bds_schema <- file.path(path.package("minihealth"), "json", "bds_schema_str.json")
+# bds_schema <-  system.file("json", "bds_schema_str.json, package = "minihealth")
 
 # testfiles: for interactive use only
 jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
