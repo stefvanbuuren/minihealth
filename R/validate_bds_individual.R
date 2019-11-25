@@ -1,7 +1,7 @@
 #' Validate JSON file
 #'
 #' This  function takes data from a JSON source and compares it to a JSON schema
-#' object.  A \code{boolean} is returned indicating whether or not the provided
+#' object. A \code{boolean} is returned indicating whether or not the provided
 #' JSON data matches the schema.
 #' @param txt A JSON string, URL or file to be compared to the schema.
 #' @param schema A JSON string, URL or file with the schema to evaluate

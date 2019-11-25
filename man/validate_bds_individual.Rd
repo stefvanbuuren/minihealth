@@ -19,7 +19,7 @@ by. The default (\code{NULL}) loads the built-in schema
 A \code{boolean} with optional \code{errors} attribute.
 }
 \description{
-This function takes data from a JSON source and compares it to a JSON schema
+This  function takes data from a JSON source and compares it to a JSON schema
 object. A \code{boolean} is returned indicating whether or not the provided
 JSON data matches the schema.
 }
