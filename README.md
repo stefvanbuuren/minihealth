@@ -36,7 +36,7 @@ data:
   - `y`: measurement, e.g. height or weight;
   - `z`: Z-score of `y` conditional on `x`.
 
-Here are some examples for automatic Z-score calculation:
+Here are some examples for automatic \(Z\)-score calculation:
 
 ``` r
 library(minihealth)
