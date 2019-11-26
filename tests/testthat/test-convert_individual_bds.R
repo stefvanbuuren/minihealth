@@ -1,6 +1,13 @@
-# library(minihealth)
-# fn <- system.file( "testdata", "client3.json", package = "minihealth")
-# con <- curl::curl(fn, open = "r")
+context("test-convert_individual_bds")
+
+# testfiles: for interactive use only
+#jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
+
+# testfiles: R CMD CHECK
+# jtf <- file.path("data", paste0("test", 1:21, ".json"))
+
+#fn <- jtf[1]
+#con <- curl::curl(fn, open = "r")
 # txt <- readLines(con)
 # d <- jsonlite::fromJSON(txt)
 # b <- d$ClientGegevens$Elementen

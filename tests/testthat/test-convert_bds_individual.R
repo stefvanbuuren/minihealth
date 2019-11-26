@@ -22,6 +22,7 @@ test_that("handles the below minimal object",
           expect_error(convert_bds_individual(js3),
              "required BDS number(s) missing: 19", fixed = TRUE))
 
+
 # testfiles: for interactive use only
 jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:22, ".json"))
 
