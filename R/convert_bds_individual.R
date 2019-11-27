@@ -35,7 +35,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
       abort(message = mess$required)
     else
       # inform user about ill-formed BDS elements
-      message(message = toJSON(mess$supplied))
+      throw_messages(mess$supplied)
   }
 
   # PHASE 3: Range checks

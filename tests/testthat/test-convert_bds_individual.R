@@ -22,7 +22,7 @@ test_that("handles the below minimal object",
           expect_error(convert_bds_individual(js3),
              "required BDS number(s) missing: 19", fixed = TRUE))
 
-jtf <- system.file("extdata", "test", paste0("test", 1:22, ".json"), package = "jamestest")
+jtf <- system.file("extdata", "test", paste0("test", 1:23, ".json"), package = "jamestest")
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
           expect_s4_class(convert_bds_individual(jtf[1]), "individual"))
@@ -98,3 +98,5 @@ test_that("test21.json (minimal data) PASSES",
 test_that("test22.json (range checking) PASSES",
           expect_s4_class(convert_bds_individual(jtf[22]), "individual"))
 
+test_that("test23.json (multiple messages) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[23]), "individual"))
