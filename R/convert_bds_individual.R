@@ -16,7 +16,7 @@
 #' @seealso \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
 #'          \code{\link[jsonlite]{fromJSON}}
 #' @examples
-#' fn <- system.file("testdata", "client3.json", package = "minihealth")
+#' fn <- system.file("extdata", "allegrosultum", "client3.json", package = "jamestest")
 #' p <- convert_bds_individual(fn)
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {

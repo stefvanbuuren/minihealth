@@ -27,7 +27,7 @@ of class \linkS4class{individual}. The function automatically calculates
 standard deviation scores and broken stick conditional means per visit.
 }
 \examples{
-fn <- system.file("testdata", "client3.json", package = "minihealth")
+fn <- system.file("extdata", "allegrosultum", "client3.json", package = "jamestest")
 p <- convert_bds_individual(fn)
 }
 \seealso{

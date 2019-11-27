@@ -12,19 +12,21 @@ Imports:
     donorloader (>= 0.6.0),
     dplyr (>= 0.8.3),
     jsonlite,
+    jsonvalidate,
     lubridate,
     methods,
     rlang (>= 0.4.0),
-    tidyr (>= 0.8.3),
-    jsonvalidate
+    tidyr (>= 0.8.3)
 Suggests: 
     curl,
     groeidiagrammen,
+    jamestest,
     testthat
 Remotes: 
     stefvanbuuren/brokenstick,
     stefvanbuuren/clopus,
     stefvanbuuren/donorloader,
+    stefvanbuuren/jamestest,
     stefvanbuuren/groeidiagrammen
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update

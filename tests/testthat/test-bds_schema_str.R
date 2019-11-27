@@ -2,11 +2,7 @@ context("bds_schema_str")
 
 # bds_schema <-  system.file("json", "bds_schema_str.json, package = "minihealth")
 
-# testfiles: for interactive use only
-jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:21, ".json"))
-
-# testfiles: R CMD CHECK
-jtf <- file.path("data", paste0("test", 1:21, ".json"))
+jtf <- system.file("extdata", "test", paste0("test", 1:22, ".json"), package = "jamestest")
 
 test_that("test1.json (client3.json) PASSES bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[1])))

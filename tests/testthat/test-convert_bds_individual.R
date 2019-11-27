@@ -22,12 +22,7 @@ test_that("handles the below minimal object",
           expect_error(convert_bds_individual(js3),
              "required BDS number(s) missing: 19", fixed = TRUE))
 
-
-# testfiles: for interactive use only
-jtf <- file.path(getwd(), "tests", "testthat", "data", paste0("test", 1:22, ".json"))
-
-# testfiles: R CMD CHECK
-jtf <- file.path("data", paste0("test", 1:22, ".json"))
+jtf <- system.file("extdata", "test", paste0("test", 1:22, ".json"), package = "jamestest")
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
           expect_s4_class(convert_bds_individual(jtf[1]), "individual"))
@@ -103,15 +98,3 @@ test_that("test21.json (minimal data) PASSES",
 test_that("test22.json (range checking) PASSES",
           expect_s4_class(convert_bds_individual(jtf[22]), "individual"))
 
-
-
-# test_that("minimal file test21.json turns into S4-object",
-#           expect_s4_class(convert_bds_individual(jtf[21]),  "individual")
-# )
-
-
-
-#library(jamesclient)
-#fn <- system.file("testdata", "client3.json", package = "jamesclient")
-#data("installed.cabinets", package = "jamestest")
-# ind2 <- convert_bds_individual(fn)
