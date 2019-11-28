@@ -5,6 +5,6 @@ throw_messages <- function(df) {
                  df[i, 2L], "): Supplied: ",
                  df[i, 4L], ", Supplied type: ",
                  df[i, 5L])
-    message(st)
+    message(st, appendLF = FALSE)
   }
 }
