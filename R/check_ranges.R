@@ -31,6 +31,7 @@ check_ranges <- function(d) {
     if (any(!is.na(hgt) & (hgt < 100 | hgt > 3000))) message("BDS 235 (Height in mm): Outside range 100-2500")
     if (any(!is.na(wgt) & (wgt < 100 | wgt > 300000))) message("BDS 245 (Weight in grammes): Outside range 100-300000")
     if (any(!is.na(hdc) & (hdc < 100 | hdc > 900))) message("BDS 252 (Head circumference in mm): Outside range 100-900")
+    if (any(!is.na(hdc) & (hdc < 100 | hdc > 900))) warning("BDS 252 (Head circumference in mm): Outside range 100-900")
   }
 
   list(dob = dob,
