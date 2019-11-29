@@ -58,8 +58,8 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                           "2" = "female",
                           NA_character_),
 
-             # weken, volgens BDS in dagen
-             ga = r$ga,
+             # convert to completed weeks
+             ga = trunc(r$ga / 7),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
              smo = extract_field2(d, 91L, "ClientGegevens", "Elementen") - 1L,
