@@ -32,7 +32,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   if (length(mess$required) > 0L) {
     if (any(grepl("required", mess$required)) | any(grepl("should", mess$required)))
       # throw error if required elements are missing
-      abort(message = mess$required)
+      abort(message = sprintf("Incomplete data: %s", mess$required[1L]))
     else
       # inform user about ill-formed BDS elements
       throw_messages(mess$supplied)
