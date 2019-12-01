@@ -36,8 +36,7 @@
             "type": "object",
             "title": "Observed items",
             "required": [
-              "Bdsnummer",
-              "Waarde"
+              "Bdsnummer"
             ],
             "if": {
               "properties": {

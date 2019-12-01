@@ -68,3 +68,9 @@ test_that("test20.json (missing Groepen) passes bds_schema_str.json",
 test_that("minimal test21.json passes bds_schema_str.json",
           expect_true(validate_bds_individual(jtf[21]))
 )
+
+fn  <- system.file("extdata", "smocc", "Laura_S.json", package = "jamestest")
+js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
+
+test_that("Laura_S.json passes bds_schema_str.json",
+          expect_true(validate_bds_individual(fn)))
