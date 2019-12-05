@@ -5,7 +5,7 @@ js1 <- minihealth::convert_individual_bds(empty)
 
 # test the empty object
 test_that("handles the empty individual object",
-           expect_error(is.individual(convert_bds_individual(js1)),
+           expect_warning(is.individual(convert_bds_individual(js1)),
           "should have required property 'Elementen'"))
 
 minimal <- new("individual", sex = "male", dob = as.Date("20181231", "%Y%m%d"))
@@ -19,7 +19,7 @@ test_that("handles the minimal individual object",
 below <- new("individual", dob = as.Date("20181231", "%Y%m%d"))
 js3 <- minihealth::convert_individual_bds(below)
 test_that("handles the below minimal object",
-          expect_error(convert_bds_individual(js3),
+          expect_warning(convert_bds_individual(js3),
              "required BDS number(s) missing: 19", fixed = TRUE))
 
 jtf <- system.file("extdata", "test", paste0("test", 1:23, ".json"), package = "jamestest")
@@ -30,34 +30,34 @@ test_that("test1.json (client3.json) passes convert_individual_bds()",
 test_that("test2.json (missing Referentie) PASSES",
           expect_s4_class(convert_bds_individual(jtf[2]), "individual"))
 
-test_that("test3.json (missing OrganisatieCode) FAILS",
-          expect_error(convert_bds_individual(jtf[3]),
+test_that("test3.json (missing OrganisatieCode) WARNS",
+          expect_warning(convert_bds_individual(jtf[3]),
                        "should have required property 'OrganisatieCode'"))
 
-test_that("test4.json (wrong type) FAILS",
-          expect_error(convert_bds_individual(jtf[4]),
+test_that("test4.json (wrong type) WARNS",
+          expect_warning(convert_bds_individual(jtf[4]),
                        ".OrganisatieCode should be integer"))
 
-test_that("test5.json (missing ClientGegevens) FAILS",
-          expect_error(convert_bds_individual(jtf[5]),
+test_that("test5.json (missing ClientGegevens) WARNS",
+          expect_warning(convert_bds_individual(jtf[5]),
                        "should have required property 'ClientGegevens'"))
 
 test_that("test6.json (Missing ContactMomenten) PASSES",
           expect_s4_class(convert_bds_individual(jtf[6]), "individual"))
 
-test_that("test7.json (Missing Referentie & OrganisatieCode) FAILS",
-          expect_error(convert_bds_individual(jtf[7]),
+test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
+          expect_warning(convert_bds_individual(jtf[7]),
                        "should have required property 'OrganisatieCode'"))
 
 test_that("test8.json returns error message",
           expect_error(convert_bds_individual(jtf[8]), "lexical error: invalid char in json text."))
 
-test_that("test9.json (Bdsnummer 19 missing) FAILS",
-          expect_error(convert_bds_individual(jtf[9]),
+test_that("test9.json (Bdsnummer 19 missing) WARNS",
+          expect_warning(convert_bds_individual(jtf[9]),
                        "required BDS number(s) missing: 19", fixed = TRUE))
 
-test_that("test10.json (Bdsnummer 20 missing) FAILS",
-          expect_error(convert_bds_individual(jtf[10]),
+test_that("test10.json (Bdsnummer 20 missing) WARNS",
+          expect_warning(convert_bds_individual(jtf[10]),
                        "required BDS number(s) missing: 20", fixed = TRUE))
 
 test_that("test11.json (Bdsnummer 82 missing) PASSES",

@@ -1,7 +1,7 @@
 check_ranges <- function(d) {
 
   e <- catch_cnd(dob <- ymd(extract_field2(d, 20L, "ClientGegevens", "Elementen")))
-  if (!is.null(e)) abort("BDS  20 (Date of birth): Cannot parse")
+  if (!is.null(e)) warning("BDS  20 (Date of birth): Cannot parse")
 
   e <- catch_cnd(dobm <- ymd(extract_field3(d, 63L, "ClientGegevens", "Groepen", "Elementen")))
   if (!is.null(e)) message("BDS  63 (Date of birth caregiver): Cannot parse", appendLF = FALSE)
@@ -22,7 +22,7 @@ check_ranges <- function(d) {
 
   if (length(d$Contactmomenten) > 0L) {
     e <- catch_cnd(dom <- ymd(d$Contactmomenten[[1L]]))
-    if (!is.null(e)) abort("Date of visit: Cannot parse")
+    if (!is.null(e)) warning("Date of visit: Cannot parse: ", as.character(d$Contactmomenten[[1L]]))
 
     hgt <- extract_field(d, 235L)
     wgt <- extract_field(d, 245L)
@@ -31,7 +31,6 @@ check_ranges <- function(d) {
     if (any(!is.na(hgt) & (hgt < 100 | hgt > 3000))) message("BDS 235 (Height in mm): Outside range 100-2500", appendLF = FALSE)
     if (any(!is.na(wgt) & (wgt < 100 | wgt > 300000))) message("BDS 245 (Weight in grammes): Outside range 100-300000", appendLF = FALSE)
     if (any(!is.na(hdc) & (hdc < 100 | hdc > 900))) message("BDS 252 (Head circumference in mm): Outside range 100-900", appendLF = FALSE)
-    if (any(!is.na(hdc) & (hdc < 100 | hdc > 900))) warning("BDS 252 (Head circumference in mm): Outside range 100-900")
   }
 
   list(dob = dob,

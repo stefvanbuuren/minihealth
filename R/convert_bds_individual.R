@@ -31,12 +31,11 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
   if (length(mess$required) > 0L) {
     if (any(grepl("required", mess$required)) | any(grepl("should", mess$required)))
-      # throw error if required elements are missing
-      abort(message = mess$required[[1L]])
-    else
-      # inform user about ill-formed BDS elements
-      throw_messages(mess$supplied)
+      # throw warnings if required elements are missing
+      warning(mess$required, call. = FALSE)
   }
+  # inform user about ill-formed BDS elements
+  throw_messages(mess$supplied)
 
   # PHASE 3: Range checks
   r <- check_ranges(d)
@@ -53,10 +52,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
   pbg <- new("individualBG",
 
-             sex = switch(b[b$Bdsnummer == 19L, 2L],
-                          "1" = "male",
-                          "2" = "female",
-                          NA_character_),
+             sex = extract_sex(b),
 
              # convert to completed weeks
              ga = trunc(r$ga / 7),
@@ -160,7 +156,18 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
 extract_dob <- function(d) {
   b <- d$ClientGegevens$Elementen
-  ymd(b[b$Bdsnummer == 20, 2])
+  dob <- ymd(b[b$Bdsnummer == 20, 2])
+  if (length(dob) == 0L) return(as.Date(NA))
+  dob
+}
+
+extract_sex <- function(b) {
+  s <- b[b$Bdsnummer == 19L, 2L]
+  if (length(s) == 0L) return(NA_character_)
+  switch(s,
+       "1" = "male",
+       "2" = "female",
+       NA_character_)
 }
 
 extract_agep <- function(d, which_parent = "02") {
