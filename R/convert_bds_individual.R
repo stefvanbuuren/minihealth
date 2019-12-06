@@ -21,9 +21,12 @@
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
-  # PHASE 1: check JSON syntax: hard stop, signal "syntax error" to caller
+  # PHASE 1: check JSON syntax: if needed, warn and exit
   err <- catch_cnd(d <- fromJSON(txt, ...))
-  if (!is.null(err)) abort(conditionMessage(err))
+  if (!is.null(err)) {
+    warning(conditionMessage(err))
+    return(new("individual"))
+  }
 
   # PHASE 2: JSON schema validation
   valid <- validate_bds_individual(txt, schema)
