@@ -54,4 +54,25 @@ create_bds_lexicon <- function(){
 }
 
 bds_lexicon <- create_bds_lexicon()
+
+library(dscore)
+library(dplyr)
+library(openxlsx)
+
+# append Van Wiechen BDS definition
+project <- path.expand("~/Package/dscore/dscore")
+fn <- file.path(project, "data-raw/data/bds_edited.csv")
+ib <- read.csv2(file = fn, stringsAsFactors = FALSE)
+idx <- !is.na(ib$bds)
+expected <- rep("one of: 1, 2", sum(idx))
+expected[substr(ib$type[idx], 1, 1) == "m"] <- "one of: 1, 2, 3"
+ddi <- data.frame(bdsnummer = ib$bds[idx],
+                  description = ib$bds_label[idx],
+                  description_EN = ib$labelEN[idx],
+                  expected = expected,
+                  stringsAsFactors = FALSE)
+Encoding(ddi$description) <- "UTF-8"
+Encoding(ddi$description_EN) <- "UTF-8"
+
+bds_lexicon <- rbind(bds_lexicon, ddi)
 usethis::use_data(bds_lexicon, overwrite = TRUE)
