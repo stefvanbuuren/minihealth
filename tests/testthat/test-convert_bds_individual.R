@@ -19,8 +19,7 @@ test_that("handles the minimal individual object",
 below <- new("individual", dob = as.Date("20181231", "%Y%m%d"))
 js3 <- minihealth::convert_individual_bds(below)
 test_that("handles the below minimal object",
-          expect_warning(convert_bds_individual(js3),
-             "required BDS number(s) missing: 19", fixed = TRUE))
+          expect_silent(convert_bds_individual(js3)))
 
 jtf <- system.file("extdata", "test", paste0("test", 1:23, ".json"), package = "jamestest")
 
@@ -52,13 +51,11 @@ test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
 test_that("test8.json returns error message",
           expect_warning(convert_bds_individual(jtf[8]), "lexical error: invalid char in json text."))
 
-test_that("test9.json (Bdsnummer 19 missing) WARNS",
-          expect_warning(convert_bds_individual(jtf[9]),
-                       "required BDS number(s) missing: 19", fixed = TRUE))
+test_that("test9.json (Bdsnummer 19 missing) is silent",
+          expect_silent(convert_bds_individual(jtf[9])))
 
-test_that("test10.json (Bdsnummer 20 missing) WARNS",
-          expect_warning(convert_bds_individual(jtf[10]),
-                       "required BDS number(s) missing: 20", fixed = TRUE))
+test_that("test10.json (Bdsnummer 20 missing) is silent",
+          expect_silent(convert_bds_individual(jtf[10])))
 
 test_that("test11.json (Bdsnummer 82 missing) PASSES",
           expect_s4_class(convert_bds_individual(jtf[11]), "individual"))
@@ -100,3 +97,10 @@ test_that("test22.json (range checking) PASSES",
 
 test_that("test23.json (multiple messages) PASSES",
           expect_s4_class(convert_bds_individual(jtf[23]), "individual"))
+
+
+fn  <- system.file("extdata", "smocc", "Laura_S.json", package = "jamestest")
+js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
+
+test_that("Laura_S.json produce message for ga",
+          expect_message(convert_bds_individual(js)))

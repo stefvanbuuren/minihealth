@@ -19,13 +19,13 @@ parse_valid <- function(valid) {
   # For missing BDS numbers that are required
   if("contains" %in% w$keyword)
     mess$required <- c(mess$required,
-                       paste("required BDS number(s) missing:",
+                       paste("verplicht BDS nummer ontbreekt:",
                              unlist(w[w$keyword == "contains", "schema"])))
 
   # For misspecified BDS values
   if("anyOf" %in% w$keyword) {
     mess$required <- c(mess$required,
-                       "misspecified BDS values found, see `supplied` for details")
+                       "foutieve BDS waarden gevonden")
 
     # For misspecified values - return supplied and accepted values
     val.err <- t(simplify2array(w[w$keyword == "anyOf", "data"]))
