@@ -48,6 +48,7 @@ Collate:
     'class-individual.R'
     'class-cabinet.R'
     'convert_bds_individual.R'
+    'convert_ddi_gsed.R'
     'convert_individual_bds.R'
     'data.R'
     'donordata_to_individual.R'

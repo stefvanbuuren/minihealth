@@ -43,6 +43,9 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   # PHASE 3: Range checks
   r <- check_ranges(d)
 
+  # convert ddi
+  ddi <- convert_ddi_gsed(d, r)
+
   b <- d$ClientGegevens$Elementen
 
   # is this child or message number?

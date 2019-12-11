@@ -21,7 +21,7 @@ js3 <- minihealth::convert_individual_bds(below)
 test_that("handles the below minimal object",
           expect_silent(convert_bds_individual(js3)))
 
-jtf <- system.file("extdata", "test", paste0("test", 1:23, ".json"), package = "jamestest")
+jtf <- system.file("extdata", "test", paste0("test", 1:24, ".json"), package = "jamestest")
 
 test_that("test1.json (client3.json) passes convert_individual_bds()",
           expect_s4_class(convert_bds_individual(jtf[1]), "individual"))
@@ -98,6 +98,8 @@ test_that("test22.json (range checking) PASSES",
 test_that("test23.json (multiple messages) PASSES",
           expect_s4_class(convert_bds_individual(jtf[23]), "individual"))
 
+test_that("test24.json (new DDI fields) PASSES",
+          expect_s4_class(convert_bds_individual(jtf[24]), "individual"))
 
 fn  <- system.file("extdata", "smocc", "Laura_S.json", package = "jamestest")
 js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
