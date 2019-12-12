@@ -46,6 +46,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   # convert ddi
   ddi <- convert_ddi_gsed(d, r)
 
+  #
   b <- d$ClientGegevens$Elementen
 
   # is this child or message number?
@@ -105,6 +106,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
+    pds <- new("individualDS")
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
@@ -155,9 +157,16 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                             at = "knots",
                             sex = pbg@sex,
                             ...))
+
+    d <- dscore(data = ddi, key = "dutch")
+    pds <- new("individualDS",
+               mst = ddi,
+               dfa = new("xyz", x = d$a, y = d$d, z = d$daz, yname = "dfa"),
+               key = "dutch",
+               population = "dutch")
   }
 
-  new("individual", pid, pbg, pan, pbs)
+  new("individual", pid, pbg, pan, pbs, pds)
 }
 
 extract_dob <- function(d) {

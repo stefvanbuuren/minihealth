@@ -11,6 +11,7 @@ Imports:
     clopus (>= 0.37.0),
     donorloader (>= 0.6.0),
     dplyr (>= 0.8.3),
+    dscore (>= 0.41.3),
     jsonlite,
     jsonvalidate,
     lubridate,
@@ -39,8 +40,10 @@ Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
     'check_ranges.R'
+    'imports.R'
     'class-xyz.R'
     'class-bse.R'
+    'class-individualDS.R'
     'class-individualBS.R'
     'class-individualAN.R'
     'class-individualBG.R'
@@ -55,7 +58,6 @@ Collate:
     'get_dob.R'
     'get_range.R'
     'get_xyz.R'
-    'imports.R'
     'individual_to_donordata.R'
     'parse_valid.R'
     'table34.R'
