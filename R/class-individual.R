@@ -2,13 +2,15 @@
 #'@include class-individualBG.R
 #'@include class-individualAN.R
 #'@include class-individualBS.R
+#'@include class-individualDS.R
 NULL
 
 #' An S4 class to represent individual data
 #'
 #'A collection of objects of \linkS4class{individualID},
-#'\linkS4class{individualBG}, \linkS4class{individualAN} and
-#'\linkS4class{individualBS}, representing data of an individual. The
+#'\linkS4class{individualBG}, \linkS4class{individualAN},
+#'\linkS4class{individualBS} and \linkS4class{individualDS}
+#'representing data of an individual. The
 #'type of information covers individual identifyers, fixed background
 #'variables, time-varying anthroponetric measures and time-varying
 #'broken stick estimates. The \code{new("individual")} function can
@@ -16,18 +18,24 @@ NULL
 #'growth reference, and predictions according the a broken stick
 #'model.
 #'@name individual-class
-#'@slot child If constructed from a `donordata` object, this slot contains the child level record. This slot is included for backward compatibility, and should be removed when feasible.
-#'@slot time If constructed from a `donordata` object, this slot contains the time level data frame. This slot is included for backward compatibility, and should be removed when feasible.
-#'@author Stef van Buuren 2016
+#'@slot child If constructed from a `donordata` object, this slot
+#'contains the child level record. This slot is included for backward
+#'compatibility, and should be removed when feasible.
+#'@slot time If constructed from a `donordata` object, this slot contains
+#'the time level data frame. This slot is included for backward
+#'compatibility, and should be removed when feasible.
+#'@author Stef van Buuren 2016/2019
 #'@seealso \linkS4class{individualID}, \linkS4class{individualBG},
-#'         \linkS4class{individualAN}, \linkS4class{individualBS}
+#'         \linkS4class{individualAN}, \linkS4class{individualBS},
+#'         \linkS4class{individualDS}
 #'@keywords classes
 #'@export
 setClass("individual",
          contains = c("individualID",
                       "individualBG",
                       "individualAN",
-                      "individualBS"),
+                      "individualBS",
+                      "individualDS"),
          slots = c(
            child = "data.frame",
            time = "data.frame"

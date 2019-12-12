@@ -1,4 +1,5 @@
 #'@include class-xyz.R
+#'@include imports.R
 NULL
 
 #' An S4 class for broken stick estimates

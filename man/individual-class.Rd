@@ -6,8 +6,9 @@
 \title{An S4 class to represent individual data}
 \description{
 A collection of objects of \linkS4class{individualID},
-\linkS4class{individualBG}, \linkS4class{individualAN} and
-\linkS4class{individualBS}, representing data of an individual. The
+\linkS4class{individualBG}, \linkS4class{individualAN},
+\linkS4class{individualBS} and \linkS4class{individualDS}
+representing data of an individual. The
 type of information covers individual identifyers, fixed background
 variables, time-varying anthroponetric measures and time-varying
 broken stick estimates. The \code{new("individual")} function can
@@ -18,16 +19,21 @@ model.
 \section{Slots}{
 
 \describe{
-\item{\code{child}}{If constructed from a `donordata` object, this slot contains the child level record. This slot is included for backward compatibility, and should be removed when feasible.}
+\item{\code{child}}{If constructed from a `donordata` object, this slot
+contains the child level record. This slot is included for backward
+compatibility, and should be removed when feasible.}
 
-\item{\code{time}}{If constructed from a `donordata` object, this slot contains the time level data frame. This slot is included for backward compatibility, and should be removed when feasible.}
+\item{\code{time}}{If constructed from a `donordata` object, this slot contains
+the time level data frame. This slot is included for backward
+compatibility, and should be removed when feasible.}
 }}
 
 \seealso{
 \linkS4class{individualID}, \linkS4class{individualBG},
-        \linkS4class{individualAN}, \linkS4class{individualBS}
+        \linkS4class{individualAN}, \linkS4class{individualBS},
+        \linkS4class{individualDS}
 }
 \author{
-Stef van Buuren 2016
+Stef van Buuren 2016/2019
 }
 \keyword{classes}
