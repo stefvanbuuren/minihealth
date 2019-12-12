@@ -5,6 +5,7 @@
 #' @importFrom donorloader     load_data
 #' @importFrom dplyr           %>% arrange distinct filter full_join
 #'                             mutate one_of recode select tibble
+#' @importFrom dscore          dscore
 #' @importFrom jsonlite        fromJSON toJSON validate
 #' @importFrom jsonvalidate    json_validate
 #' @importFrom lubridate       dmy ymd
