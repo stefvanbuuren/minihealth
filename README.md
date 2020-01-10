@@ -268,7 +268,8 @@ pbs <- new("individualBS",
                         data = pan@wgt, 
                         at = "knots",
                         sex = pbg@sex))
-rob <- new("individual", pid, pbg, pan, pbs)
+pds <- new("individualDS")
+rob <- new("individual", pid, pbg, pan, pbs, pds)
 ```
 
 Doing this sequence by hand is somewhat inconvenient. Fortunately, there

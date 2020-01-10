@@ -37,7 +37,7 @@ LazyData: TRUE
 Acknowledgement: Development of this package was kindly suported by the
     Bill & Melinda Gates Foundation
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Collate: 
     'check_ranges.R'
     'imports.R'

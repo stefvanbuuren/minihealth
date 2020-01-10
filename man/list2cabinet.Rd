@@ -19,7 +19,8 @@ and then collects all individuals into an object of \code{cabinet} S4 class.
 \seealso{
 \code{\link{donordata_to_individual}}
 
-Other cabinet: \code{\link{as}}
+Other cabinet: 
+\code{\link{as}()}
 }
 \author{
 Stef van Buuren 2016
