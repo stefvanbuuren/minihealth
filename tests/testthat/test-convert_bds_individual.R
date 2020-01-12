@@ -104,5 +104,5 @@ test_that("test24.json (new DDI fields) PASSES",
 fn  <- system.file("extdata", "smocc", "Laura_S.json", package = "jamestest")
 js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
 
-test_that("Laura_S.json produce message for ga",
-          expect_message(convert_bds_individual(js)))
+#test_that("Laura_S.json produce message for ga",
+#          expect_message(convert_bds_individual(js)))
