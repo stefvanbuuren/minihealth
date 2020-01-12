@@ -178,7 +178,10 @@ extract_dob <- function(d) {
 
 extract_sex <- function(b) {
   s <- b[b$Bdsnummer == 19L, 2L]
-  if (length(s) == 0L) return(NA_character_)
+  if (length(s) == 0L) {
+    message("BDS 19 (Geslacht) missing", appendLF = FALSE)
+    return(NA_character_)
+  }
   switch(s,
        "1" = "male",
        "2" = "female",

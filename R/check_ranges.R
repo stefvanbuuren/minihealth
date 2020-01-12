@@ -2,7 +2,10 @@ check_ranges <- function(d) {
   lex <- minihealth::bds_lexicon
 
   e <- catch_cnd(dob <- ymd(extract_field2(d, 20L, "ClientGegevens", "Elementen")))
-  if (!is.null(e)) warning("BDS  20 (",
+  if (length(dob) == 0L) message("BDS  20 (",
+                                 lex[lex$bdsnummer == 20, "description"],
+                                 ") Missing", appendLF = FALSE)
+  if (!is.null(e)) message("BDS  20 (",
                            lex[lex$bdsnummer == 20, "description"],
                            ") Onjuist format", appendLF = FALSE)
 

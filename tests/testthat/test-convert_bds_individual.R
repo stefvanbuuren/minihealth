@@ -43,7 +43,7 @@ test_that("test5.json (missing ClientGegevens) WARNS",
           expect_warning(convert_bds_individual(jtf[5]),
                        "should have required property 'ClientGegevens'"))
 
-test_that("test6.json (Missing ContactMomenten) PASSES",
+test_that("test6.json (Missing ContactMomenten) WARNS",
           expect_warning(convert_bds_individual(jtf[6]),
                          "Missing 'Contactmomenten'"))
 
@@ -51,11 +51,11 @@ test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
           expect_warning(convert_bds_individual(jtf[7]),
                        "should have required property 'OrganisatieCode'"))
 
-test_that("test8.json returns error message",
+test_that("test8.json (Invalid JSON) WARNS",
           expect_warning(convert_bds_individual(jtf[8]), "lexical error: invalid char in json text."))
 
-test_that("test9.json (Bdsnummer 19 missing) is silent",
-          expect_silent(convert_bds_individual(jtf[9])))
+test_that("test9.json (Bdsnummer 19 missing) returns message",
+          expect_message(convert_bds_individual(jtf[9])))
 
 test_that("test10.json (Bdsnummer 20 missing) is silent",
           expect_silent(convert_bds_individual(jtf[10])))
@@ -92,7 +92,7 @@ test_that("test19.json (Bdsnummer 110 numeric) PASSES",
 test_that("test20.json (missing Groepen) PASSES",
            expect_s4_class(convert_bds_individual(jtf[20]), "individual"))
 
-test_that("test21.json (minimal data) PASSES",
+test_that("test21.json (minimal data) WARNS",
           expect_warning(convert_bds_individual(jtf[21]),
                          "Missing 'Contactmomenten'"))
 
