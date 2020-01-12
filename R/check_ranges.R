@@ -37,7 +37,9 @@ check_ranges <- function(d) {
 
   hdc <- wgt <- hgt <- dom <- NULL
 
-  if (length(d$Contactmomenten) > 0L) {
+  if (length(d$Contactmomenten) == 0L) {
+    warning("Missing 'Contactmomenten'")
+  } else {
     e <- catch_cnd(dom <- ymd(d$Contactmomenten[[1L]]))
     if (!is.null(e)) warning("Meetdatum: Onjuist format: ", as.character(d$Contactmomenten[[1L]]))
 
