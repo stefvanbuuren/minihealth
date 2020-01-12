@@ -33,7 +33,9 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   mess <- parse_valid(valid)
 
   if (length(mess$required) > 0L) {
-    if (any(grepl("required", mess$required)) | any(grepl("should", mess$required)))
+    if (any(grepl("required", mess$required)) |
+        any(grepl("verplicht", mess$required)) |
+        any(grepl("should", mess$required)))
       # throw warnings if required elements are missing
       warning(mess$required, call. = FALSE)
   }
@@ -178,10 +180,7 @@ extract_dob <- function(d) {
 
 extract_sex <- function(b) {
   s <- b[b$Bdsnummer == 19L, 2L]
-  if (length(s) == 0L) {
-    message("BDS 19 (Geslacht) missing", appendLF = FALSE)
-    return(NA_character_)
-  }
+  if (length(s) == 0L) return(NA_character_)
   switch(s,
        "1" = "male",
        "2" = "female",

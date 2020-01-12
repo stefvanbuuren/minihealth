@@ -52,13 +52,16 @@ test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
                        "should have required property 'OrganisatieCode'"))
 
 test_that("test8.json (Invalid JSON) WARNS",
-          expect_warning(convert_bds_individual(jtf[8]), "lexical error: invalid char in json text."))
+          expect_warning(convert_bds_individual(jtf[8]),
+                         "lexical error: invalid char in json text."))
 
-test_that("test9.json (Bdsnummer 19 missing) returns message",
-          expect_message(convert_bds_individual(jtf[9])))
+test_that("test9.json (Bdsnummer 19 missing) returns warning",
+          expect_warning(convert_bds_individual(jtf[9]),
+                         "verplicht BDS nummer ontbreekt: 19"))
 
-test_that("test10.json (Bdsnummer 20 missing) is silent",
-          expect_silent(convert_bds_individual(jtf[10])))
+test_that("test10.json (Bdsnummer 20 missing) return warning",
+          expect_warning(convert_bds_individual(jtf[10]),
+                         "verplicht BDS nummer ontbreekt: 20"))
 
 test_that("test11.json (Bdsnummer 82 missing) PASSES",
           expect_s4_class(convert_bds_individual(jtf[11]), "individual"))
