@@ -15,24 +15,40 @@ check_ranges <- function(d) {
                            ") Onjuist format", appendLF = FALSE)
 
   ga <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
+  if (is.na(ga))
+    message("BDS  82 (",
+            lex[lex$bdsnummer == 82, "description"],
+            " in dagen) heeft geen waarde", appendLF = FALSE)
   if (!is.na(ga) & (ga < 50 | ga > 350))
     message("BDS  82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen): Buiten bereik 50-350", appendLF = FALSE)
 
   bw <- extract_field2(d, 110L, "ClientGegevens", "Elementen")
+  if (is.na(bw))
+    message("BDS 110 (",
+            lex[lex$bdsnummer == 110, "description"],
+            " in grammen: heeft geen waarde", appendLF = FALSE)
   if (!is.na(bw) & (bw < 300 | bw > 8000))
     message("BDS 110 (",
             lex[lex$bdsnummer == 110, "description"],
             " in grammen: Buiten bereik 300-8000", appendLF = FALSE)
 
   hgtm <- extract_field2(d, 238L, "ClientGegevens", "Elementen")
+  if (is.na(hgtm))
+    message("BDS 238 (",
+            lex[lex$bdsnummer == 238, "description"],
+            " in mm): heeft geen waarde", appendLF = FALSE)
   if (!is.na(hgtm) & (hgtm < 800 | hgtm > 3000))
     message("BDS 238 (",
             lex[lex$bdsnummer == 238, "description"],
             " in mm): Buiten bereik 800-3000", appendLF = FALSE)
 
   hgtf <- extract_field2(d, 240L, "ClientGegevens", "Elementen")
+  if (is.na(hgtm))
+    message("BDS 240 (",
+            lex[lex$bdsnummer == 240, "description"],
+            " in mm): heeft geen waarde", appendLF = FALSE)
   if (!is.na(hgtf) & (hgtf < 800 | hgtf > 3000))
     message("BDS 240 (",
             lex[lex$bdsnummer == 240, "description"],
@@ -50,14 +66,26 @@ check_ranges <- function(d) {
     wgt <- extract_field(d, 245L)
     hdc <- extract_field(d, 252L)
 
+    if (all(is.na(hgt)))
+      message("BDS 235 (",
+              lex[lex$bdsnummer == 235, "description"],
+              " in mm): heeft geen waarde", appendLF = FALSE)
     if (any(!is.na(hgt) & (hgt < 100 | hgt > 3000)))
       message("BDS 235 (",
               lex[lex$bdsnummer == 235, "description"],
               " in mm): Buiten bereik 100-2500", appendLF = FALSE)
+    if (all(is.na(wgt)))
+      message("BDS 245 (",
+              lex[lex$bdsnummer == 245, "description"],
+              " in grammen): heeft geen waarde", appendLF = FALSE)
     if (any(!is.na(wgt) & (wgt < 100 | wgt > 300000)))
       message("BDS 245 (",
               lex[lex$bdsnummer == 245, "description"],
               " in grammen): Buiten bereik 100-300000", appendLF = FALSE)
+    if (all(is.na(hdc)))
+      message("BDS 252 (",
+              lex[lex$bdsnummer == 252, "description"],
+              " in mm): heeft geen waarde", appendLF = FALSE)
     if (any(!is.na(hdc) & (hdc < 100 | hdc > 900)))
       message("BDS 252 (",
               lex[lex$bdsnummer == 252, "description"],
