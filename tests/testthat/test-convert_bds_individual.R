@@ -13,15 +13,16 @@ js2 <- minihealth::convert_individual_bds(minimal)
 
 # test the minimal object
 test_that("handles the minimal individual object",
-          expect_warning(convert_bds_individual(js2),
-                         "Missing 'Contactmomenten'"))
+          expect_message(convert_bds_individual(js2),
+                         "Missing 'Contactmomenten'",
+                         fixed = TRUE))
 
 # test the below minimal (without sex field)
 below <- new("individual", dob = as.Date("20181231", "%Y%m%d"))
 js3 <- minihealth::convert_individual_bds(below)
 test_that("handles the below minimal object",
           expect_warning(convert_bds_individual(js3),
-                         "Missing 'Contactmomenten'"))
+                         "verplicht BDS nummer ontbreekt: 19"))
 
 jtf <- system.file("extdata", "test", paste0("test", 1:24, ".json"), package = "jamestest")
 
@@ -44,8 +45,9 @@ test_that("test5.json (missing ClientGegevens) WARNS",
                        "should have required property 'ClientGegevens'"))
 
 test_that("test6.json (Missing ContactMomenten) WARNS",
-          expect_warning(convert_bds_individual(jtf[6]),
-                         "Missing 'Contactmomenten'"))
+          expect_message(convert_bds_individual(jtf[6]),
+                         "Missing 'Contactmomenten'",
+                         fixed = TRUE))
 
 test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
           expect_warning(convert_bds_individual(jtf[7]),
@@ -96,12 +98,15 @@ test_that("test18.json (Bdsnummer 91 numeric) produces message",
 test_that("test19.json (Bdsnummer 110 numeric) PASSES",
           expect_silent(convert_bds_individual(jtf[19])))
 
-test_that("test20.json (missing Groepen) PASSES",
-           expect_silent(convert_bds_individual(jtf[20])))
+test_that("test20.json (missing Groepen) produces message",
+           expect_message(convert_bds_individual(jtf[20]),
+                          "Missing 'ClientGegevens$Groepen'",
+                          fixed = TRUE))
 
 test_that("test21.json (minimal data) WARNS",
-          expect_warning(convert_bds_individual(jtf[21]),
-                         "Missing 'Contactmomenten'"))
+          expect_message(convert_bds_individual(jtf[21]),
+                         "Missing 'Contactmomenten'",
+                         fixed = TRUE))
 
 test_that("test22.json (range checking) PASSES",
           expect_s4_class(convert_bds_individual(jtf[22]), "individual"))

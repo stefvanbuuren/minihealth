@@ -57,7 +57,7 @@ check_ranges <- function(d) {
   hdc <- wgt <- hgt <- dom <- NULL
 
   if (length(d$Contactmomenten) == 0L) {
-    warning("Missing 'Contactmomenten'")
+    message("Missing 'Contactmomenten'", appendLF = FALSE)
   } else {
     e <- catch_cnd(dom <- ymd(d$Contactmomenten[[1L]]))
     if (!is.null(e)) warning("Meetdatum: Onjuist format: ", as.character(d$Contactmomenten[[1L]]))
@@ -90,6 +90,10 @@ check_ranges <- function(d) {
       message("BDS 252 (",
               lex[lex$bdsnummer == 252, "description"],
               " in mm): Buiten bereik 100-900", appendLF = FALSE)
+  }
+
+  if (length(d$ClientGegevens$Groepen) == 0L) {
+    message("Missing 'ClientGegevens$Groepen'", appendLF = FALSE)
   }
 
   list(dob = dob,
