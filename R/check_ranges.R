@@ -16,11 +16,11 @@ check_ranges <- function(d) {
 
   ga <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
   if (is.na(ga))
-    message("BDS  82 (",
+    message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen) heeft geen waarde", appendLF = FALSE)
   if (!is.na(ga) & (ga < 50 | ga > 350))
-    message("BDS  82 (",
+    message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen): Buiten bereik 50-350", appendLF = FALSE)
 
