@@ -160,10 +160,10 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                             sex = pbg@sex,
                             ...))
 
-    d <- dscore(data = ddi, key = "dutch")
+    ds <- dscore(data = ddi, key = "dutch")
     pds <- new("individualDS",
                mst = ddi,
-               dfa = new("xyz", x = d$a, y = d$d, z = d$daz, yname = "dfa"),
+               dfa = new("xyz", x = ds$a, y = ds$d, z = ds$daz, yname = "dfa"),
                key = "dutch",
                population = "dutch")
   }
