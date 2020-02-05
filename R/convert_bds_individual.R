@@ -204,6 +204,7 @@ extract_agep <- function(d, which_parent = "02") {
       return(agep)
     }
   }
+  NA_real_
 }
 
 extract_field <- function(d, f = 245L) {

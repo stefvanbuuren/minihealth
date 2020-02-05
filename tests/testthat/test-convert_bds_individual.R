@@ -130,3 +130,10 @@ js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
 test_that("not_a_vector.json produces messages",
           expect_message(convert_bds_individual(js)))
 
+# problematic json file http400.json identified by Allegro Sultum - Feb 2020
+fn  <- system.file("extdata", "test", "http400.json", package = "jamestest")
+js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
+
+test_that("http400.json proceeds silent - no biological mother",
+          expect_silent(convert_bds_individual(js)))
+
