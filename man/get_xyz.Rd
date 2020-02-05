@@ -9,13 +9,15 @@ get_xyz(ind, yname)
 \arguments{
 \item{ind}{An object of class \code{individual}.}
 
-\item{yname}{A vector of name of outcome variable}
+\item{yname}{Name of outcome variable, e.g. \code{"hgt"}. Must be one
+of \code{slotNames(ind)}.}
 }
 \value{
-A data frame
+A data frame with names \code{"x"}, \code{"y"} and \code{"z"}
 }
 \description{
-Get the x, y and z coordinates of the measurement
+The function removes rows with incomplete \code{"x"} or \code{"y"}
+components.
 }
 \examples{
 # Extract anthropometric measures

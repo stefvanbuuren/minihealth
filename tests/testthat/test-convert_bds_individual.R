@@ -122,3 +122,11 @@ js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
 
 test_that("Laura_S.json is silent with GA in days",
           expect_silent(convert_bds_individual(js)))
+
+# 2 problematic json files identified by Allegro Sultum - Feb 2020
+fn  <- system.file("extdata", "test", "not_a_vector.json", package = "jamestest")
+js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
+
+test_that("not_a_vector.json produces messages",
+          expect_message(convert_bds_individual(js)))
+
