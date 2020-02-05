@@ -200,6 +200,7 @@ extract_agep <- function(d, which_parent = "02") {
       dobp <- ymd(pp[pp$Bdsnummer == 63, 2])
       agep <- as.numeric(trunc(difftime(dob, dobp, "days")/365.25))
       aa <- 1
+      if (length(agep) == 0L) agep <- NA_real_
       return(agep)
     }
   }
