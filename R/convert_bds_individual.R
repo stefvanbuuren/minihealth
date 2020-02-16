@@ -45,8 +45,9 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   # PHASE 3: Range checks
   r <- check_ranges(d)
 
-  # convert ddi
+  # convert ddi, calculate D-score
   ddi <- convert_ddi_gsed(d, r)
+  ds <- dscore(data = ddi, key = "dutch")
 
   #
   b <- d$ClientGegevens$Elementen
@@ -97,7 +98,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   else {
     time <-
       data.frame(
-        age = round((r$dom - r$dob) / 365.25, 4L),
+        age = as.numeric(round((r$dom - r$dob) / 365.25, 4L)),
         hgt = r$hgt / 10,
         wgt = r$wgt / 1000,
         hdc = r$hdc / 10,
@@ -108,30 +109,33 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
-    pds <- new("individualDS")
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
-                         x = as.numeric(time$age),
+                         x = time$age,
                          y = as.numeric(time$hgt),
                          sex = pbg@sex),
                wgt = new("xyz", yname = "wgt",
-                         x = as.numeric(time$age),
+                         x = time$age,
                          y = as.numeric(time$wgt),
                          sex = pbg@sex),
                hdc = new("xyz", yname = "hdc",
-                         x = as.numeric(time$age),
+                         x = time$age,
                          y = as.numeric(time$hdc),
                          sex = pbg@sex),
                bmi = new("xyz", yname = "bmi",
-                         x = as.numeric(time$age),
+                         x = time$age,
                          y = as.numeric(time$bmi),
                          sex = pbg@sex),
                wfh = new("xyz", yname = "wfh",
                          xname = "hgt",
-                         x = as.numeric(time$hgt),
+                         x = time$hgt,
                          y = as.numeric(time$wgt),
-                         sex = pbg@sex))
+                         sex = pbg@sex),
+               dsc = new("xyz", yname = "dsc",
+                         x = ds$a,
+                         y = ds$d,
+                         z = ds$daz))
     pbs <- new("individualBS",
                bs.hgt = new("bse", yname = "hgt",
                             data = pan@hgt,
@@ -158,17 +162,16 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                             data = pan@wfh,
                             at = "knots",
                             sex = pbg@sex,
-                            ...))
+                            ...),
+               bs.dsc = new("bse", yname = "dsc",
+                            data = pan@dsc,
+                            at = "knots",
+                            sex = pbg@sex,
+                            ...)
+               )
+    }
 
-    ds <- dscore(data = ddi, key = "dutch")
-    pds <- new("individualDS",
-               mst = ddi,
-               dfa = new("xyz", x = ds$a, y = ds$d, z = ds$daz, yname = "dfa"),
-               key = "dutch",
-               population = "dutch")
-  }
-
-  new("individual", pid, pbg, pan, pbs, pds)
+  new("individual", pid, pbg, pan, pbs)
 }
 
 extract_dob <- function(d) {

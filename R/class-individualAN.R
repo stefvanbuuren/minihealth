@@ -8,6 +8,7 @@
 #' @slot hdc  Head circumference in cm (\code{xyz})
 #' @slot bmi  Body mass index kg/m**2 (\code{xyz})
 #' @slot wfh  Weight for height kg/m (\code{xyz})
+#' @slot dsc  D-score (D) (\code{xyz})
 #' @seealso \code{\link{xyz-class}}
 #' @examples
 #' # create object with height and weight measures
@@ -35,13 +36,15 @@ setClass("individualAN",
            wgt = "xyz",
            hdc = "xyz",
            bmi = "xyz",
-           wfh = "xyz"),
+           wfh = "xyz",
+           dsc = "xyz"),
          prototype = list(
            hgt = new("xyz", yname = "hgt"),
            wgt = new("xyz", yname = "wgt"),
            hdc = new("xyz", yname = "hdc"),
            bmi = new("xyz", yname = "bmi"),
-           wfh = new("xyz", yname = "wfh", xname = "hgt")
+           wfh = new("xyz", yname = "wfh", xname = "hgt"),
+           dsc = new("xyz", yname = "dsc")
          )
 )
 
@@ -57,11 +60,13 @@ setAs("individualAN", "data.frame", function(from) {
   wgt <- as(from@wgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   hdc <- as(from@hdc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   bmi <- as(from@bmi, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+  dsc <- as(from@dsc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
   # wfh <- as(from@wfh, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
 
   m <- full_join(hgt, wgt, by = "age")
   m <- full_join(m, hdc, by = "age")
   m <- full_join(m, bmi, by = "age")
+  m <- full_join(m, dsc, by = "age")
   # m <- full_join(m, wfh, by = "age")  # cannot merge by age
   arrange(m, .data$age)
 }

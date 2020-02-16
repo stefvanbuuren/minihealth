@@ -19,8 +19,10 @@ An S4 class to represent individual broken stick estimates
 \item{\code{bmi}}{Body mass index kg/m**2 (\code{bse})}
 
 \item{\code{wfh}}{Weight for height kg/m (\code{bse})}
+
+\item{\code{dsc}}{D-score (D) (\code{bse}) - currently unavailable}
 }}
 
 \author{
-Stef van Buuren 2016
+Stef van Buuren 2016-2020
 }

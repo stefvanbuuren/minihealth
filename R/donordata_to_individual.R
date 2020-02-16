@@ -155,9 +155,7 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                             ...))
   }
 
-  pds <- new("individualDS", key = "dutch")
-
-  new("individual", pid, pbg, pan, pbs, pds,
+  new("individual", pid, pbg, pan, pbs,
            child = child, time = time)
 }
 
