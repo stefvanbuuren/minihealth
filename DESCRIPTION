@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini Dossier for Individual Health Data
-Version: 0.66.0
+Version: 0.67.0
 Authors@R: c(person("Stef", "van Buuren", email = "stef.vanbuuren@tno.nl", role = c("cre", "aut")), 
              person("Arjan", "Huizing", email = "arjan.huizing@tno.nl", role = "aut"))
 Depends: 
@@ -9,7 +9,7 @@ Depends:
 Imports:
     brokenstick (>= 0.59.1),
     clopus (>= 0.41.1),
-    donorloader (>= 0.6.0),
+    donorloader (>= 0.8.0),
     dplyr (>= 0.8.3),
     dscore (>= 1.0.2),
     jsonlite,
