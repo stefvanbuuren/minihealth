@@ -11,6 +11,10 @@ or standard deviation score (SDS)
 corresponding to \code{y} given \code{x}). The class calculates
 \code{z} (when \code{y} is specified), or \code{y} (when \code{z} is specified).
 }
+\details{
+Changed Feb 2020: The function rounds `z` to 3 digits after the
+decimal point.
+}
 \section{Slots}{
 
  \describe{

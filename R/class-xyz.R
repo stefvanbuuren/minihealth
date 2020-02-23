@@ -32,6 +32,8 @@
 #'    \code{call} was actually found.}
 #'}
 #'
+#' @details Changed Feb 2020: The function rounds `z` to 3 digits after the
+#' decimal point.
 #'@name xyz-class
 #'@rdname xyz-class
 #'@aliases xyz-class
@@ -133,11 +135,11 @@ setMethod(
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- as.numeric(rep(NA, lx))
       else slot(.Object, "z") <-
-          as.numeric(y2z(y = as.numeric(y),
+          round(as.numeric(y2z(y = as.numeric(y),
                          x = slot(.Object, "x"),
-                         ref = ref))
+                         ref = ref)), 3L)
     }
-    else slot(.Object, "z") <- as.numeric(z)
+    else slot(.Object, "z") <- round(as.numeric(z), 3L)
 
     # administrative names
     .Object@xname <- as.character(xname[1])
