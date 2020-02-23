@@ -1,3 +1,7 @@
+# minihealth 0.68.0
+
+* Round Z-scores to 3 digits after decimal point
+
 # minihealth 0.46.0
 
 * Export `get_dob()`
