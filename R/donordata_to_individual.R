@@ -55,8 +55,10 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
 
   id <- id[1]
 
-  child <- load_data(con = con, dnr = dnr, element = "child", ids = id)
-  time <- load_data(con = con, dnr = dnr, element = "time", ids = id)
+  # we use as.data.frame() to avoid tibble warnings if column doesn't exist
+  # see https://github.com/tidyverse/tibble/issues/450
+  child <- as.data.frame(load_data(con = con, dnr = dnr, element = "child", ids = id))
+  time <- as.data.frame(load_data(con = con, dnr = dnr, element = "time", ids = id))
 
   if (nrow(child) == 0 & nrow(time) == 0) return(
     new("individual", dnr = dnr, id = as.integer(id), ...))
@@ -101,35 +103,35 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
-                         x = as.numeric(time$age),
-                         y = as.numeric(time$hgt),
+                         x = time$age,
+                         y = time$hgt,
                          sex = pbg@sex,
                          ...),
                wgt = new("xyz", yname = "wgt",
-                         x = as.numeric(time$age),
-                         y = as.numeric(time$wgt),
+                         x = time$age,
+                         y = time$wgt,
                          sex = pbg@sex,
                          ...),
                hdc = new("xyz", yname = "hdc",
-                         x = as.numeric(time$age),
-                         y = as.numeric(time$hdc),
+                         x = time$age,
+                         y = time$hdc,
                          sex = pbg@sex,
                          ...),
                bmi = new("xyz", yname = "bmi",
-                         x = as.numeric(time$age),
-                         y = as.numeric(time$wgt/(time$hgt/100)^2),
+                         x = time$age,
+                         y = time$wgt/(time$hgt/100)^2,
                          sex = pbg@sex,
                          ...),
                wfh = new("xyz", yname = "wfh",
                          xname = "hgt",
-                         x = as.numeric(time$hgt),
-                         y = as.numeric(time$wgt),
+                         x = time$hgt,
+                         y = time$wgt,
                          sex = pbg@sex,
                          ...),
                dsc = new("xyz",
                          yname = "dsc",
-                         x = as.numeric(time$age),
-                         y = as.numeric(time$dsc),
+                         x = time$age,
+                         y = time$dsc,
                          libname = "clopus::dscore",
                          prefix = "nl2014",
                          sub = ifelse(!is.na(pbg@ga) && pbg@ga < 37,
