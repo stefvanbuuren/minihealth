@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini Dossier for Individual Health Data
-Version: 0.68.1
+Version: 0.68.2
 Authors@R: c(person("Stef", "van Buuren", email = "stef.vanbuuren@tno.nl", role = c("cre", "aut")), 
              person("Arjan", "Huizing", email = "arjan.huizing@tno.nl", role = "aut"))
 Depends: 
@@ -20,7 +20,6 @@ Imports:
     tidyr (>= 0.8.3)
 Suggests: 
     curl,
-    groeidiagrammen,
     jamestest,
     testthat
 Remotes: 
@@ -28,8 +27,7 @@ Remotes:
     stefvanbuuren/clopus,
     stefvanbuuren/donorloader,
     stefvanbuuren/dscore,
-    stefvanbuuren/jamestest,
-    stefvanbuuren/groeidiagrammen
+    stefvanbuuren/jamestest
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Description: Contains a collection of tools to store, handle and update
     individual health data.

@@ -17,7 +17,7 @@
 #' @seealso \linkS4class{individual}, \linkS4class{bse}, \linkS4class{xyz},
 #'          \code{\link[jsonlite]{toJSON}}
 #' @examples
-#' data("installed.cabinets", package = "groeidiagrammen")
+#' data("installed.cabinets", package = "jamestest")
 #' ind <- installed.cabinets[[3]][[8]]
 #' b <- convert_individual_bds(ind)
 #' @export

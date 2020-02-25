@@ -28,7 +28,7 @@ If the slot \code{slot(ind, "dob")} is not set, the conversion
 uses the artificial birth date \code{01 Jan 2000}.
 }
 \examples{
-data("installed.cabinets", package = "groeidiagrammen")
+data("installed.cabinets", package = "jamestest")
 ind <- installed.cabinets[[3]][[8]]
 b <- convert_individual_bds(ind)
 }
