@@ -202,27 +202,27 @@ boy
 new("bse", data = boy)
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
 #>   age  hgt  hgt.z
-#> 1 0.0 50.6 -0.367
-#> 2 0.2 54.8 -2.001
+#> 1 0.0 50.6 -0.366
+#> 2 0.2 54.8 -2.002
 #> 3 0.5 63.5 -1.788
 
 # calculate broken stick estimates at all break points
 new("bse", data = boy, at = "knots")
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
 #>       age  hgt  hgt.z
-#> 1  0.0000 50.6 -0.367
-#> 2  0.0767 50.8 -1.678
-#> 3  0.1533 53.2 -1.964
-#> 4  0.2500 56.4 -2.040
-#> 5  0.3333 60.1 -1.549
+#> 1  0.0000 50.6 -0.366
+#> 2  0.0767 50.8 -1.674
+#> 3  0.1533 53.2 -1.963
+#> 4  0.2500 56.4 -2.043
+#> 5  0.3333 60.2 -1.508
 #> 6  0.5000 63.5 -1.788
-#> 7  0.6250 66.7 -1.478
-#> 8  0.7500 68.2 -1.679
-#> 9  0.9167 70.8 -1.653
-#> 10 1.1667 74.5 -1.532
-#> 11 1.5000 78.6 -1.519
-#> 12 2.0000 84.3 -1.410
-#> 13 3.0000 92.8 -1.444
+#> 7  0.6250 66.7 -1.470
+#> 8  0.7500 68.3 -1.673
+#> 9  0.9167 70.8 -1.646
+#> 10 1.1667 74.6 -1.531
+#> 11 1.5000 78.6 -1.513
+#> 12 2.0000 84.3 -1.404
+#> 13 3.0000 92.9 -1.403
 ```
 
 See the help (“?`bse-class`”) and the
@@ -238,7 +238,8 @@ each of which is coded by its own class:
   - `individualBG`: Background, like sex, gestional age or etnicity;
   - `individualAN`: Bundles person’s anthrometric data, like `hgt` and
     `wgt`;
-  - `individualBS`: Bundles person’s brokenstick estimates.
+  - `individualBS`: Bundles person’s brokenstick estimates;
+  - `individualMS`: Stores raw milestone data;
 
 Creating an instance of class `individual` can be done by hand in two
 steps. First, create one or more of the four subclasses, and then  
