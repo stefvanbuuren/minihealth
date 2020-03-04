@@ -49,6 +49,7 @@ Collate:
     'class-individual.R'
     'class-cabinet.R'
     'class-individualDS.R'
+    'class-individualMS.R'
     'convert_bds_individual.R'
     'convert_ddi_gsed.R'
     'convert_individual_bds.R'
