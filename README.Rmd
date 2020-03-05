@@ -135,9 +135,19 @@ pbs <- new("individualBS",
                         data = pan@wgt, 
                         at = "knots",
                         sex = pbg@sex))
-rob <- new("individual", pid, pbg, pan, pbs)
-```
+data <- data.frame(age = c(0.2, 0.5, 0.7),
+                   k1430 = c(1, NA, NA),
+                   k1431 = c(2, NA, NA),
+                   k1437 = c(3, 1, 1),
+                   k1438 = c(0, 1, 1),
+                   k1439 = c(0, 1, 1))
+map <- data.frame(from = c("k1430", "k1431", "k1437", "k1438", "k1439"),
+                  to = c(879, 927, 928, 881, 883))
+mil <- new("individualMS",
+           ddi = new("ird", mst = data, map = map, instrument = "ddi"))
 
+rob <- new("individual", pid, pbg, pan, pbs, mil)
+```
 
 Doing this sequence by hand is somewhat inconvenient. 
 Fortunately, there are two functions that convert other formats
