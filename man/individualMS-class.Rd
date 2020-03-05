@@ -3,38 +3,18 @@
 \docType{class}
 \name{individualMS-class}
 \alias{individualMS-class}
-\title{An S4 class to represent raw D-score milestones}
+\title{An S4 class to assemble individual milestone data}
 \description{
-The \code{individualMS} class stores raw individual milestone
-0/1/M+/M- data.
-}
-\details{
-Conversion of currently only one-way, from \code{mst} to \code{bds}.
+An S4 class to assemble individual milestone data
 }
 \section{Slots}{
 
 \describe{
-\item{\code{mst}}{A numeric \code{matrix} or a \code{data.frame} with
-milestone responses data.
-There should be a variable with decimal age named \code{"age"} (or
-optionally a different name defined by \code{xname}). The remaining
-columns may contain 0 (fail), 1 (pass), 2 (M+), 3 (M-) or \code{NA}
-responses on milestones.}
-
-\item{\code{map}}{A data frame with two columns that maps column names
-in \code{mst} into \code{bds} numbers. The first column is a
-character vector with names in \code{mst} (do not include the age variable),
-the second is an integer vector with the BDS number.}
-
-\item{\code{bds}}{A calculated data frame containing age plus the
-mapped variables from \code{mst}. Values are coded into the
-BDS-codes: 1 (pass), 2 (fail, M-), 3 (M+). If not specified, the
-\code{bds} slot is converted from \code{mst} and \code{map}.}
-
-\item{\code{xname}}{Name of the age variable}
+\item{\code{ddi}}{Individual response data, \code{ddi} instrument}
 }}
 
 \examples{
+# create object with DDI
 data <- data.frame(age = c(0.0821, 0.159, 0.255),
                    k1430 = c(1, NA, NA),
                    k1431 = c(2, NA, NA),
@@ -43,7 +23,9 @@ data <- data.frame(age = c(0.0821, 0.159, 0.255),
                    k1439 = c(0, 1, 1))
 map <- data.frame(from = c("k1430", "k1431", "k1437", "k1438", "k1439"),
                   to = c(879, 927, 928, 881, 883))
-new("individualMS", mst = data, map = map)
+z <- new("individualMS",
+     ddi = new("ird", mst = data, map = map, instrument = "ddi"))
+z
 }
 \author{
 Stef van Buuren 2020

@@ -22,7 +22,6 @@
 #' terneuzen_bs <- load_data(dnr = "terneuzen_bs")
 #'
 #' p <- donordata_to_individual(dnr = "smocc", id = 10001)
-#' p
 #'
 #' # from lollypop.preterm
 #' # calculating Z-score relative to preterm growth references
@@ -44,7 +43,6 @@
 #' q@bs.wgt <- new("bse", data = q@wgt)
 #' q@bs.hdc <- new("bse", data = q@hdc)
 #'
-#' q
 #'
 #' # use models argument to estimate brokenstick estimates
 #' p <- donordata_to_individual(dnr = "terneuzen", id = 11,
@@ -100,6 +98,7 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
+    mil <- new("individualMS")
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
@@ -170,10 +169,14 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                             at = "knots",
                             sex = pbg@sex,
                             ...))
+    mil <- new("individualMS",
+               ddi = new("ird", mst = time,
+                         map = load_data(dnr = "smocc_bds"),
+                         instrument = "ddi", ...))
   }
 
-  new("individual", pid, pbg, pan, pbs,
-           child = child, time = time)
+  new("individual", pid, pbg, pan, pbs, mil,
+      child = child, time = time)
 }
 
 set.slot <- function(data, name,

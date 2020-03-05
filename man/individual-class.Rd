@@ -6,8 +6,8 @@
 \title{An S4 class to represent individual data}
 \description{
 A collection of objects of \linkS4class{individualID},
-\linkS4class{individualBG}, \linkS4class{individualAN} and
-\linkS4class{individualBS}
+\linkS4class{individualBG}, \linkS4class{individualAN},
+\linkS4class{individualBS} and \linkS4class{individualMS}
 representing data of an individual. The
 type of information covers individual identifyers, fixed background
 variables, time-varying anthroponetric measures and time-varying
@@ -30,7 +30,8 @@ compatibility, and should be removed when feasible.}
 
 \seealso{
 \linkS4class{individualID}, \linkS4class{individualBG},
-        \linkS4class{individualAN}, \linkS4class{individualBS}
+        \linkS4class{individualAN}, \linkS4class{individualBS},
+        \linkS4class{individualMS}
 }
 \author{
 Stef van Buuren 2016/2019

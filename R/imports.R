@@ -12,4 +12,5 @@
 #' @importFrom rlang           .data abort catch_cnd
 #' @importFrom stats           predict
 #' @importFrom tidyr           gather
+#' @importFrom utils           head
 NULL

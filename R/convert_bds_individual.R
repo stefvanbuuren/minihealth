@@ -1,3 +1,6 @@
+#' @include class-individual.R
+NULL
+
 #' Convert json BSD data for single individual to class individual
 #'
 #' This function takes data from a json source and saves it as a an object
@@ -109,6 +112,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
+    mil <- new("individualMS")
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
@@ -167,11 +171,14 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                             data = pan@dsc,
                             at = "knots",
                             sex = pbg@sex,
-                            ...)
-               )
+                            ...))
+    mil <- new("individualMS",
+               ddi = new("ird", mst = time,
+                         map = load_data(dnr = "smocc_bds"),
+                         instrument = "ddi", ...))
     }
 
-  new("individual", pid, pbg, pan, pbs)
+  new("individual", pid, pbg, pan, pbs, mil)
 }
 
 extract_dob <- function(d) {

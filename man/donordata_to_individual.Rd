@@ -42,7 +42,6 @@ terneuzen <- load_data(dnr = "terneuzen")
 terneuzen_bs <- load_data(dnr = "terneuzen_bs")
 
 p <- donordata_to_individual(dnr = "smocc", id = 10001)
-p
 
 # from lollypop.preterm
 # calculating Z-score relative to preterm growth references
@@ -64,7 +63,6 @@ q@bs.hgt <- new("bse", data = q@hgt)
 q@bs.wgt <- new("bse", data = q@wgt)
 q@bs.hdc <- new("bse", data = q@hdc)
 
-q
 
 # use models argument to estimate brokenstick estimates
 p <- donordata_to_individual(dnr = "terneuzen", id = 11,

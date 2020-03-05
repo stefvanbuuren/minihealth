@@ -17,7 +17,8 @@ Imports:
     lubridate,
     methods,
     rlang (>= 0.4.0),
-    tidyr (>= 0.8.3)
+    tidyr (>= 0.8.3),
+    utils
 Suggests: 
     curl,
     jamestest,
@@ -42,6 +43,8 @@ Collate:
     'imports.R'
     'class-xyz.R'
     'class-bse.R'
+    'class-ird.R'
+    'class-individualMS.R'
     'class-individualBS.R'
     'class-individualAN.R'
     'class-individualBG.R'
@@ -49,7 +52,6 @@ Collate:
     'class-individual.R'
     'class-cabinet.R'
     'class-individualDS.R'
-    'class-individualMS.R'
     'convert_bds_individual.R'
     'convert_ddi_gsed.R'
     'convert_individual_bds.R'

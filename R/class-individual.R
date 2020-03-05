@@ -2,13 +2,14 @@
 #'@include class-individualBG.R
 #'@include class-individualAN.R
 #'@include class-individualBS.R
+#'@include class-individualMS.R
 NULL
 
 #' An S4 class to represent individual data
 #'
 #'A collection of objects of \linkS4class{individualID},
-#'\linkS4class{individualBG}, \linkS4class{individualAN} and
-#'\linkS4class{individualBS}
+#'\linkS4class{individualBG}, \linkS4class{individualAN},
+#'\linkS4class{individualBS} and \linkS4class{individualMS}
 #'representing data of an individual. The
 #'type of information covers individual identifyers, fixed background
 #'variables, time-varying anthroponetric measures and time-varying
@@ -25,14 +26,16 @@ NULL
 #'compatibility, and should be removed when feasible.
 #'@author Stef van Buuren 2016/2019
 #'@seealso \linkS4class{individualID}, \linkS4class{individualBG},
-#'         \linkS4class{individualAN}, \linkS4class{individualBS}
+#'         \linkS4class{individualAN}, \linkS4class{individualBS},
+#'         \linkS4class{individualMS}
 #'@keywords classes
 #'@export
 setClass("individual",
          contains = c("individualID",
                       "individualBG",
                       "individualAN",
-                      "individualBS"),
+                      "individualBS",
+                      "individualMS"),
          slots = c(
            child = "data.frame",
            time = "data.frame"
