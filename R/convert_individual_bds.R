@@ -118,10 +118,10 @@ as_bds_contacts <- function(ind) {
 
   # reshuffle
   z <- gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
+    drop_na() %>%
     mutate(Bdsnummer = as.integer(.data$Bdsnummer),
            Waarde = as.character(.data$Waarde)) %>%
     arrange(.data$time, .data$Bdsnummer)
-  # NOTE: here we should delete rows with missing values
 
   f <- as.factor(z$time)
   z <- split(z[, c("Bdsnummer", "Waarde")], f)
