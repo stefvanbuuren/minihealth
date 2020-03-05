@@ -10,8 +10,8 @@
 The `minihealth` package is a central component of
 [JAMES](https://github.com/stefvanbuuren/james). The package
 
-  - Defines S4 classes `xyz`, `bse`, `individual` and `cabinet` for
-    analysing individual growth data;
+  - Defines S4 classes `xyz`, `bse`, `irs`, `individual` and `cabinet`
+    for analysing individual growth data;
   - Translates `individual`, `donordata` and `bds` formats into each
     other;
   - Extracts data and ranges from `individual` objects.
