@@ -1,3 +1,9 @@
+# minihealth 0.70.0
+
+* Adds functionality for milestone scores. Two new classes: `individualMS` and `ird`
+* Extends the `individual` class
+* Updates to new classes in `convert_bds_individual()` and `donordata_to_individual()`
+
 # minihealth 0.69.0
 
 * Adds class `individualMS` to convert raw milestones data (from SMOCC) into BDS coding
