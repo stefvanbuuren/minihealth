@@ -49,7 +49,7 @@ setClass("individualAN",
 )
 
 
-#' as("bse", "data.frame")
+#' as("individualAN", "data.frame")
 #'
 #' @name as
 #' @family individualAN
