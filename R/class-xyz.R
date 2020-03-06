@@ -127,19 +127,23 @@ setMethod(
       if (missing(z)) slot(.Object, "y") <- as.numeric(rep(NA, lx))
       else slot(.Object, "y") <-
           as.numeric(z2y(z = as.numeric(z),
-                                 x = slot(.Object, "x"),
-                                 ref = ref))
+                         x = slot(.Object, "x"),
+                         ref = ref))
     }
     else slot(.Object, "y") <- as.numeric(y)
+    if (length(slot(.Object, "y")) == 0)
+      slot(.Object, "y") <- as.numeric(rep(NA, lx))
 
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- as.numeric(rep(NA, lx))
       else slot(.Object, "z") <-
           round(as.numeric(y2z(y = as.numeric(y),
-                         x = slot(.Object, "x"),
-                         ref = ref)), 3L)
+                               x = slot(.Object, "x"),
+                               ref = ref)), 3L)
     }
     else slot(.Object, "z") <- round(as.numeric(z), 3L)
+    if (length(slot(.Object, "z")) == 0)
+      slot(.Object, "z") <- as.numeric(rep(NA, lx))
 
     # administrative names
     .Object@xname <- as.character(xname[1])
