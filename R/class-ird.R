@@ -78,9 +78,7 @@ setMethod(
       # find set of unique matches (ex age)
       from <- intersect(map[[1L]], colnames(mst))
       from <- setdiff(from, xname)
-      to <- map[map[[1L]] %in% from, 2L]
-      if (length(to)) to <- paste0("n", to)
-      else to <- character(0)
+      to <- as.character(map[map[[1L]] %in% from, 2L])
 
       # extract, rename and recode
       bds <- mst[, c(xname, from), drop = FALSE]
