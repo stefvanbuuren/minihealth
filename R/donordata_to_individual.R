@@ -200,5 +200,5 @@ set.slot <- function(data, name,
 #' for legacy reasons
 #' @export
 donordata.to.individual <- function(con = NULL, dnr, id, ...) {
-  donordata_to_individual(con = con, dnr = dnr, id = id, ...)
+  .Deprecated("donordata_to_individual")
 }
