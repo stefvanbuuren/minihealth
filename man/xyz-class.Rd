@@ -19,7 +19,8 @@ decimal point.
 
  \describe{
    \item{\code{x}:}{Numeric vector of decimal ages (in years) at which
-   measurements \code{y} are made.}
+   measurements \code{y} are made. The length of \code{x} determines how
+   many measurements (including \code{NA}'s) are stored.}
    \item{\code{y}:}{Numeric vector of measurement of length \code{length(x)}.}
    \item{\code{z}:}{Numeric vector of Z-score of length \code{length(x)}.}
    \item{\code{xname}:}{A character scalar with the name of the \code{x}
@@ -45,14 +46,15 @@ decimal point.
 
 \examples{
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
-d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
 d1
 
 # Z-scores of weight (in kg) at same ages
-d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt")
-d2@z
+d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt",
+  sex = "female")
+d2
 
-# Obtain reference table used to calculate Z-scores in d2
+# Obtain reference used to calculate Z-scores in d2
 eval(d2@call)
 
 # List available WHO references in clopus package
@@ -70,6 +72,7 @@ d3
 # Shortcut specification of WHO standard
 d3@call
 d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
+d4
 
 # Standard weight centiles at age 0.5 year of Dutch girls
 d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")

@@ -9,7 +9,8 @@
 #'@section Slots:
 #'  \describe{
 #'    \item{\code{x}:}{Numeric vector of decimal ages (in years) at which
-#'    measurements \code{y} are made.}
+#'    measurements \code{y} are made. The length of \code{x} determines how
+#'    many measurements (including \code{NA}'s) are stored.}
 #'    \item{\code{y}:}{Numeric vector of measurement of length \code{length(x)}.}
 #'    \item{\code{z}:}{Numeric vector of Z-score of length \code{length(x)}.}
 #'    \item{\code{xname}:}{A character scalar with the name of the \code{x}
@@ -42,14 +43,15 @@
 #'@keywords classes
 #'@examples
 #'# specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
-#'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+#'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
 #'d1
 #'
 #'# Z-scores of weight (in kg) at same ages
-#'d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt")
-#'d2@z
+#'d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt",
+#'   sex = "female")
+#'d2
 #'
-#'# Obtain reference table used to calculate Z-scores in d2
+#'# Obtain reference used to calculate Z-scores in d2
 #'eval(d2@call)
 #'
 #'# List available WHO references in clopus package
@@ -67,6 +69,7 @@
 #'# Shortcut specification of WHO standard
 #'d3@call
 #'d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
+#'d4
 #'
 #'# Standard weight centiles at age 0.5 year of Dutch girls
 #'d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
@@ -124,7 +127,7 @@ setMethod(
     lx <- length(slot(.Object, "x"))
 
     if (missing(y)) {
-      if (missing(z)) slot(.Object, "y") <- as.numeric(rep(NA, lx))
+      if (missing(z)) slot(.Object, "y") <- rep(NA_real_, lx)
       else slot(.Object, "y") <-
           as.numeric(z2y(z = as.numeric(z),
                          x = slot(.Object, "x"),
@@ -132,10 +135,10 @@ setMethod(
     }
     else slot(.Object, "y") <- as.numeric(y)
     if (length(slot(.Object, "y")) == 0)
-      slot(.Object, "y") <- as.numeric(rep(NA, lx))
+      slot(.Object, "y") <- rep(NA_real_, lx)
 
     if (missing(z)) {
-      if (missing(y)) slot(.Object, "z") <- as.numeric(rep(NA, lx))
+      if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
       else slot(.Object, "z") <-
           round(as.numeric(y2z(y = as.numeric(y),
                                x = slot(.Object, "x"),
@@ -143,7 +146,7 @@ setMethod(
     }
     else slot(.Object, "z") <- round(as.numeric(z), 3L)
     if (length(slot(.Object, "z")) == 0)
-      slot(.Object, "z") <- as.numeric(rep(NA, lx))
+      slot(.Object, "z") <- rep(NA_real_, lx)
 
     # administrative names
     .Object@xname <- as.character(xname[1])
@@ -157,19 +160,17 @@ setMethod(
 
 
 setValidity("xyz", function(object) {
-  if (length(object@x) > 0) {
-    if (length(object@y) > 1 && length(object@x) != length(object@y))
-      return(paste0("Non-conformable length: ",
-                    object@xname, " (", length(object@x),") and ",
-                    object@yname, " (", length(object@y),")."))
-    if (length(object@z) > 1 && length(object@x) != length(object@z))
-      return(paste0("Non-conformable length: ",
-                    object@xname, " (", length(object@x),") and ",
-                    object@zname, " (", length(object@z),")."))
-    if (length(object@xname) > 1) return("xname not of length 1")
-    if (length(object@yname) > 1) return("yname not of length 1")
-    if (length(object@zname) > 1) return("zname not of length 1")
-  }
+  if (length(object@y) > 1 && length(object@x) != length(object@y))
+    return(paste0("Non-conformable length: ",
+                  object@xname, " (", length(object@x),") and ",
+                  object@yname, " (", length(object@y),")."))
+  if (length(object@z) > 1 && length(object@x) != length(object@z))
+    return(paste0("Non-conformable length: ",
+                  object@xname, " (", length(object@x),") and ",
+                  object@zname, " (", length(object@z),")."))
+  if (length(object@xname) > 1) return("xname not of length 1")
+  if (length(object@yname) > 1) return("yname not of length 1")
+  if (length(object@zname) > 1) return("zname not of length 1")
   return(TRUE)
 })
 
@@ -177,19 +178,20 @@ setMethod("show", signature(object = "xyz" ),
           function (object) {
             if (!object@found) cat("No reference\n")
             else cat(paste("package: clopus, library:",
-                           strsplit(as.character(object@call[[2]]), '\\[\\[\\"')[[1]][1],
+                           strsplit(as.character(object@call[[2]]),
+                                    '\\[\\[\\"')[[1]][1],
                            ", member:",
-                           strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
+                           strsplit(as.character(object@call[[2]]),
+                                    '\\"')[[1]][2],
                            "\n"))
-            ox <- object@x
-            oy <- object@y
-            oz <- object@z
-            if (length(ox) == 0) ox <- NA_real_
-            if (length(oy) == 0) oy <- NA_real_
-            if (length(oz) == 0) oz <- NA_real_
-            df <- data.frame(ox, oy, oz)
-            names(df) <- c(object@xname, object@yname, object@zname)
-            print(df)
+            if (length(object@x) | length(object@y) | length(object@z)) {
+              df <- data.frame(object@x, object@y, object@z)
+              names(df) <- c(object@xname, object@yname, object@zname)
+              print(df)
+              return()
+            }
+            cat("No data for ", object@xname, ", ", object@yname,
+                " and ", object@zname, "\n", sep = "")
           }
 )
 
@@ -199,9 +201,8 @@ setMethod("show", signature(object = "xyz" ),
 #' @name as
 #' @family xyz
 setAs("xyz", "data.frame", function(from) {
-  if (length(from@y) == 0) from@y <- rep(NA_real_, length(from@x))
-  if (length(from@z) == 0) from@z <- rep(NA_real_, length(from@x))
   df <- data.frame(x = from@x, y = from@y, z = from@z)
   names(df) <- c(from@xname, from@yname, from@zname)
-  return(df)}
+  df
+  }
 )
