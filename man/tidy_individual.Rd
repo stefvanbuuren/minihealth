@@ -4,10 +4,13 @@
 \alias{tidy_individual}
 \title{Tidy individual class}
 \usage{
-tidy_individual(ind)
+tidy_individual(ind, remove_duplicates = TRUE)
 }
 \arguments{
 \item{ind}{Object of class \code{individual}}
+
+\item{remove_duplicates}{Logical. Should function return data frame
+with duplicated rows removed? Default is \code{TRUE}.}
 
 \item{\dots}{Additional parameters. Currently ignored.}
 }

@@ -5,6 +5,8 @@
 #' with anthropometric measures.
 #'
 #' @param ind Object of class \code{individual}
+#' @param remove_duplicates Logical. Should function return data frame
+#' with duplicated rows removed? Default is \code{TRUE}.
 #' @param \dots Additional parameters. Currently ignored.
 #' @return A \code{data.frame}
 #' @author Stef van Buuren 2020
@@ -14,7 +16,7 @@
 #' ind <- installed.cabinets[[3]][[8]]
 #' b <- tidy_individual(ind)
 #' @export
-tidy_individual <- function(ind) {
+tidy_individual <- function(ind, remove_duplicates = TRUE) {
   ynames <- c("hgt", "wgt", "hdc", "bmi", "wfh", "dsc")
 
   x <- c(ind@hgt@x, ind@wgt@x, ind@hdc@x, ind@bmi@x, ind@dsc@x)
@@ -24,5 +26,8 @@ tidy_individual <- function(ind) {
                          length(ind@hdc@x), length(ind@bmi@x),
                          0, length(ind@dsc@x)))
 
-  data.frame(x, yname, y, z, stringsAsFactors = FALSE)
+  # bind, remove rows with both y and z missing
+  b <- data.frame(x, yname, y, z, stringsAsFactors = FALSE)
+  idx <- !((is.na(y) & is.na(z)) | duplicated(b))
+  b[idx, ]
 }
