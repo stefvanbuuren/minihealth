@@ -175,8 +175,7 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                          instrument = "ddi", ...))
   }
 
-  new("individual", pid, pbg, pan, pbs, mil,
-      child = child, time = time)
+  new("individual", pid, pbg, pan, pbs, mil)
 }
 
 set.slot <- function(data, name,

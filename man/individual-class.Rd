@@ -16,18 +16,6 @@ automatically calculate standard deviation scores relative to a
 growth reference, and predictions according the a broken stick
 model.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{child}}{If constructed from a `donordata` object, this slot
-contains the child level record. This slot is included for backward
-compatibility, and should be removed when feasible.}
-
-\item{\code{time}}{If constructed from a `donordata` object, this slot contains
-the time level data frame. This slot is included for backward
-compatibility, and should be removed when feasible.}
-}}
-
 \seealso{
 \linkS4class{individualID}, \linkS4class{individualBG},
         \linkS4class{individualAN}, \linkS4class{individualBS},

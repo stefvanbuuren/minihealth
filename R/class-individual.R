@@ -18,12 +18,6 @@ NULL
 #'growth reference, and predictions according the a broken stick
 #'model.
 #'@name individual-class
-#'@slot child If constructed from a `donordata` object, this slot
-#'contains the child level record. This slot is included for backward
-#'compatibility, and should be removed when feasible.
-#'@slot time If constructed from a `donordata` object, this slot contains
-#'the time level data frame. This slot is included for backward
-#'compatibility, and should be removed when feasible.
 #'@author Stef van Buuren 2016/2019
 #'@seealso \linkS4class{individualID}, \linkS4class{individualBG},
 #'         \linkS4class{individualAN}, \linkS4class{individualBS},
@@ -35,16 +29,7 @@ setClass("individual",
                       "individualBG",
                       "individualAN",
                       "individualBS",
-                      "individualMS"),
-         slots = c(
-           child = "data.frame",
-           time = "data.frame"
-         ),
-         prototype = list(
-           child = data.frame(),
-           time = data.frame()
-         )
-)
+                      "individualMS"))
 
 #' Is this object of class `individual`?
 #'
