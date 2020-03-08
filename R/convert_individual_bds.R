@@ -118,11 +118,12 @@ as_bds_contacts <- function(ind) {
 
   # set BDS numbers
   d$bds <- dplyr::recode(d$yname, hgt = "235", wgt = "245",
-                         hdc = "252", bmi = "248",
+                         hdc = "252",
                          .default = NA_character_)
 
   # sort according to time
   d <- d %>%
+    drop_na(.data$bds) %>%
     arrange(.data$time, .data$bds) %>%
     mutate(Bdsnummer = as.integer(.data$bds),
            Waarde = as.character(.data$y))
