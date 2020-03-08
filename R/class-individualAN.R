@@ -82,29 +82,4 @@ setAs("individualAN", "data.frame", function(from) {
   for (i in seq_along(sn))
     df[[i]] <- as(slot(from, sn[i]), "data.frame")
   do.call(rbind.data.frame, df)
-  # sl <- rep(NA_real_, length(sn))
-  # xn <- yn <- zn <- rep(NA_character_, length(sn))
-  # xv <- yv <- zv <- vector("list", length(sn))
-  # for (i in seq_along(sn)) {
-  #   s <- slot(from, sn[i])
-  #   sl[i] <- length(slot(s, "x"))
-  #   xn[i] <- slot(s, "xname")
-  #   yn[i] <- slot(s, "yname")
-  #   zn[i] <- slot(s, "zname")
-  #   xv[[i]] <- slot(s, "x")
-  #   yv[[i]] <- slot(s, "y")
-  #   zv[[i]] <- slot(s, "z")
-  # }
-  # x <- unlist(xv, use.names = FALSE)
-  # y <- unlist(yv, use.names = FALSE)
-  # z <- unlist(zv, use.names = FALSE)
-  # xname <- rep(xn, sl)
-  # yname <- rep(yn, sl)
-  # zname <- rep(zn, sl)
-  #
-  # # bind
-  # data.frame(xname, yname, zname, x, y, z, stringsAsFactors = FALSE)
-  # remove rows with both y and z missing
-  #idx <- !((is.na(y) & is.na(z)) | duplicated(b))
-  #b[idx, ]
 })

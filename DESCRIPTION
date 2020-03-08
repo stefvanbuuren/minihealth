@@ -65,5 +65,4 @@ Collate:
     'table34.R'
     'tests.R'
     'throw_messages.R'
-    'tidy_individual.R'
     'validate_bds_individual.R'
