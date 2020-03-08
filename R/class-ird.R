@@ -81,14 +81,18 @@ setMethod(
       to <- as.character(map[map[[1L]] %in% from, 2L])
 
       # extract, rename and recode
-      bds <- mst[, c(xname, from), drop = FALSE]
-      colnames(bds) <- c(xname, to)
-      for (i in to)
-        bds[[i]] <- dplyr::recode(bds[[i]],
-                                  `0` = 2L,
-                                  `1` = 1L,
-                                  `2` = 3L,
-                                  `3` = 2L)
+      if (!length(to)) {
+        bds <- data.frame(age = numeric(0))
+      } else {
+        bds <- mst[, c(xname, from), drop = FALSE]
+        colnames(bds) <- c(xname, to)
+        for (i in to)
+          bds[[i]] <- dplyr::recode(bds[[i]],
+                                    `0` = 2L,
+                                    `1` = 1L,
+                                    `2` = 3L,
+                                    `3` = 2L)
+      }
       .Object@bds <- bds
     }
 

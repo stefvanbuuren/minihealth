@@ -37,7 +37,7 @@ individual_to_donordata <- function(x, element = NULL) {
     sex  = slot(x, "sex"),
     etn  = slot(x, "etn"),
     edu  = slot(x, "edu"),
-    ga   = slot(x, "ga"),
+    ga   = floor(slot(x, "ga") / 7),
     bw   = slot(x, "bw"),
     twin = slot(x, "twin"),
     agem = slot(x, "agem"),
@@ -50,6 +50,8 @@ individual_to_donordata <- function(x, element = NULL) {
   hgt.df <- data.frame(slot(x, "hgt"))
   wgt.df <- data.frame(slot(x, "wgt"))
   bmi.df <- data.frame(slot(x, "bmi"))
+  wfh.df <- data.frame(slot(x, "wfh"))
+  dsc.df <- data.frame(slot(x, "dsc"))
 
   time <- tibble(
     src  = slot(x, "src"),
@@ -61,16 +63,20 @@ individual_to_donordata <- function(x, element = NULL) {
     age  = hgt.df$x,
     sex  = slot(x, "sex"),
     etn  = slot(x, "etn"),
-    ga   = slot(x, "ga"),
+    ga   = floor(slot(x, "ga") / 7),
     bw   = slot(x, "bw"),
     hgt  = hgt.df$y,
     wgt  = wgt.df$y,
     hdc  = hdc.df$y,
     bmi  = bmi.df$y,
+    wfh  = wfh.df$y,
+    dsc  = dsc.df$y,
     hgt.z = hgt.df$z,
     wgt.z = wgt.df$z,
     hdc.z = hdc.df$z,
-    bmi.z = bmi.df$z)
+    bmi.z = bmi.df$z,
+    wfh.z = wfh.df$z,
+    dsc.z = dsc.df$z)
 
   if (element == "time") return(time)
 
