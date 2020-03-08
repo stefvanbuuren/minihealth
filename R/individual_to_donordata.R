@@ -57,20 +57,20 @@ individual_to_donordata <- function(x, element = NULL) {
     rec  = ifelse(nrow(hgt.df) >= 1L, 1L:nrow(hgt.df), integer(0)),
     nrec = nrow(hgt.df),
     dob  = format(slot(x, "dob"), format = "%d-%m-%y"),
-    dom  = format(slot(x, "dob")  + round(hgt.df$age * 365.25), format = "%d-%m-%y"),
-    age  = hgt.df$age,
+    dom  = format(slot(x, "dob")  + round(hgt.df$x * 365.25), format = "%d-%m-%y"),
+    age  = hgt.df$x,
     sex  = slot(x, "sex"),
     etn  = slot(x, "etn"),
     ga   = slot(x, "ga"),
     bw   = slot(x, "bw"),
-    hgt  = hgt.df$hgt,
-    wgt  = wgt.df$wgt,
-    hdc  = hdc.df$hdc,
-    hgt.z = hgt.df$hgt.z,
-    wgt.z = wgt.df$wgt.z,
-    hdc.z = hdc.df$hdc.z,
-    bmi  = bmi.df$bmi,
-    bmi.z = bmi.df$bmi.z)
+    hgt  = hgt.df$y,
+    wgt  = wgt.df$y,
+    hdc  = hdc.df$y,
+    bmi  = bmi.df$y,
+    hgt.z = hgt.df$z,
+    wgt.z = wgt.df$z,
+    hdc.z = hdc.df$z,
+    bmi.z = bmi.df$z)
 
   if (element == "time") return(time)
 

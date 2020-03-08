@@ -94,40 +94,44 @@ as_bds_contacts <- function(ind) {
   # this function produces a JSON string with data coded according
   # to the BDS schema
 
-  # extract measurements
-  z <- new("individualAN", hgt = ind@hgt, wgt = ind@wgt, hdc = ind@hdc,
-           bmi = ind@bmi, wfh = ind@wfh)
-  z <- as(z, "data.frame")[, c("age", "hgt", "wgt", "hdc")]
+  # extract measurements, only take age-related
+  # remove duplicates, and NA's on y
+  d <- as(ind, "data.frame") %>%
+    dplyr::filter(.data$xname == "age") %>%
+    dplyr::filter(!duplicated(.data)) %>%
+    drop_na(.data$y)
 
   # return NULL if there are no measurements
-  if (nrow(z) == 0L) return(NULL)
+  if (nrow(d) == 0L) return(NULL)
 
-  # calculate measurement dates
+  # back-calculate measurement dates
+  # use 2000-01-01 as birth data if no DOB is known
   dob <- as.Date(get_dob(ind), format = "%d-%m-%y")
-  days <- round(z$age * 365.25)
-  z$age <- format(dob + days, format = "%Y%m%d")
+  days <- round(d$x * 365.25)
+  d$time <- format(dob + days, format = "%Y%m%d")
 
   # set proper units
-  z$hgt <- z$hgt * 10
-  z$wgt <- z$wgt * 1000
-  z$hdc <- z$hdc * 10
-  colnames(z) <- c("time", "235", "245", "252")
+  d[d$yname %in% c("hgt", "hdc"), "y"] <-
+    d[d$yname %in% c("hgt", "hdc"), "y"] * 10
+  d[d$yname == "wgt", "y"] <-
+    d[d$yname == "wgt", "y"] * 1000
 
-  # remove duplicate rows
-  z <- z %>% distinct(.data$time, .keep_all = TRUE)
+  # set BDS numbers
+  d$bds <- dplyr::recode(d$yname, hgt = "235", wgt = "245",
+                         hdc = "252", bmi = "248",
+                         .default = NA_character_)
 
-  # reshuffle
-  z <- gather(z, key = "Bdsnummer", value = "Waarde", "235", "245", "252") %>%
-    drop_na() %>%
-    mutate(Bdsnummer = as.integer(.data$Bdsnummer),
-           Waarde = as.character(.data$Waarde)) %>%
-    arrange(.data$time, .data$Bdsnummer)
+  # sort according to time
+  d <- d %>%
+    arrange(.data$time, .data$bds) %>%
+    mutate(Bdsnummer = as.integer(.data$bds),
+           Waarde = as.character(.data$y))
 
-  f <- as.factor(z$time)
-  z <- split(z[, c("Bdsnummer", "Waarde")], f)
+  f <- as.factor(d$time)
+  d <- split(d[, c("Bdsnummer", "Waarde")], f)
 
   data.frame(
-    Tijdstip = names(z),
-    Elementen = I(z),
+    Tijdstip = names(d),
+    Elementen = I(d),
     stringsAsFactors = FALSE)
 }

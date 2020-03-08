@@ -1,8 +1,8 @@
 #' An S4 class to represent individual anthropometric data
 #'
-#'The \code{individualAN} class stores anthropometric measures as
-#'the collection of \code{xyz}-class for height, weight,
-#'head circumference, bmi, and weight for height.
+#' The \code{individualAN} class stores anthropometric measures as
+#' the collection of \code{xyz}-class for height, weight,
+#' head circumference, bmi, and weight for height.
 #' @slot hgt  Length/height in cm (\code{xyz})
 #' @slot wgt  Weight in kg (\code{xyz})
 #' @slot hdc  Head circumference in cm (\code{xyz})
@@ -29,7 +29,7 @@
 #'        z = c(-2, 2, -2, 2), call = hgtref),
 #'      hdc = new("xyz", yname = "wgt", x = c(0, 0, 1, 1),
 #'        z = c(-2, 2, -2, 2), call = hdcref))
-#' @author Stef van Buuren 2016
+#' @author Stef van Buuren 2016-2020
 setClass("individualAN",
          slots = c(
            hgt = "xyz",
@@ -48,26 +48,63 @@ setClass("individualAN",
          )
 )
 
+# #' as("individualAN", "data.frame")
+# #'
+# #' @name as
+# #' @family individualAN
+# setAs("individualAN", "data.frame", function(from) {
+#   # note: preserve only first row in case of duplicate ages
+#   ynames <- c("hgt", "wgt", "hdc", "bmi", "wfh")
+#   hgt <- as(from@hgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#   wgt <- as(from@wgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#   hdc <- as(from@hdc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#   bmi <- as(from@bmi, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#   dsc <- as(from@dsc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#   # wfh <- as(from@wfh, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
+#
+#   m <- full_join(hgt, wgt, by = "age")
+#   m <- full_join(m, hdc, by = "age")
+#   m <- full_join(m, bmi, by = "age")
+#   m <- full_join(m, dsc, by = "age")
+#   # m <- full_join(m, wfh, by = "age")  # cannot merge by age
+#   arrange(m, .data$age)
+# }
+# )
 
 #' as("individualAN", "data.frame")
 #'
 #' @name as
 #' @family individualAN
 setAs("individualAN", "data.frame", function(from) {
-  # note: preserve only first row in case of duplicate ages
-  ynames <- c("hgt", "wgt", "hdc", "bmi", "wfh")
-  hgt <- as(from@hgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
-  wgt <- as(from@wgt, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
-  hdc <- as(from@hdc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
-  bmi <- as(from@bmi, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
-  dsc <- as(from@dsc, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
-  # wfh <- as(from@wfh, "data.frame") %>% distinct(.data$age, .keep_all = TRUE)
 
-  m <- full_join(hgt, wgt, by = "age")
-  m <- full_join(m, hdc, by = "age")
-  m <- full_join(m, bmi, by = "age")
-  m <- full_join(m, dsc, by = "age")
-  # m <- full_join(m, wfh, by = "age")  # cannot merge by age
-  arrange(m, .data$age)
-}
-)
+  sn <- slotNames("individualAN")
+  df <- vector("list", length(sn))
+  for (i in seq_along(sn))
+    df[[i]] <- as(slot(from, sn[i]), "data.frame")
+  do.call(rbind.data.frame, df)
+  # sl <- rep(NA_real_, length(sn))
+  # xn <- yn <- zn <- rep(NA_character_, length(sn))
+  # xv <- yv <- zv <- vector("list", length(sn))
+  # for (i in seq_along(sn)) {
+  #   s <- slot(from, sn[i])
+  #   sl[i] <- length(slot(s, "x"))
+  #   xn[i] <- slot(s, "xname")
+  #   yn[i] <- slot(s, "yname")
+  #   zn[i] <- slot(s, "zname")
+  #   xv[[i]] <- slot(s, "x")
+  #   yv[[i]] <- slot(s, "y")
+  #   zv[[i]] <- slot(s, "z")
+  # }
+  # x <- unlist(xv, use.names = FALSE)
+  # y <- unlist(yv, use.names = FALSE)
+  # z <- unlist(zv, use.names = FALSE)
+  # xname <- rep(xn, sl)
+  # yname <- rep(yn, sl)
+  # zname <- rep(zn, sl)
+  #
+  # # bind
+  # data.frame(xname, yname, zname, x, y, z, stringsAsFactors = FALSE)
+  # remove rows with both y and z missing
+  #idx <- !((is.na(y) & is.na(z)) | duplicated(b))
+  #b[idx, ]
+})

@@ -49,5 +49,5 @@ new("individualAN",
 \code{\link{xyz-class}}
 }
 \author{
-Stef van Buuren 2016
+Stef van Buuren 2016-2020
 }

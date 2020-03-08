@@ -195,13 +195,38 @@ setMethod("show", signature(object = "xyz" ),
           }
 )
 
+
 #' as("xyz", "data.frame")
 #'
 #' @name as
 #' @family xyz
 setAs("xyz", "data.frame", function(from) {
-  df <- data.frame(x = from@x, y = from@y, z = from@z)
-  names(df) <- c(from@xname, from@yname, from@zname)
-  df
-  }
-)
+  library <- ifelse(from@found,
+                    strsplit(as.character(from@call[[2]]), '\\[\\[\\"')[[1]][1],
+                    NA_character_)
+  member <- ifelse(from@found,
+                   strsplit(as.character(from@call[[2]]), '\\"')[[1]][2],
+                   NA_character_)
+  if (length(from@x))
+    data.frame(xname = from@xname, yname = from@yname, zname = from@zname,
+               x = from@x, y = from@y, z = from@z,
+               found = from@found,
+               library = library,
+               member  = member,
+               stringsAsFactors = FALSE)
+  else
+    data.frame(xname = character(), yname = character(), zname = character(),
+               x = numeric(), y = numeric(), z = numeric(),
+               found = logical(),
+               library = character(),
+               member = character(),
+               stringsAsFactors = FALSE)
+})
+
+# OLD VERSION PRE 0.71.0, names the columns with xname/yname/zname
+# setAs("xyz", "data.frame", function(from) {
+#   df <- data.frame(x = from@x, y = from@y, z = from@z)
+#   names(df) <- c(from@xname, from@yname, from@zname)
+#   df
+#   }
+# )
