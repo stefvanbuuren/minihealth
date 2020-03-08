@@ -1,3 +1,7 @@
+# minihealth 0.71.0
+
+* Generalises the `as(..., "data.frame")` functions for `xyz` and `individualAN` so that the produced data frames are complete and tidy
+
 # minihealth 0.70.0
 
 * Adds functionality for milestone scores. Two new classes: `individualMS` and `ird`
