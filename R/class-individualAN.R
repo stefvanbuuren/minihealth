@@ -83,3 +83,7 @@ setAs("individualAN", "data.frame", function(from) {
     df[[i]] <- as(slot(from, sn[i]), "data.frame")
   do.call(rbind.data.frame, df)
 })
+
+#' @export
+as.data.frame.individualAN <-
+  function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")

@@ -230,3 +230,8 @@ setAs("xyz", "data.frame", function(from) {
 #   df
 #   }
 # )
+
+#' @export
+as.data.frame.xyz <-
+  function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
+

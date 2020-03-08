@@ -11,6 +11,6 @@
 #' @importFrom lubridate       dmy ymd
 #' @importFrom rlang           .data abort catch_cnd
 #' @importFrom stats           predict
-#' @importFrom tidyr           gather drop_na
+#' @importFrom tidyr           drop_na gather pivot_longer
 #' @importFrom utils           head
 NULL

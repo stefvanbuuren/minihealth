@@ -26,3 +26,21 @@ setClass("individualMS",
          prototype = list(
            ddi = new("ird", instrument = "ddi"))
 )
+
+#' as("individualMS", "data.frame")
+#'
+#' @name as
+#' @family individualMS
+setAs("individualMS", "data.frame", function(from) {
+
+  sn <- slotNames("individualMS")
+  df <- vector("list", length(sn))
+  for (i in seq_along(sn))
+    df[[i]] <- as(slot(from, sn[i]), "data.frame")
+  do.call(rbind.data.frame, df)
+})
+
+#' @export
+as.data.frame.individualMS <-
+  function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
+

@@ -167,4 +167,8 @@ setAs("bse", "data.frame", function(from) {
   return(df)}
 )
 
+#' @export
+as.data.frame.bse <-
+  function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
+
 

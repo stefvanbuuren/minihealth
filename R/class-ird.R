@@ -114,3 +114,17 @@ setMethod("show",
             # print(head(object@map))
           }
 )
+
+#' as("ird", "data.frame")
+#'
+#' @name as
+#' @family ird
+setAs("ird", "data.frame", function(from) {
+  pivot_longer(from@bds, -.data$age, names_to = "bds", values_to = "y",
+               values_drop_na = TRUE) %>%
+    data.frame()
+})
+
+#' @export
+as.data.frame.ird <-
+  function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
