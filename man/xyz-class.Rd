@@ -19,8 +19,9 @@ decimal point.
 
  \describe{
    \item{\code{x}:}{Numeric vector of decimal ages (in years) at which
-   measurements \code{y} are made. The length of \code{x} determines how
-   many measurements (including \code{NA}'s) are stored.}
+   measurements \code{y} and Z-scores \code{z} are made. The length
+   of \code{x} determines how many measurements (including \code{NA}'s)
+   are stored.}
    \item{\code{y}:}{Numeric vector of measurement of length \code{length(x)}.}
    \item{\code{z}:}{Numeric vector of Z-score of length \code{length(x)}.}
    \item{\code{xname}:}{A character scalar with the name of the \code{x}
