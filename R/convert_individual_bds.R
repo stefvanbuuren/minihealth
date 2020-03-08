@@ -96,7 +96,7 @@ as_bds_contacts <- function(ind) {
 
   # extract measurements, only take age-related
   # remove duplicates, and NA's on y
-  d <- as(ind, "data.frame") %>%
+  d <- data.frame(ind) %>%
     dplyr::filter(.data$xname == "age") %>%
     dplyr::filter(!duplicated(.data)) %>%
     drop_na(.data$y)

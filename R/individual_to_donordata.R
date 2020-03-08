@@ -46,10 +46,10 @@ individual_to_donordata <- function(x, element = NULL) {
     hgtf = slot(x, "hgtf"))
   if (element == "child") return(child)
 
-  hdc.df <- as(slot(x, "hdc"), "data.frame")
-  hgt.df <- as(slot(x, "hgt"), "data.frame")
-  wgt.df <- as(slot(x, "wgt"), "data.frame")
-  bmi.df <- as(slot(x, "bmi"), "data.frame")
+  hdc.df <- data.frame(slot(x, "hdc"))
+  hgt.df <- data.frame(slot(x, "hgt"))
+  wgt.df <- data.frame(slot(x, "wgt"))
+  bmi.df <- data.frame(slot(x, "bmi"))
 
   time <- tibble(
     src  = slot(x, "src"),

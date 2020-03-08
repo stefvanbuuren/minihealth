@@ -299,7 +299,7 @@ inverse (but lossy) transformations.
 
   - A `cabinet` is a collection of multiple objects of class
     `individual`;
-  - `as(d1, "data.frame")` extracts the data frame from objects of class
+  - `data.frame(d1)` extracts the data frame from objects of class
     `xyz`;
   - `get_xyz(rob, "hgt")` extracts the data frame from objects of class
     `individual`;

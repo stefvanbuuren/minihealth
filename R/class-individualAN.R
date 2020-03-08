@@ -80,7 +80,7 @@ setAs("individualAN", "data.frame", function(from) {
   sn <- slotNames("individualAN")
   df <- vector("list", length(sn))
   for (i in seq_along(sn))
-    df[[i]] <- as(slot(from, sn[i]), "data.frame")
+    df[[i]] <- data.frame(slot(from, sn[i]))
   do.call(rbind.data.frame, df)
 })
 
