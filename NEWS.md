@@ -1,3 +1,7 @@
+# minihealth 0.72.0
+
+* Replaces calls `as(..., "data.frame")` by `data.frame(...)`
+
 # minihealth 0.71.0
 
 * Generalises the `as(..., "data.frame")` functions for `xyz` and `individualAN` so that the produced data frames are complete and tidy
