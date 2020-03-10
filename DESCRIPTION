@@ -44,7 +44,7 @@ Collate:
     'class-xyz.R'
     'class-bse.R'
     'class-ird.R'
-    'class-individualMS.R'
+    'class-individualRW.R'
     'class-individualBS.R'
     'class-individualAN.R'
     'class-individualBG.R'

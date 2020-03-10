@@ -169,13 +169,13 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                             at = "knots",
                             sex = pbg@sex,
                             ...))
-    mil <- new("individualMS",
+    prw <- new("individualRW",
                ddi = new("ird", mst = time,
                          map = load_data(dnr = "smocc_bds"),
                          instrument = "ddi", ...))
   }
 
-  new("individual", pid, pbg, pan, pbs, mil)
+  new("individual", pid, pbg, pan, pbs, prw)
 }
 
 set.slot <- function(data, name,

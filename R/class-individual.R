@@ -2,14 +2,14 @@
 #'@include class-individualBG.R
 #'@include class-individualAN.R
 #'@include class-individualBS.R
-#'@include class-individualMS.R
+#'@include class-individualRW.R
 NULL
 
 #' An S4 class to represent individual data
 #'
 #'A collection of objects of \linkS4class{individualID},
 #'\linkS4class{individualBG}, \linkS4class{individualAN},
-#'\linkS4class{individualBS} and \linkS4class{individualMS}
+#'\linkS4class{individualBS} and \linkS4class{individualRW}
 #'representing data of an individual. The
 #'type of information covers individual identifyers, fixed background
 #'variables, time-varying anthroponetric measures and time-varying
@@ -21,7 +21,7 @@ NULL
 #'@author Stef van Buuren 2016/2019
 #'@seealso \linkS4class{individualID}, \linkS4class{individualBG},
 #'         \linkS4class{individualAN}, \linkS4class{individualBS},
-#'         \linkS4class{individualMS}
+#'         \linkS4class{individualRW}
 #'@keywords classes
 #'@export
 setClass("individual",
@@ -29,7 +29,7 @@ setClass("individual",
                       "individualBG",
                       "individualAN",
                       "individualBS",
-                      "individualMS"))
+                      "individualRW"))
 
 #' Is this object of class `individual`?
 #'
@@ -40,4 +40,3 @@ is.individual <- function(x)
 {
   inherits(x,"individual")
 }
-

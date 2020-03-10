@@ -1,7 +1,7 @@
 #' @include class-ird.R
 NULL
 
-#' An S4 class to assemble individual milestone data
+#' An S4 class to assemble raw data, e.g. milestones responses
 #'
 #' @author Stef van Buuren 2020
 #' @keywords classes
@@ -16,24 +16,24 @@ NULL
 #'                    k1439 = c(0, 1, 1))
 #' map <- data.frame(from = c("k1430", "k1431", "k1437", "k1438", "k1439"),
 #'                   to = c(879, 927, 928, 881, 883))
-#' z <- new("individualMS",
+#' z <- new("individualRW",
 #'      ddi = new("ird", mst = data, map = map, instrument = "ddi"))
 #' z
 #' @export
-setClass("individualMS",
+setClass("individualRW",
          slots = c(
            ddi = "ird"),
          prototype = list(
            ddi = new("ird", instrument = "ddi"))
 )
 
-#' as("individualMS", "data.frame")
+#' as("individualRW", "data.frame")
 #'
 #' @name as
-#' @family individualMS
-setAs("individualMS", "data.frame", function(from) {
+#' @family individualRW
+setAs("individualRW", "data.frame", function(from) {
 
-  sn <- slotNames("individualMS")
+  sn <- slotNames("individualRW")
   df <- vector("list", length(sn))
   for (i in seq_along(sn))
     df[[i]] <- as(slot(from, sn[i]), "data.frame")
@@ -41,6 +41,6 @@ setAs("individualMS", "data.frame", function(from) {
 })
 
 #' @export
-as.data.frame.individualMS <-
+as.data.frame.individualRW <-
   function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
 

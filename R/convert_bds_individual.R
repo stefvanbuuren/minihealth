@@ -172,13 +172,13 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                             at = "knots",
                             sex = pbg@sex,
                             ...))
-    mil <- new("individualMS",
+    prw <- new("individualRW",
                ddi = new("ird", mst = time,
                          map = load_data(dnr = "smocc_bds"),
                          instrument = "ddi", ...))
     }
 
-  new("individual", pid, pbg, pan, pbs, mil)
+  new("individual", pid, pbg, pan, pbs, prw)
 }
 
 extract_dob <- function(d) {
