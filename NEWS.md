@@ -1,3 +1,7 @@
+# minihealth 0.73.0
+
+* `convert_individual.bds()` includes the raw ddi data to BDS JSON
+
 # minihealth 0.72.0
 
 * Replaces calls `as(..., "data.frame")` by `data.frame(...)`
