@@ -113,9 +113,7 @@ setMethod("show",
           signature(object = "ird" ),
           function (object) {
             cat("Object of class ird\n")
-            # print(head(object@mst, 3))
-            print(head(object@bds, 3))
-            # print(head(object@map))
+            print(object@bds)
           }
 )
 
@@ -124,8 +122,9 @@ setMethod("show",
 #' @name as
 #' @family ird
 setAs("ird", "data.frame", function(from) {
-  pivot_longer(from@bds, -.data$age, names_to = "bds", values_to = "y",
-               values_drop_na = TRUE) %>%
+  suppressWarnings(pivot_longer(from@bds, -.data$age, names_to = "bds", values_to = "y",
+               values_drop_na = TRUE)) %>%
+    select(all_of(c("age", "bds", "y"))) %>%
     data.frame()
 })
 
