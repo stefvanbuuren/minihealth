@@ -18,6 +18,7 @@ Imports:
     methods,
     rlang (>= 0.4.0),
     tidyr (>= 0.8.3),
+    tidyselect,
     utils
 Suggests: 
     curl,

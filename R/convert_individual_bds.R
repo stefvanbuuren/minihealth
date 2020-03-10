@@ -18,7 +18,7 @@
 #'          \code{\link[jsonlite]{toJSON}}
 #' @examples
 #' data("installed.cabinets", package = "jamestest")
-#' ind <- installed.cabinets[[3]][[8]]
+#' ind <- installed.cabinets[[2]][[6]]
 #' b <- convert_individual_bds(ind)
 #' @export
 convert_individual_bds <- function(ind = NULL, ...) {
@@ -105,10 +105,7 @@ as_bds_contacts <- function(ind) {
   if (nrow(d) == 0L) return(NULL)
 
   # back-calculate measurement dates
-  # use 2000-01-01 as birth data if no DOB is known
-  dob <- as.Date(get_dob(ind), format = "%d-%m-%y")
-  days <- round(d$x * 365.25)
-  d$time <- format(dob + days, format = "%Y%m%d")
+  d$time <- age_to_time(ind, d$x)
 
   # set proper units
   d[d$yname %in% c("hgt", "hdc"), "y"] <-
@@ -117,8 +114,8 @@ as_bds_contacts <- function(ind) {
     d[d$yname == "wgt", "y"] * 1000
 
   # set BDS numbers
-  d$bds <- dplyr::recode(d$yname, hgt = "235", wgt = "245",
-                         hdc = "252",
+  d$bds <- dplyr::recode(d$yname,
+                         hgt = "235", wgt = "245", hdc = "252",
                          .default = NA_character_)
 
   # sort according to time
@@ -126,8 +123,21 @@ as_bds_contacts <- function(ind) {
     drop_na(.data$bds) %>%
     arrange(.data$time, .data$bds) %>%
     mutate(Bdsnummer = as.integer(.data$bds),
-           Waarde = as.character(.data$y))
+           Waarde = as.character(.data$y)) %>%
+    select(all_of(c("time", "Bdsnummer", "Waarde")))
 
+  # extract raw responses from DDI
+  ddi <- data.frame(ind@ddi) %>%
+    mutate(time = age_to_time(ind, .data$age),
+           Bdsnummer = as.integer(.data$bds),
+           Waarde = as.character(.data$y)) %>%
+    select(all_of(c("time", "Bdsnummer", "Waarde")))
+
+  # merge measurements
+  d <- bind_rows(d, ddi) %>%
+    arrange(.data$time, .data$Bdsnummer)
+
+  # split by time, and return
   f <- as.factor(d$time)
   d <- split(d[, c("Bdsnummer", "Waarde")], f)
 
@@ -135,4 +145,12 @@ as_bds_contacts <- function(ind) {
     Tijdstip = names(d),
     Elementen = I(d),
     stringsAsFactors = FALSE)
+}
+
+age_to_time <- function(ind, age) {
+  # back-calculate measurement dates
+  # use 2000-01-01 as birth data if no DOB is known
+  dob <- as.Date(get_dob(ind), format = "%d-%m-%y")
+  days <- round(age * 365.25)
+  format(dob + days, format = "%Y%m%d")
 }

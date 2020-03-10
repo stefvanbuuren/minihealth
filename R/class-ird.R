@@ -122,8 +122,11 @@ setMethod("show",
 #' @name as
 #' @family ird
 setAs("ird", "data.frame", function(from) {
-  suppressWarnings(pivot_longer(from@bds, -.data$age, names_to = "bds", values_to = "y",
-               values_drop_na = TRUE)) %>%
+  if (!nrow(from@bds))
+    return(data.frame(age = numeric(0), bds = integer(0), y = numeric(0)))
+  suppressWarnings(pivot_longer(from@bds, -.data$age,
+                                names_to = "bds", values_to = "y",
+                                values_drop_na = TRUE)) %>%
     select(all_of(c("age", "bds", "y"))) %>%
     data.frame()
 })
