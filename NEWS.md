@@ -1,3 +1,8 @@
+# minihealth 0.74.0
+
+* preserves the GA in days by extending the `individualBG` class with a `gad` slot
+* adds BDS 989 (throws ball) to the JSON validator schema
+
 # minihealth 0.73.0
 
 * `convert_individual.bds()` includes the raw ddi data to BDS JSON

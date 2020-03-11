@@ -1,7 +1,7 @@
 Package: minihealth
 Type: Package
 Title: Mini Dossier for Individual Health Data
-Version: 0.73.0
+Version: 0.74.0
 Authors@R: c(person("Stef", "van Buuren", email = "stef.vanbuuren@tno.nl", role = c("cre", "aut")), 
              person("Arjan", "Huizing", email = "arjan.huizing@tno.nl", role = "aut"))
 Depends: 
@@ -22,7 +22,7 @@ Imports:
     utils
 Suggests: 
     curl,
-    jamestest,
+    jamestest (>= 0.21.0),
     testthat
 Remotes: 
     stefvanbuuren/brokenstick,
