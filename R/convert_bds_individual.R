@@ -67,8 +67,9 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
              sex = extract_sex(b),
 
-             # convert to completed weeks
-             ga = trunc(r$ga / 7),
+             # store GA in days and completed weeks
+             gad = r$gad,
+             ga  = trunc(r$gad / 7),
 
              # 1 = Nee, volgens BDS 1 = Ja, 2 = Nee
              smo = extract_field2(d, 91L, "ClientGegevens", "Elementen") - 1L,
@@ -223,18 +224,10 @@ extract_field <- function(d, f = 245L) {
     ifelse("Waarde" %in% names(x), x[x$Bdsnummer == f2, "Waarde"], NA))))
 }
 
-extract_ga <- function(b) {
-  ga <- as.numeric(b[b$Bdsnummer == 82, 2])
-  if (length(ga) == 0L) ga <- NA_real_
-  # convert days to weeks
-  if (!is.na(ga) & ga > 50) ga <- trunc(ga / 7)
-  as.numeric(ga)
-}
-
 extract_field2 <- function(d, f, l1, l2) {
   b <- d[[l1]][[l2]]
   v <- b[b$Bdsnummer == f, "Waarde"]
-  ifelse (length(v) == 0L, NA_real_, as.numeric(v))
+  ifelse (!length(v), NA_real_, as.numeric(v))
 }
 
 extract_field3 <- function(d, f, l1, l2, l3, which_parent = "02") {

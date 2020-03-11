@@ -14,12 +14,12 @@ check_ranges <- function(d) {
                            lex[lex$bdsnummer == 63, "description"],
                            ") Onjuist format", appendLF = FALSE)
 
-  ga <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
-  if (is.na(ga))
+  gad <- extract_field2(d, 82L, "ClientGegevens", "Elementen")
+  if (is.na(gad))
     message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen) heeft geen waarde", appendLF = FALSE)
-  if (!is.na(ga) & (ga < 50 | ga > 350))
+  if (!is.na(gad) & (gad < 50 | gad > 350))
     message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen): Buiten bereik 50-350", appendLF = FALSE)
@@ -98,7 +98,7 @@ check_ranges <- function(d) {
 
   list(dob = dob,
        dobm = dobm,
-       ga = ga,
+       gad = gad,
        bw = bw,
        hgtm = hgtm,
        hgtf = hgtf,

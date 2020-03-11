@@ -78,7 +78,8 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                etn   = set.slot(child, "etn", "character"),
                edu   = set.slot(child, "edu", "character"),
 
-               ga    = set.slot(child, "ga") * 7,
+               gad   = set.slot(child, "ga") * 7,
+               ga    = set.slot(child, "ga"),
                bw    = set.slot(child, "bw"),
                twin  = set.slot(child, "twin"),
                agem  = set.slot(child, "agem"),

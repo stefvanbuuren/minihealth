@@ -64,7 +64,7 @@ as_bds_clientdata <- function(ind) {
 
   x$Elementen[1L, 2L] <- switch(slot(ind, "sex"), "male" = "1", "female" = "2", NA_character_)
   x$Elementen[2L, 2L] <- format(as.Date(slot(ind, "dob"), format = "%d-%m-%y"), format = "%Y%m%d")
-  x$Elementen[3L, 2L] <- as.character(slot(ind, "ga"))
+  x$Elementen[3L, 2L] <- as.character(slot(ind, "gad"))
   x$Elementen[4L, 2L] <- as.character(slot(ind, "smo") + 1L)
   x$Elementen[5L, 2L] <- as.character(slot(ind, "bw"))
   x$Elementen[6L, 2L] <- as.character(slot(ind, "hgtm") * 10)

@@ -6,7 +6,8 @@
 #' @slot etn  Etnicity: \code{"NL"}, \code{"TU"},
 #'            \code{"MA"}, \code{"HS"}, \code{"other"} (\code{character})
 #' @slot edu  Education: \code{"low"}, \code{"middle"}, \code{"high"}
-#' @slot ga   Gestational age, weeks (\code{numeric})
+#' @slot gad  Gestational age, in days (\code{numeric})
+#' @slot ga   Gestational age, in completed weeks (\code{numeric})
 #' @slot bw   Birth weight, grammes (\code{numeric})
 #' @slot twin Twin: \code{0}, \code{1} (\code{numeric})
 #' @slot agem Mother age, years (\code{numeric})
@@ -22,6 +23,7 @@ setClass("individualBG",
            sex   = "character",
            etn   = "character",
            edu   = "character",
+           gad   = "numeric",
            ga    = "numeric",
            bw    = "numeric",
            twin  = "numeric",
@@ -37,6 +39,7 @@ setClass("individualBG",
            sex   = NA_character_,
            etn   = NA_character_,
            edu   = NA_character_,
+           gad   = NA_real_,
            ga    = NA_real_,
            bw    = NA_real_,
            twin  = NA_real_,

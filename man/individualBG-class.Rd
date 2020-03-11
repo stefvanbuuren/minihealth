@@ -18,7 +18,9 @@ such as sex or birth weight. Each slot has length one.
 
 \item{\code{edu}}{Education: \code{"low"}, \code{"middle"}, \code{"high"}}
 
-\item{\code{ga}}{Gestational age, weeks (\code{numeric})}
+\item{\code{gad}}{Gestational age, in days (\code{numeric})}
+
+\item{\code{ga}}{Gestational age, in completed weeks (\code{numeric})}
 
 \item{\code{bw}}{Birth weight, grammes (\code{numeric})}
 
