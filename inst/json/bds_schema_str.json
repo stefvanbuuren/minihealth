@@ -537,6 +537,11 @@
                     }
                 },
                 {"properties": {
+                    "Bdsnummer": {"const": 989},
+                    "Waarde": {"enum": ["1", "2"]}
+                    }
+                },
+                {"properties": {
                     "Bdsnummer": {"const": 991},
                     "Waarde": {"enum": ["1", "2"]}
                     }
