@@ -1,17 +1,14 @@
 context("convert_bds_individual")
 
-empty <- new("individual")
-js1 <- minihealth::convert_individual_bds(empty)
-
 # test the empty object
+js1 <- '{"OrganisatieCode":0,"ClientGegevens":{}}'
 test_that("handles the empty individual object",
            expect_warning(is.individual(convert_bds_individual(js1)),
           "should have required property 'Elementen'"))
 
+# test the minimal object
 minimal <- new("individual", sex = "male", dob = as.Date("20181231", "%Y%m%d"))
 js2 <- minihealth::convert_individual_bds(minimal)
-
-# test the minimal object
 test_that("handles the minimal individual object",
           expect_message(convert_bds_individual(js2),
                          "Missing 'Contactmomenten'",

@@ -29,7 +29,7 @@ uses the artificial birth date \code{01 Jan 2000}.
 }
 \examples{
 data("installed.cabinets", package = "jamestest")
-ind <- installed.cabinets[[2]][[6]]
+ind <- installed.cabinets[[3]][[1]]
 b <- convert_individual_bds(ind)
 }
 \seealso{

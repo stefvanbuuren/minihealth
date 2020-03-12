@@ -18,7 +18,7 @@
 #'          \code{\link[jsonlite]{toJSON}}
 #' @examples
 #' data("installed.cabinets", package = "jamestest")
-#' ind <- installed.cabinets[[2]][[6]]
+#' ind <- installed.cabinets[[3]][[1]]
 #' b <- convert_individual_bds(ind)
 #' @export
 convert_individual_bds <- function(ind = NULL, ...) {
@@ -63,7 +63,7 @@ as_bds_clientdata <- function(ind) {
   )
 
   x$Elementen[1L, 2L] <- switch(slot(ind, "sex"), "male" = "1", "female" = "2", NA_character_)
-  x$Elementen[2L, 2L] <- format(as.Date(slot(ind, "dob"), format = "%d-%m-%y"), format = "%Y%m%d")
+  x$Elementen[2L, 2L] <- format(as.Date(get_dob(ind), format = "%d-%m-%y"), format = "%Y%m%d")
   x$Elementen[3L, 2L] <- as.character(slot(ind, "gad"))
   x$Elementen[4L, 2L] <- as.character(slot(ind, "smo") + 1L)
   x$Elementen[5L, 2L] <- as.character(slot(ind, "bw"))
