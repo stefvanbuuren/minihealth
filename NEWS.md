@@ -1,3 +1,7 @@
+# minihealth 0.74.1
+
+* Add bug fix that creates a synthetic dob (20000101) when NA
+
 # minihealth 0.74.0
 
 * preserves the GA in days by extending the `individualBG` class with a `gad` slot
