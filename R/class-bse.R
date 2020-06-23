@@ -13,8 +13,8 @@ NULL
 #'
 #'@section Slots:
 #'  \describe{
-#'    \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick_export} as created by
-#'    \code{\link[brokenstick]{export}}.}
+#'    \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick} as created by
+#'    \code{\link[brokenstick]{brokenstick}}.}
 #'    \item{\code{found}:}{Logical indicating whether the broken stick model specified by
 #'    \code{call} was actually found.}
 #'    \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
@@ -24,21 +24,37 @@ NULL
 #'@rdname bse-class
 #'@aliases bse-class
 #'@author Stef van Buuren 2016
-#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{export}}, \code{\link[brokenstick]{predict.brokenstick}}
+#'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
 #'@examples
 #'library(donorloader)
 #'smocc_bs <- load_data(dnr = "smocc_bs")
-#'# first specify three height measures
-#'d1 <- new("bse", data = new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4)))
-#'d1
-#'# Same, but now for a female
-#'d2 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female"))
-#'d2
+#'
+#' # specify three height measures for child
+#' child <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
+#' # we get no Z-score conversion because haven't told the child's sex
+#' child
+#'
+#' boy <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
+#' girl <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female", ga = 32)
+#' boy
+#' girl
+#'
+#' d1 <- new("bse", child)
+#' d1
+#'
+#' # Same, but now for the girl
+#' d2 <- new("bse", girl)
+#' d2
+#'
 #'# Calculate predicted value for each x
 #'d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
 #' sex = "female"))
 #'d3
+#'
+#'d4 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
+#' sex = "female"), at = "knots")
+#'d4
 #'@export
 
 setClass("bse",
@@ -56,10 +72,11 @@ setClass("bse",
 
 setMethod("initialize", "bse",
           function (.Object, data,
-                    at = "x",
+                    at = c("x", "knots"),
                     models = "smocc_bs",
                     call = quote(as.numeric(NULL)),
                     ...) {
+            at <- match.arg(at)
 
             # can't calculate if we have no data
             if (missing(data)) data <- new("xyz", ...)
@@ -84,7 +101,7 @@ setMethod("initialize", "bse",
 
             # fetch the model
             model <- eval(call)
-            .Object@found <- inherits(model, "brokenstick_export")
+            .Object@found <- inherits(model, "brokenstick")
 
             # fill only if we have a model
             if (.Object@found) {
@@ -95,34 +112,43 @@ setMethod("initialize", "bse",
 
               # fill y and z
               if (at == "x") .Object@x <- data@x
-              else .Object@x <- as.numeric(get_knots(model))
+              if (at == "knots") .Object@x <- as.numeric(get_knots(model))
 
               if (.Object@zscale) {
-                .Object@z <- predict(object = model, y = data@z,
-                                     x = data@x, at = at,
-                                     output = "vector", ...)
+                # z scale
+                df <- data.frame(
+                  age = data@x,
+                  zname = data@z,
+                  id = rep(1L, length(data@x)))
+                colnames(df) <- c("age", data@zname, "id")
+                if (nrow(df)) {
+                  if (at == "x") .Object@z <- predict(model, df, shape = "vector", ...)
+                  if (at == "knots") .Object@z <- predict(model, df, x = "knots", shape = "vector", ...)
+                }
+                else .Object@z <- numeric(0)
                 if (length(.Object@z) == 0) .Object@x <- numeric(0)
                 .Object@y <- as.numeric(z2y(z = .Object@z,
                                             x = .Object@x,
                                             ref = eval(data@call),
                                             ...))
               } else {
-                .Object@y <- predict(object = model, y = data@y,
-                                     x = data@x, at = at,
-                                     output = "vector", ...)
+                # y scale
+                df <- data.frame(
+                  age = data@x,
+                  yname = data@y,
+                  id = rep(1L, length(data@x)))
+                colnames(df) <- c("age", data@yname, "id")
+                if (nrow(df)) {
+                  if (at == "x") .Object@y <- predict(model, df, shape = "vector", ...)
+                  if (at == "knots") .Object@y <- predict(model, df, x = "knots", shape = "vector", ...)
+                }
+                else .Object@y <- numeric(0)
                 if (length(.Object@y) == 0) .Object@y <- numeric(0)
                 .Object@z <- as.numeric(y2z(y = .Object@y,
                                             x = .Object@x,
                                             ref = eval(data@call),
                                             ...))
               }
-
-              # remove estimate for boundary[2]
-              # if (at == "knots") {
-              #   .Object@x <- .Object@x[-length(.Object@x)]
-              #   .Object@y <- .Object@y[-length(.Object@y)]
-              #   .Object@z <- .Object@z[-length(.Object@z)]
-              # }
             }
 
             check <- validObject(.Object)
@@ -132,8 +158,8 @@ setMethod("initialize", "bse",
 
 
 setValidity("bse", function(object) {
-  #if (!inherits(eval(object@call), "brokenstick_export"))
-  #  return(paste0("eval(", object@call, ") is not an object of class 'brokenstick_export'"))
+  #if (!inherits(eval(object@call), "brokenstick"))
+  #  return(paste0("eval(", object@call, ") is not an object of class 'brokenstick'"))
   return(TRUE)
 })
 
