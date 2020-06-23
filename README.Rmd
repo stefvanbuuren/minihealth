@@ -98,7 +98,7 @@ See the help ("?`bse-class`") and the
 
 ## Example 3: Bundle all measures by individual
 
-The S4 class `individual` bundles four different types of information, 
+The S4  class `individual` bundles four different types of information, 
 each of which is coded by its own class:
 
 - `individualID`: ID information, like name, date of birth;

@@ -1,3 +1,7 @@
+# minihealth 0.75.0
+
+* Update to `R 4.0.0` and `brokenstick 0.70.1`
+
 # minihealth 0.74.1
 
 * Add bug fix that creates a synthetic dob (20000101) when NA
