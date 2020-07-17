@@ -3,8 +3,8 @@ context("convert_bds_individual")
 # test the empty object
 js1 <- '{"OrganisatieCode":0,"ClientGegevens":{}}'
 test_that("handles the empty individual object",
-           expect_warning(is.individual(convert_bds_individual(js1)),
-          "should have required property 'Elementen'"))
+           expect_message(is.individual(convert_bds_individual(js1)),
+                          "should have required property 'Elementen'"))
 
 # test the minimal object
 minimal <- new("individual", sex = "male", dob = as.Date("20181231", "%Y%m%d"))
@@ -18,7 +18,7 @@ test_that("handles the minimal individual object",
 below <- new("individual", dob = as.Date("20181231", "%Y%m%d"))
 js3 <- minihealth::convert_individual_bds(below)
 test_that("handles the below minimal object",
-          expect_warning(convert_bds_individual(js3),
+          expect_message(convert_bds_individual(js3),
                          "verplicht BDS nummer ontbreekt: 19"))
 
 jtf <- system.file("extdata", "test", paste0("test", 1:24, ".json"), package = "jamestest")
@@ -30,15 +30,15 @@ test_that("test2.json (missing Referentie) PASSES",
           expect_s4_class(convert_bds_individual(jtf[2]), "individual"))
 
 test_that("test3.json (missing OrganisatieCode) WARNS",
-          expect_warning(convert_bds_individual(jtf[3]),
+          expect_message(convert_bds_individual(jtf[3]),
                        "should have required property 'OrganisatieCode'"))
 
 test_that("test4.json (wrong type) WARNS",
-          expect_warning(convert_bds_individual(jtf[4]),
+          expect_message(convert_bds_individual(jtf[4]),
                        ".OrganisatieCode should be integer"))
 
 test_that("test5.json (missing ClientGegevens) WARNS",
-          expect_warning(convert_bds_individual(jtf[5]),
+          expect_message(convert_bds_individual(jtf[5]),
                        "should have required property 'ClientGegevens'"))
 
 test_that("test6.json (Missing ContactMomenten) WARNS",
@@ -47,7 +47,7 @@ test_that("test6.json (Missing ContactMomenten) WARNS",
                          fixed = TRUE))
 
 test_that("test7.json (Missing Referentie & OrganisatieCode) WARNS",
-          expect_warning(convert_bds_individual(jtf[7]),
+          expect_message(convert_bds_individual(jtf[7]),
                        "should have required property 'OrganisatieCode'"))
 
 test_that("test8.json (Invalid JSON) WARNS",
@@ -55,11 +55,11 @@ test_that("test8.json (Invalid JSON) WARNS",
                          "lexical error: invalid char in json text."))
 
 test_that("test9.json (Bdsnummer 19 missing) returns warning",
-          expect_warning(convert_bds_individual(jtf[9]),
+          expect_message(convert_bds_individual(jtf[9]),
                          "verplicht BDS nummer ontbreekt: 19"))
 
 test_that("test10.json (Bdsnummer 20 missing) return warning",
-          expect_warning(convert_bds_individual(jtf[10]),
+          expect_message(convert_bds_individual(jtf[10]),
                          "verplicht BDS nummer ontbreekt: 20"))
 
 test_that("test11.json (Bdsnummer 82 missing) return message",

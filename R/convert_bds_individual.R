@@ -36,13 +36,11 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
   mess <- parse_valid(valid)
 
   if (length(mess$required) > 0L) {
-    if (any(grepl("required", mess$required)) |
-        any(grepl("verplicht", mess$required)) |
+    if (any(grepl("required", mess$required)) ||
+        any(grepl("verplicht", mess$required)) ||
         any(grepl("should", mess$required)))
-      # throw warnings if required elements are missing
-      warning(mess$required, call. = FALSE)
+      throw_messages(mess$required)
   }
-  # inform user about ill-formed BDS elements
   throw_messages(mess$supplied)
 
   # PHASE 3: Range checks
