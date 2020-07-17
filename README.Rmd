@@ -26,7 +26,7 @@ The `minihealth` package is a central component of
 
 ## Installation
 
-You can install the development version `minihealth` by
+Install the development version `minihealth` by
 
 ```{r eval = FALSE}
 install.packages("remotes")

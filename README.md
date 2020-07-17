@@ -18,7 +18,7 @@ The `minihealth` package is a central component of
 
 ## Installation
 
-You can install the development version `minihealth` by
+Install the development version `minihealth` by
 
 ``` r
 install.packages("remotes")
@@ -40,9 +40,6 @@ Here are some examples for automatic \(Z\)-score calculation:
 
 ``` r
 library(minihealth)
-#> Registered S3 method overwritten by 'pryr':
-#>   method      from
-#>   print.bytes Rcpp
 
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
 new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))

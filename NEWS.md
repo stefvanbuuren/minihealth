@@ -1,3 +1,8 @@
+# minihealth 0.76.0
+
+* Solves the pesky warning message: "Unreplaced values treated as NA as .x is not compatible. Please specify replacements exhaustively or supply .default"
+* Turns most warnings into messages. The only warnings remaining occur if the input JSON is invalid.
+
 # minihealth 0.75.0
 
 * Update to `R 4.0.0` and `brokenstick 0.70.1`
