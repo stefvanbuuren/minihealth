@@ -134,3 +134,19 @@ js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
 test_that("http400.json proceeds silent - no biological mother",
           expect_silent(convert_bds_individual(js)))
 
+# test battery - comment out to activate
+# path <- system.file("extdata", package = "jamestest")
+# libs <- c("allegrosultum", "test", "smocc", "terneuzen", "preterm", "graham")
+# for (lib in libs) {
+#   files <- list.files(path = file.path(path, lib), pattern = ".json", full.names = TRUE)
+#   for (file in files) {
+#     cat("File ", file, "\n")
+#     if (file == "/Users/buurensv/Library/R/4.0/library/jamestest/extdata/test/test14.json") next
+#     if (file == "/Users/buurensv/Library/R/4.0/library/jamestest/extdata/test/test8.json") next
+#     js  <- jsonlite::toJSON(jsonlite::fromJSON(file), auto_unbox = TRUE)
+#     test_that(paste(file, "passes"), {
+#       expect_silent(suppressMessages(convert_bds_individual(txt = js)))
+#     })
+#   }
+# }
+

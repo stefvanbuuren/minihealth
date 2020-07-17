@@ -24,8 +24,8 @@ convert_ddi_gsed <- function(d, r) {
     type <- minihealth::bds_gsed[n, "type"]
     bds  <- minihealth::bds_gsed[n, c("bds", "bdsr", "bdsl")]
     w[, item] <- switch(type,
-                        g1 = recode(w[, as.character(bds[1L])], `1` = 1L, `2` = 0L),
-                        m1 = recode(w[, as.character(bds[1L])], `1` = 1L, `2` = 0L, `3` = 1L),
+                        g1 = recode(w[, as.character(bds[1L])], `1` = 1L, `2` = 0L, .default = NA_integer_),
+                        m1 = recode(w[, as.character(bds[1L])], `1` = 1L, `2` = 0L, `3` = 1L, .default = NA_integer_),
                         g2 = {
                           bdsr <- w[, as.character(bds[2L])]
                           bdsl <- w[, as.character(bds[3L])]

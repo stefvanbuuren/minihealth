@@ -91,7 +91,8 @@ setMethod(
                                     `0` = 2L,
                                     `1` = 1L,
                                     `2` = 3L,
-                                    `3` = 2L)
+                                    `3` = 2L,
+                                    .default = NA_integer_)
       }
       .Object@bds <- bds
     }
