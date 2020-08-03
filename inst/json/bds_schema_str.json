@@ -272,7 +272,7 @@
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 911},
+                    "Bdsnummer": {"const": 912},
                     "Waarde": {"enum": ["1", "2"]}
                     }
                 },
@@ -397,12 +397,12 @@
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 942},
+                    "Bdsnummer": {"const": 943},
                     "Waarde": {"enum": ["1", "2", "3"]}
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 944},
+                    "Bdsnummer": {"const": 945},
                     "Waarde": {"enum": ["1", "2"]}
                     }
                 },
@@ -462,7 +462,7 @@
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 960},
+                    "Bdsnummer": {"const": 961},
                     "Waarde": {"enum": ["1", "2"]}
                     }
                 },
@@ -477,7 +477,7 @@
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 965},
+                    "Bdsnummer": {"const": 966},
                     "Waarde": {"enum": ["1", "2"]}
                     }
                 },
@@ -497,7 +497,7 @@
                     }
                 },
                 {"properties": {
-                    "Bdsnummer": {"const": 972},
+                    "Bdsnummer": {"const": 973},
                     "Waarde": {"enum": ["1", "2", "3"]}
                     }
                 },
