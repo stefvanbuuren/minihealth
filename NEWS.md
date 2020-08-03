@@ -1,3 +1,7 @@
+# minihealth 0.77.0
+
+* Repairs six incorrect BDS numbers in `inst/json/bds_schema_str.json`.
+
 # minihealth 0.76.0
 
 * Solves the pesky warning message: "Unreplaced values treated as NA as .x is not compatible. Please specify replacements exhaustively or supply .default"
