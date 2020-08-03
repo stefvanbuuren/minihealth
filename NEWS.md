@@ -1,6 +1,7 @@
 # minihealth 0.77.0
 
 * Repairs six incorrect BDS numbers in `inst/json/bds_schema_str.json`.
+* Updates `data/bds_lexicon` with the six repairs.
 
 # minihealth 0.76.0
 
