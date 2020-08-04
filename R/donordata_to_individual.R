@@ -99,7 +99,7 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
   if (is.null(time)) {
     pan <- new("individualAN")
     pbs <- new("individualBS")
-    mil <- new("individualMS")
+    mil <- new("individualRW")
   } else {
     pan <- new("individualAN",
                hgt = new("xyz", yname = "hgt",
