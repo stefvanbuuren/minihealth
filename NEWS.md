@@ -1,3 +1,7 @@
+# minihealth 0.78.0
+
+* Replace `individualMS` by more general `individualRW` for raw data storage.
+
 # minihealth 0.77.0
 
 * Repairs six incorrect BDS numbers in `inst/json/bds_schema_str.json`.

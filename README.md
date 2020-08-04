@@ -199,27 +199,27 @@ boy
 new("bse", data = boy)
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
 #>   age  hgt  hgt.z
-#> 1 0.0 50.6 -0.367
-#> 2 0.2 54.8 -2.002
-#> 3 0.5 63.5 -1.788
+#> 1 0.0 50.6 -0.349
+#> 2 0.2 54.9 -1.982
+#> 3 0.5 63.5 -1.801
 
 # calculate broken stick estimates at all break points
 new("bse", data = boy, at = "knots")
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
 #>       age  hgt  hgt.z
-#> 1  0.0000 50.6 -0.367
-#> 2  0.0767 50.8 -1.678
-#> 3  0.1533 53.2 -1.965
-#> 4  0.2500 56.4 -2.041
-#> 5  0.3333 60.1 -1.546
-#> 6  0.5000 63.5 -1.788
-#> 7  0.6250 66.7 -1.480
-#> 8  0.7500 68.2 -1.677
-#> 9  0.9167 70.8 -1.650
-#> 10 1.1667 74.5 -1.532
-#> 11 1.5000 78.6 -1.517
-#> 12 2.0000 84.3 -1.407
-#> 13 3.0000 92.8 -1.445
+#> 1  0.0000 50.6 -0.349
+#> 2  0.0767 50.9 -1.640
+#> 3  0.1533 53.2 -1.945
+#> 4  0.2500 56.5 -2.020
+#> 5  0.3333 60.0 -1.599
+#> 6  0.5000 63.5 -1.801
+#> 7  0.6250 66.5 -1.532
+#> 8  0.7500 68.1 -1.740
+#> 9  0.9167 70.7 -1.708
+#> 10 1.1667 74.3 -1.605
+#> 11 1.5000 78.3 -1.588
+#> 12 2.0000 84.0 -1.483
+#> 13 3.0000 92.4 -1.547
 ```
 
 See the help (“?`bse-class`”) and the
@@ -236,7 +236,7 @@ each of which is coded by its own class:
   - `individualAN`: Bundles person’s anthrometric data, like `hgt` and
     `wgt`;
   - `individualBS`: Bundles person’s brokenstick estimates;
-  - `individualMS`: Stores raw milestone data;
+  - `individualRW`: Stores raw data, e.g. milestones;
 
 Creating an instance of class `individual` can be done by hand in two
 steps. First, create one or more of the four subclasses, and then  

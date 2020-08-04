@@ -105,7 +105,7 @@ each of which is coded by its own class:
 - `individualBG`: Background, like sex, gestional age or etnicity;
 - `individualAN`: Bundles person's anthrometric data, like `hgt` and `wgt`;
 - `individualBS`: Bundles person's brokenstick estimates;
-- `individualMS`: Stores raw milestone data;
+- `individualRW`: Stores raw data, e.g. milestones;
 
 Creating an instance of class `individual` can be done by hand in two 
 steps. First, create one or more of the four subclasses, and then  
