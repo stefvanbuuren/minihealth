@@ -24,7 +24,15 @@ NULL
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
-  checked <- verify(txt, schema = schema, ...)
+  # Check. Tranform json errors (e.g. no file, invalid json) into a
+  # warning, and exit with empty individual object.
+  checked <- tryCatch(
+    expr = verify(txt, schema = schema, ...),
+    error = function(cnd) {
+      stop(conditionMessage(cnd))
+      new("individual")
+    }
+  )
 
   d <- checked$data
   b <- d$ClientGegevens$Elementen
@@ -156,7 +164,7 @@ convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
                ddi = new("ird", mst = time,
                          map = load_data(dnr = "smocc_bds"),
                          instrument = "ddi", ...))
-    }
+  }
 
   new("individual", pid, pbg, pan, pbs, prw)
 }
@@ -172,9 +180,9 @@ extract_sex <- function(b) {
   s <- b[b$Bdsnummer == 19L, 2L]
   if (length(s) == 0L) return(NA_character_)
   switch(s,
-       "1" = "male",
-       "2" = "female",
-       NA_character_)
+         "1" = "male",
+         "2" = "female",
+         NA_character_)
 }
 
 extract_agep <- function(d, which_parent = "02") {
