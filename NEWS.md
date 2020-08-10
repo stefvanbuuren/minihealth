@@ -1,3 +1,7 @@
+# minihealth 0.79.0
+
+* Adds `verify()` to isolate JSON testing from conversion to `individual`
+
 # minihealth 0.78.0
 
 * Replace `individualMS` by more general `individualRW` for raw data storage.
