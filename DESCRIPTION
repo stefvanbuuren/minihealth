@@ -67,3 +67,4 @@ Collate:
     'tests.R'
     'throw_messages.R'
     'validate_bds_individual.R'
+    'verify.R'

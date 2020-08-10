@@ -24,34 +24,15 @@ NULL
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
-  # PHASE 1: check JSON syntax: if needed, warn and exit
-  err <- catch_cnd(d <- fromJSON(txt, ...))
-  if (!is.null(err)) {
-    warning(conditionMessage(err))
-    return(new("individual"))
-  }
+  checked <- verify(txt, schema = schema, ...)
 
-  # PHASE 2: JSON schema validation
-  valid <- validate_bds_individual(txt, schema)
-  mess <- parse_valid(valid)
-
-  if (length(mess$required) > 0L) {
-    if (any(grepl("required", mess$required)) ||
-        any(grepl("verplicht", mess$required)) ||
-        any(grepl("should", mess$required)))
-      throw_messages(mess$required)
-  }
-  throw_messages(mess$supplied)
-
-  # PHASE 3: Range checks
-  r <- check_ranges(d)
+  d <- checked$data
+  b <- d$ClientGegevens$Elementen
+  r <- checked$ranges
 
   # convert ddi, calculate D-score
   ddi <- convert_ddi_gsed(d, r)
   ds <- dscore(data = ddi, key = "dutch")
-
-  #
-  b <- d$ClientGegevens$Elementen
 
   # is this child or message number?
   pid <- new("individualID",
