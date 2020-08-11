@@ -1,3 +1,7 @@
+# minihealth 0.80.0
+
+* Adds the `convert_checked_individual()` workhorse
+
 # minihealth 0.79.0
 
 * Adds `verify()` to isolate JSON testing from conversion to `individual`
