@@ -54,6 +54,7 @@ Collate:
     'class-cabinet.R'
     'class-individualDS.R'
     'convert_bds_individual.R'
+    'convert_checked_individual.R'
     'convert_ddi_gsed.R'
     'convert_individual_bds.R'
     'data.R'

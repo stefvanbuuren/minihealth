@@ -2,7 +2,7 @@
 % Please edit documentation in R/convert_bds_individual.R
 \name{convert_bds_individual}
 \alias{convert_bds_individual}
-\title{Convert json BSD data for single individual to class individual}
+\title{Convert json BDS data for single individual to class individual}
 \usage{
 convert_bds_individual(txt = NULL, schema = NULL, ...)
 }
@@ -35,5 +35,5 @@ p <- convert_bds_individual(fn)
          \code{\link[jsonlite]{fromJSON}}
 }
 \author{
-Stef van Buuren 2019
+Stef van Buuren 2020
 }
