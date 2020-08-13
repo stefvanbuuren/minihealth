@@ -24,13 +24,14 @@ NULL
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 
+  if (is.null(txt)) return(NULL)
+
   # Check. Tranform json errors (e.g. no file, invalid json) into a
   # warning, and exit with empty individual object.
   checked <- tryCatch(
     expr = verify(txt, schema = schema, ...),
     error = function(cnd) {
       stop(conditionMessage(cnd))
-      new("individual")
     }
   )
 

@@ -1,3 +1,7 @@
+# minihealth 0.80.1
+
+* Add fast return in `convert_bds_individual()` for `NULL` input
+
 # minihealth 0.80.0
 
 * Adds the `convert_checked_individual()` workhorse
