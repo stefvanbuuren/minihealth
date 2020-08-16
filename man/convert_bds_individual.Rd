@@ -19,7 +19,7 @@ schema.}
 as.call(...)} for setting proper reference standards.}
 }
 \value{
-An object of class \linkS4class{individual}.
+An object of class \linkS4class{individual} or \code{NULL}
 }
 \description{
 This function takes data from a json source and saves it as a an object
