@@ -4,9 +4,8 @@
 #' object. A \code{boolean} is returned indicating whether or not the provided
 #' JSON data matches the schema.
 #' @param txt A JSON string, URL or file to be compared to the schema.
-#' @param schema A JSON string, URL or file with the schema to evaluate
-#' by. The default (\code{NULL}) loads the built-in schema
-#' \code{"bds_schema_str.json"}.
+#' @param schema The name of one the the built-in schema's.
+#' The default (\code{NULL}) loads \code{"bds_schema_str.json"}.
 #' @param verbose include an error message when validation fails.
 #' @return A \code{boolean} with optional \code{errors} attribute.
 #' @author Arjan Huizing 2019
@@ -14,7 +13,9 @@
 validate_bds_individual <- function(txt = NULL, schema = NULL,
                                     verbose = TRUE) {
   if (is.null(schema))
-    schema <- system.file("json", "bds_schema_str.json", package = "minihealth")
+    schemajs <- system.file("json", "bds_schema_str.json", package = "minihealth")
+  else
+    schemajs <- system.file("json", schema, package = "minihealth")
 
-  json_validate(txt, schema, engine = "ajv", verbose = verbose)
+  json_validate(txt, schemajs, engine = "ajv", verbose = verbose)
 }
