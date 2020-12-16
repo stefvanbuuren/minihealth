@@ -6,6 +6,8 @@ NULL
 #' This function takes data from a json source and saves it as a an object
 #' of class \linkS4class{individual}. The function automatically calculates
 #' standard deviation scores and broken stick conditional means per visit.
+#' The function hard-codes the transformations \code{clopus::transform_z()}
+#' and \code{clopus::transform_y()}.
 #' @param txt a JSON string, URL or file
 #' @param schema A JSON string, URL or file that selects the JSON validation
 #' schema.
@@ -20,7 +22,9 @@ NULL
 #'          \code{\link[jsonlite]{fromJSON}}
 #' @examples
 #' fn <- system.file("extdata", "allegrosultum", "client3.json", package = "jamestest")
-#' p <- convert_bds_individual(fn)
+#'
+#' # using clopus::transform_y and clopus::transform_z
+#' q <- convert_bds_individual(fn)
 #' @export
 convert_bds_individual <- function(txt = NULL, schema = NULL, ...) {
 

@@ -179,7 +179,7 @@ setMethod(
     # initialize z
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
-      else if (usetransform) {
+      else if (usetransform && lx) {
         slot(.Object, "transform") <- "transform_z()"
         df <- data.frame(y = slot(.Object, "y"),
                          x = slot(.Object, "x"),
