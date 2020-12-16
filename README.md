@@ -4,17 +4,16 @@
 # minihealth
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 The `minihealth` package is a central component of
 [JAMES](https://github.com/stefvanbuuren/james). The package
 
-  - Defines S4 classes `xyz`, `bse`, `ird`, `individual` and `cabinet`
+-   Defines S4 classes `xyz`, `bse`, `ird`, `individual` and `cabinet`
     for analysing individual growth data;
-  - Translates `individual`, `donordata` and `bds` formats into each
+-   Translates `individual`, `donordata` and `bds` formats into each
     other;
-  - Extracts data and ranges from `individual` objects.
+-   Extracts data and ranges from `individual` objects.
 
 ## Installation
 
@@ -32,14 +31,15 @@ There is no release on CRAN.
 The S4 class `xyz` stores three variables useful for anthropometric
 data:
 
-  - `x`: usually age, but can also be height (in weight-for-height);
-  - `y`: measurement, e.g. height or weight;
-  - `z`: Z-score of `y` conditional on `x`.
+-   `x`: usually age, but can also be height (in weight-for-height);
+-   `y`: measurement, e.g. height or weight;
+-   `z`: Z-score of `y` conditional on `x`.
 
-Here are some examples for automatic \(Z\)-score calculation:
+Here are some examples for automatic *Z*-score calculation:
 
 ``` r
 library(minihealth)
+#> Loading required package: clopus
 
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
 new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
@@ -231,12 +231,12 @@ more examples.
 The S4 class `individual` bundles four different types of information,
 each of which is coded by its own class:
 
-  - `individualID`: ID information, like name, date of birth;
-  - `individualBG`: Background, like sex, gestional age or etnicity;
-  - `individualAN`: Bundles person’s anthrometric data, like `hgt` and
+-   `individualID`: ID information, like name, date of birth;
+-   `individualBG`: Background, like sex, gestional age or etnicity;
+-   `individualAN`: Bundles person’s anthrometric data, like `hgt` and
     `wgt`;
-  - `individualBS`: Bundles person’s brokenstick estimates;
-  - `individualRW`: Stores raw data, e.g. milestones;
+-   `individualBS`: Bundles person’s brokenstick estimates;
+-   `individualRW`: Stores raw data, e.g. milestones;
 
 Creating an instance of class `individual` can be done by hand in two
 steps. First, create one or more of the four subclasses, and then  
@@ -284,9 +284,9 @@ Doing this sequence by hand is somewhat inconvenient. Fortunately, there
 are two functions that convert other formats into an object of class
 `individual`:
 
-  - `donordata_to_individual()` takes data in `donordata` format, and
+-   `donordata_to_individual()` takes data in `donordata` format, and
     converts it into `individual` format;
-  - `convert_bds_individual()` takes data in `bds` format, and converts
+-   `convert_bds_individual()` takes data in `bds` format, and converts
     it into `individual` format;
 
 See the respective documentation for more detail. Both functions have
@@ -294,11 +294,11 @@ inverse (but lossy) transformations.
 
 ## Miscellaneous functionality
 
-  - A `cabinet` is a collection of multiple objects of class
+-   A `cabinet` is a collection of multiple objects of class
     `individual`;
-  - `data.frame(d1)` extracts the data frame from objects of class
+-   `data.frame(d1)` extracts the data frame from objects of class
     `xyz`;
-  - `get_xyz(rob, "hgt")` extracts the data frame from objects of class
+-   `get_xyz(rob, "hgt")` extracts the data frame from objects of class
     `individual`;
-  - `get_range(rob)` extract the age range from objects of class
+-   `get_range(rob)` extract the age range from objects of class
     `individual`.

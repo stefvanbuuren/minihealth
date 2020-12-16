@@ -1,3 +1,10 @@
+# minihealth 0.81.0 
+
+* The `xyz` and `bse` classes now support `clopus::transform_z()` and  
+`clopus::transform_y()` transformations. Add `usetransform = TRUE, sex = .., ga = ..`
+arguments to the `new("xyz", ...)` and `new("bse", ...)` calls to activate this
+option.
+
 # minihealth 0.80.2 
 
 * Support only built-in schema
