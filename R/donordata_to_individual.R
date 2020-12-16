@@ -27,22 +27,21 @@
 #' # calculating Z-score relative to preterm growth references
 #' q <- donordata_to_individual(dnr = "lollypop.preterm", id = 50001)
 #'
-#' # overwrite hgt, wgt and hdc slots
-#' q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
-#'              libname = "clopus::preterm", prefix = "pt2012a",
-#'              sex = q@sex, sub = q@ga)
-#' q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, yname = "wgt",
-#'              libname = "clopus::preterm", prefix = "pt2012a",
-#'              sex = q@sex, sub = q@ga)
-#' q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, yname = "hdc",
-#'              libname = "clopus::preterm", prefix = "pt2012b",
-#'              sex = q@sex, sub = q@ga)
-#'
-#' # update broken stick estimate
-#' q@bs.hgt <- new("bse", data = q@hgt)
-#' q@bs.wgt <- new("bse", data = q@wgt)
-#' q@bs.hdc <- new("bse", data = q@hdc)
-#'
+#' # This is a manual way to convert to preterm references
+#' # Not needed anymore after introduction of usetransform (0.81)
+#' #q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
+#' #              libname = "clopus::preterm", prefix = "pt2012a",
+#' #             sex = q@sex, sub = q@ga)
+#' #q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, yname = "wgt",
+#' #              libname = "clopus::preterm", prefix = "pt2012a",
+#' #              sex = q@sex, sub = q@ga)
+#' #q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, yname = "hdc",
+#' #              libname = "clopus::preterm", prefix = "pt2012b",
+#' #              sex = q@sex, sub = q@ga)
+#' # # update broken stick estimate
+#' # q@bs.hgt <- new("bse", data = q@hgt)
+#' # q@bs.wgt <- new("bse", data = q@wgt)
+#' # q@bs.hdc <- new("bse", data = q@hdc)
 #'
 #' # use models argument to estimate brokenstick estimates
 #' p <- donordata_to_individual(dnr = "terneuzen", id = 11,
@@ -105,70 +104,90 @@ donordata_to_individual <- function(con = NULL, dnr, id, ...) {
                hgt = new("xyz", yname = "hgt",
                          x = time$age,
                          y = time$hgt,
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...),
                wgt = new("xyz", yname = "wgt",
                          x = time$age,
                          y = time$wgt,
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...),
                hdc = new("xyz", yname = "hdc",
                          x = time$age,
                          y = time$hdc,
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...),
                bmi = new("xyz", yname = "bmi",
                          x = time$age,
                          y = time$wgt/(time$hgt/100)^2,
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...),
                wfh = new("xyz", yname = "wfh",
                          xname = "hgt",
                          x = time$hgt,
                          y = time$wgt,
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...),
                dsc = new("xyz",
                          yname = "dsc",
                          x = time$age,
                          y = time$dsc,
-                         libname = "clopus::dscore",
-                         prefix = "nl2014",
-                         sub = ifelse(!is.na(pbg@ga) && pbg@ga < 37,
-                                      pbg@ga, 40),
+                         usetransform = TRUE,
                          sex = pbg@sex,
+                         ga = pbg@ga,
                          ...))
     pbs <- new("individualBS",
                bs.hgt = new("bse", yname = "hgt",
                             data = pan@hgt,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...),
                bs.wgt = new("bse", yname = "wgt",
                             data = pan@wgt,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...),
                bs.hdc = new("bse", yname = "hdc",
                             data = pan@hdc,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...),
                bs.bmi = new("bse", yname = "bmi",
                             data = pan@bmi,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...),
                bs.wfh = new("bse", yname = "wfh",
                             xname = "hgt",
                             data = pan@wfh,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...),
                bs.dsc = new("bse", yname = "dsc",
                             data = pan@dsc,
                             at = "knots",
+                            usetransform = TRUE,
                             sex = pbg@sex,
+                            ga = pbg@ga,
                             ...))
     prw <- new("individualRW",
                ddi = new("ird", mst = time,
