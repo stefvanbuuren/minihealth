@@ -181,7 +181,7 @@ setMethod(
       if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
       else if (usetransform) {
         slot(.Object, "transform") <- "transform_z()"
-        df <- data.frame(y = as.numeric(y),
+        df <- data.frame(y = slot(.Object, "y"),
                          x = slot(.Object, "x"),
                          sex = sexga$sex,
                          ga = sexga$ga)
