@@ -67,7 +67,7 @@ eval(d2@call)
 # so let attach clopus first
 library("clopus")
 find.reference(libname = "who")
-detach("package:clopus")
+# detach("package:clopus")
 
 # Head circumference of girl, relative to WHO standard
 d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),

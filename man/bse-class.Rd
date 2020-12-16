@@ -15,11 +15,16 @@ values specified in the \code{data} argument of the
 \section{Slots}{
 
  \describe{
-   \item{\code{call}:}{An object of class \code{call} that refers to an object with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should yield an object of class \code{brokenstick} as created by
+   \item{\code{call}:}{An object of class \code{call} that refers to an object
+   with a pre-fitted broken stick model. Evaluation by \code{eval(call)} should
+   yield an object of class \code{brokenstick} as created by
    \code{\link[brokenstick]{brokenstick}}.}
-   \item{\code{found}:}{Logical indicating whether the broken stick model specified by
-   \code{call} was actually found.}
-   \item{\code{zscale}:}{A logical indicating whether the broken stick model models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale (\code{zscale = FALSE}). At initialization, the \code{new()} function tries to infer and set this flag from the model specified by \code{call}.}
+   \item{\code{found}:}{Logical indicating whether the broken stick model
+   specified by \code{call} was actually found.}
+   \item{\code{zscale}:}{A logical indicating whether the broken stick model
+   models the outcome in the Z-scale (\code{zscale = TRUE}, default) or Y-scale
+   (\code{zscale = FALSE}). At initialization, the \code{new()} function tries
+   to infer and set this flag from the model specified by \code{call}.}
 }
 }
 
@@ -33,7 +38,7 @@ child <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
 child
 
 boy <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
-girl <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female", ga = 32)
+girl <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
 boy
 girl
 
@@ -52,9 +57,17 @@ d3
 d4 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
 sex = "female"), at = "knots")
 d4
+
+# use transform_y function instead of reference call
+# now, -0.126 is converted to 41.2 cm
+d5 <- new("bse", girl, usetransform = TRUE, ga = 32, sex = "female")
+d5
+d5@transform
+
 }
 \seealso{
-\code{\link{xyz-class}}, \code{\link[brokenstick]{brokenstick}}, \code{\link[brokenstick]{predict.brokenstick}}
+\code{\link{xyz-class}}, \code{\link[brokenstick]{brokenstick}},
+\code{\link[brokenstick]{predict.brokenstick}}
 }
 \author{
 Stef van Buuren 2016
