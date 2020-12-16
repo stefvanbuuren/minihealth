@@ -11,6 +11,7 @@ convert_checked_individual <- function(checked = NULL, ...) {
   ddi <- convert_ddi_gsed(d, r)
   ds <- dscore(data = ddi, key = "dutch")
 
+  # browser()
   # is this child or message number?
   pid <- new("individualID",
              id = 0L,

@@ -105,8 +105,8 @@ test_that("test21.json (minimal data) MESS",
                          "Missing 'Contactmomenten'",
                          fixed = TRUE))
 
-test_that("test22.json (range checking) SILENT",
-          expect_silent(convert_bds_individual(jtf[22])))
+test_that("test22.json (set gad 50 = ga 7 equal to NA)",
+          expect_message(convert_bds_individual(jtf[22])))
 
 test_that("test23.json (multiple messages) MESS",
           expect_message(convert_bds_individual(jtf[23])))
