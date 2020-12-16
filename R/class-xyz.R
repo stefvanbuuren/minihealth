@@ -32,6 +32,10 @@
 #'    \item{\code{found}:}{Internal logical flag indicating
 #'    whether the reference specified by
 #'    \code{call} was actually found.}
+#'    \item{\code{usetransform}:}{Logical indicating whether conversion to
+#'    and from should be done using \code{clopus::transform_z()} and
+#'    \code{clopus::transform_y()}.}
+#'    \item{\code{transform}:}{Name of the \code{clopus} transform function.}
 #'}
 #'
 #' @details Changed Feb 2020: The function rounds `z` to 3 digits after the
@@ -87,6 +91,16 @@
 #'                                 sex = "female", yname = "hgt", sub = "32")
 #'d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
 #'d7
+#'
+#'# use transform_y function instead of reference call
+#'d8 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
+#'   usetransform = TRUE, ga = 32, sex = "female")
+#'d8
+#'
+#'# use transform_z function
+#'d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
+#'   usetransform = TRUE, ga = 32, sex = "female")
+#'d9
 #'@export
 setClass("xyz",
          slots = c(
@@ -97,11 +111,12 @@ setClass("xyz",
            yname = "character",
            zname = "character",
            call  = "language",
-           found = "logical"
+           found = "logical",
+           usetransform = "logical",
+           transform = "character"
          ), prototype = list(
            call = quote(as.numeric(NULL)),
-           found = FALSE
-         )
+           found = FALSE)
 )
 
 setMethod(
@@ -109,7 +124,12 @@ setMethod(
   function (.Object, x = numeric(0), y, z,
             xname = "age", yname = "hgt",
             call = quote(as.numeric(NULL)),
+            usetransform = FALSE,
             ...) {
+
+    # store flag
+    slot(.Object, "usetransform") <- usetransform
+    slot(.Object, "transform") <- "not set"
 
     # direct call specification overides everything else
     if (!missing(call)) slot(.Object, "call") <- as.call(call)
@@ -123,12 +143,30 @@ setMethod(
     ref <- eval(call)
     .Object@found <- is.reference(ref)
 
-    # initialize x, y and z
+    # parse sex and ga
+    catch <- function(sex = NA_character_, ga = NA_real_, ...) {
+      sex <- match.arg(sex, c("male", "female", NA_character_))
+      list(sex = sex, ga = as.numeric(ga))
+    }
+    sexga <- catch(...)
+
+    # initialize x
     slot(.Object, "x") <- as.numeric(x)
     lx <- length(slot(.Object, "x"))
 
+    # initialize y
     if (missing(y)) {
       if (missing(z)) slot(.Object, "y") <- rep(NA_real_, lx)
+      else if (usetransform) {
+        slot(.Object, "transform") <- "transform_y()"
+        df <- data.frame(z = as.numeric(z),
+                         x = slot(.Object, "x"),
+                         sex = sexga$sex,
+                         ga = sexga$ga)
+        names(df) <- c(paste0(yname, ".z"), "age", "sex", "ga")
+        slot(.Object, "y") <-
+          as.numeric(transform_y(df, ynames = yname)[[yname]])
+      }
       else slot(.Object, "y") <-
           as.numeric(z2y(z = as.numeric(z),
                          x = slot(.Object, "x"),
@@ -138,8 +176,19 @@ setMethod(
     if (length(slot(.Object, "y")) == 0)
       slot(.Object, "y") <- rep(NA_real_, lx)
 
+    # initialize z
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
+      else if (usetransform) {
+        slot(.Object, "transform") <- "transform_z()"
+        df <- data.frame(y = as.numeric(y),
+                         x = slot(.Object, "x"),
+                         sex = sexga$sex,
+                         ga = sexga$ga)
+        names(df) <- c(yname, "age", "sex", "ga")
+        slot(.Object, "z") <-
+          as.numeric(transform_z(df, ynames = yname)[[paste0(yname, ".z")]])
+      }
       else slot(.Object, "z") <-
           round(as.numeric(y2z(y = as.numeric(y),
                                x = slot(.Object, "x"),
@@ -176,14 +225,21 @@ setValidity("xyz", function(object) {
 
 setMethod("show", signature(object = "xyz" ),
           function (object) {
-            if (!object@found) cat("No reference\n")
-            else cat(paste("package: clopus, library:",
-                           strsplit(as.character(object@call[[2]]),
-                                    '\\[\\[\\"')[[1]][1],
-                           ", member:",
-                           strsplit(as.character(object@call[[2]]),
-                                    '\\"')[[1]][2],
-                           "\n"))
+            if (object@usetransform) {
+              cat(paste("package: clopus, function:",
+                        object@transform, "\n"))
+            } else {
+              if (!object@found) cat("No reference\n")
+              else {
+                cat(paste("package: clopus, library:",
+                          strsplit(as.character(object@call[[2]]),
+                                   '\\[\\[\\"')[[1]][1],
+                          ", member:",
+                          strsplit(as.character(object@call[[2]]),
+                                   '\\"')[[1]][2],
+                          "\n"))
+              }
+            }
             if (length(object@x) | length(object@y) | length(object@z)) {
               df <- data.frame(object@x, object@y, object@z)
               names(df) <- c(object@xname, object@yname, object@zname)

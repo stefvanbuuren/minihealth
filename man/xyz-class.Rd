@@ -42,6 +42,10 @@ decimal point.
    \item{\code{found}:}{Internal logical flag indicating
    whether the reference specified by
    \code{call} was actually found.}
+   \item{\code{usetransform}:}{Logical indicating whether conversion to
+   and from should be done using \code{clopus::transform_z()} and
+   \code{clopus::transform_y()}.}
+   \item{\code{transform}:}{Name of the \code{clopus} transform function.}
 }
 }
 
@@ -90,6 +94,16 @@ ref <- clopus::create.reference.call(libname = "clopus::preterm", prefix = "pt20
                                 sex = "female", yname = "hgt", sub = "32")
 d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
 d7
+
+# use transform_y function instead of reference call
+d8 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
+  usetransform = TRUE, ga = 32, sex = "female")
+d8
+
+# use transform_z function
+d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
+  usetransform = TRUE, ga = 32, sex = "female")
+d9
 }
 \seealso{
 \code{\link[clopus]{create.reference.call}}
