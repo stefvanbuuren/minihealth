@@ -22,7 +22,7 @@ Imports:
     utils
 Suggests: 
     curl,
-    jamestest (>= 0.21.0),
+    jamestest (>= 0.24.0),
     testthat
 Remotes: 
     stefvanbuuren/clopus,
