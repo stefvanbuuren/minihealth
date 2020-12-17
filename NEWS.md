@@ -1,3 +1,9 @@
+# minihealth 0.82.0 
+
+* Changes the transformations in `donordata_to_indivual()` and 
+`convert_bds_individual()` to use clopus::transform_y()` and 
+`clopus::transform_z()` functions.
+
 # minihealth 0.81.0 
 
 * The `xyz` and `bse` classes now support `clopus::transform_z()` and  
