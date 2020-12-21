@@ -1,3 +1,7 @@
+# minihealth 0.83.0 
+
+* Extends `xyz` class to weight-for-height Z-scores
+
 # minihealth 0.82.0 
 
 * Changes the transformations in `donordata_to_indivual()` and 
