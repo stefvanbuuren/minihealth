@@ -17,9 +17,9 @@
 #'    \item{\code{xname}:}{A character scalar with the name of the \code{x}
 #'    variable,usually something like \code{"age"}.}
 #'    \item{\code{yname}:}{A character scalar with the name of the measurement.
-#'    Currently restricted to one of \code{c("hgt", "wgt", "hdc", "bmi", "dsc")}
+#'    Currently restricted to one of \code{c("hgt", "wgt", "hdc", "wfh", "bmi", "dsc")}
 #'    for height (in cm), weight (in kg), head circumference (in cm),
-#'    body mass index and D-score, respectively.}
+#'    weight-for-height (kg/m), body mass index (kg/m^2) and D-score, respectively.}
 #'    \item{\code{zname}:}{A character scalar with the name of the \code{z}
 #'    variable. By default, is it equal to \code{paste0(yname, ".z")}.}
 #'    \item{\code{call}:}{An object of class \code{call} that specifies the
@@ -181,11 +181,19 @@ setMethod(
       if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
       else if (usetransform && lx) {
         slot(.Object, "transform") <- "transform_z()"
+        if (yname != "wfh") {
         df <- data.frame(y = slot(.Object, "y"),
                          x = slot(.Object, "x"),
                          sex = sexga$sex,
                          ga = sexga$ga)
         names(df) <- c(yname, "age", "sex", "ga")
+        } else {
+          df <- data.frame(y = slot(.Object, "y"),
+                           x = slot(.Object, "x"),
+                           sex = sexga$sex,
+                           ga = sexga$ga)
+          names(df) <- c("wgt", "hgt", "sex", "ga")
+        }
         slot(.Object, "z") <-
           as.numeric(transform_z(df, ynames = yname)[[paste0(yname, ".z")]])
       }

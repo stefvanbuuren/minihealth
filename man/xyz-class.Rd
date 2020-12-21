@@ -27,9 +27,9 @@ decimal point.
    \item{\code{xname}:}{A character scalar with the name of the \code{x}
    variable,usually something like \code{"age"}.}
    \item{\code{yname}:}{A character scalar with the name of the measurement.
-   Currently restricted to one of \code{c("hgt", "wgt", "hdc", "bmi", "dsc")}
+   Currently restricted to one of \code{c("hgt", "wgt", "hdc", "wfh", "bmi", "dsc")}
    for height (in cm), weight (in kg), head circumference (in cm),
-   body mass index and D-score, respectively.}
+   weight-for-height (kg/m), body mass index (kg/m^2) and D-score, respectively.}
    \item{\code{zname}:}{A character scalar with the name of the \code{z}
    variable. By default, is it equal to \code{paste0(yname, ".z")}.}
    \item{\code{call}:}{An object of class \code{call} that specifies the

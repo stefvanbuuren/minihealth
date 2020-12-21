@@ -18,9 +18,9 @@ head circumference, bmi, and weight for height.
 
 \item{\code{hdc}}{Head circumference in cm (\code{xyz})}
 
-\item{\code{bmi}}{Body mass index kg/m**2 (\code{xyz})}
-
 \item{\code{wfh}}{Weight for height kg/m (\code{xyz})}
+
+\item{\code{bmi}}{Body mass index kg/m**2 (\code{xyz})}
 
 \item{\code{dsc}}{D-score (D) (\code{xyz})}
 }}

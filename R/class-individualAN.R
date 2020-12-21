@@ -6,8 +6,8 @@
 #' @slot hgt  Length/height in cm (\code{xyz})
 #' @slot wgt  Weight in kg (\code{xyz})
 #' @slot hdc  Head circumference in cm (\code{xyz})
-#' @slot bmi  Body mass index kg/m**2 (\code{xyz})
 #' @slot wfh  Weight for height kg/m (\code{xyz})
+#' @slot bmi  Body mass index kg/m**2 (\code{xyz})
 #' @slot dsc  D-score (D) (\code{xyz})
 #' @seealso \code{\link{xyz-class}}
 #' @examples
@@ -35,15 +35,15 @@ setClass("individualAN",
            hgt = "xyz",
            wgt = "xyz",
            hdc = "xyz",
-           bmi = "xyz",
            wfh = "xyz",
+           bmi = "xyz",
            dsc = "xyz"),
          prototype = list(
            hgt = new("xyz", yname = "hgt"),
            wgt = new("xyz", yname = "wgt"),
            hdc = new("xyz", yname = "hdc"),
-           bmi = new("xyz", yname = "bmi"),
            wfh = new("xyz", yname = "wfh", xname = "hgt"),
+           bmi = new("xyz", yname = "bmi"),
            dsc = new("xyz", yname = "dsc")
          )
 )
