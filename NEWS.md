@@ -1,3 +1,7 @@
+# minihealth 0.84.0
+
+* Renames ".z" to "_z"
+
 # minihealth 0.83.0 
 
 * Extends `xyz` class to weight-for-height Z-scores
