@@ -160,7 +160,7 @@ setMethod("initialize", "bse",
                                    x = .Object@x,
                                    sex = sexga$sex,
                                    ga = sexga$ga)
-                  names(df) <- c(paste0(.Object@yname, ".z"), "age", "sex", "ga")
+                  names(df) <- c(paste0(.Object@yname, "_z"), "age", "sex", "ga")
                   slot(.Object, "y") <-
                     as.numeric(transform_y(df, ynames = .Object@yname)[[.Object@yname]])
                 } else {
@@ -192,7 +192,7 @@ setMethod("initialize", "bse",
                                    ga = sexga$ga)
                   names(df) <- c(.Object@yname, "age", "sex", "ga")
                   slot(.Object, "z") <-
-                    as.numeric(transform_z(df, ynames = .Object@yname)[[paste0(.Object@yname, ".z")]])
+                    as.numeric(transform_z(df, ynames = .Object@yname)[[paste0(.Object@yname, "_z")]])
                 } else {
                   .Object@z <- as.numeric(y2z(y = .Object@y,
                                               x = .Object@x,
