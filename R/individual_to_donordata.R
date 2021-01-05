@@ -71,12 +71,12 @@ individual_to_donordata <- function(x, element = NULL) {
     bmi  = bmi.df$y,
     wfh  = wfh.df$y,
     dsc  = dsc.df$y,
-    hgt.z = hgt.df$z,
-    wgt.z = wgt.df$z,
-    hdc.z = hdc.df$z,
-    bmi.z = bmi.df$z,
-    wfh.z = wfh.df$z,
-    dsc.z = dsc.df$z)
+    hgt_z = hgt.df$z,
+    wgt_z = wgt.df$z,
+    hdc_z = hdc.df$z,
+    bmi_z = bmi.df$z,
+    wfh_z = wfh.df$z,
+    dsc_z = dsc.df$z)
 
   if (element == "time") return(time)
 

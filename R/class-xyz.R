@@ -21,7 +21,7 @@
 #'    for height (in cm), weight (in kg), head circumference (in cm),
 #'    weight-for-height (kg/m), body mass index (kg/m^2) and D-score, respectively.}
 #'    \item{\code{zname}:}{A character scalar with the name of the \code{z}
-#'    variable. By default, is it equal to \code{paste0(yname, ".z")}.}
+#'    variable. By default, is it equal to \code{paste0(yname, "_z")}.}
 #'    \item{\code{call}:}{An object of class \code{call} that specifies the
 #'    appropriate reference table from the \pkg{clopus} package. Use the function
 #'    \code{\link[clopus]{create.reference.call}} to set \code{call} manually.
@@ -163,7 +163,7 @@ setMethod(
                          x = slot(.Object, "x"),
                          sex = sexga$sex,
                          ga = sexga$ga)
-        names(df) <- c(paste0(yname, ".z"), "age", "sex", "ga")
+        names(df) <- c(paste0(yname, "_z"), "age", "sex", "ga")
         slot(.Object, "y") <-
           as.numeric(transform_y(df, ynames = yname)[[yname]])
       }
@@ -195,7 +195,7 @@ setMethod(
           names(df) <- c("wgt", "hgt", "sex", "ga")
         }
         slot(.Object, "z") <-
-          as.numeric(transform_z(df, ynames = yname)[[paste0(yname, ".z")]])
+          as.numeric(transform_z(df, ynames = yname)[[paste0(yname, "_z")]])
       }
       else slot(.Object, "z") <-
           round(as.numeric(y2z(y = as.numeric(y),
@@ -209,7 +209,7 @@ setMethod(
     # administrative names
     .Object@xname <- as.character(xname[1])
     .Object@yname <- as.character(yname[1])
-    if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], ".z")
+    if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], "_z")
 
     check <- validObject(.Object)
     return(.Object)

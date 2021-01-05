@@ -44,7 +44,7 @@ library(minihealth)
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
 new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
 #> No reference
-#>   age  hgt hgt.z
+#>   age  hgt hgt_z
 #> 1 0.0 51.0    NA
 #> 2 0.2 54.1    NA
 #> 3 0.5 63.4    NA
@@ -52,7 +52,7 @@ new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
 # at the minimum, specify sex for automatic Z-score calculation
 new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
 #> package: clopus, library: clopus::nl1997 , member: nl1997.mhgtNL 
-#>   age  hgt  hgt.z
+#>   age  hgt  hgt_z
 #> 1 0.0 51.0 -0.154
 #> 2 0.2 54.1 -2.312
 #> 3 0.5 63.4 -1.829
@@ -62,7 +62,7 @@ d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0),
           sex = "male", yname = "wgt")
 d1
 #> package: clopus, library: clopus::nl1997 , member: nl1997.mwgtNL 
-#>   age wgt  wgt.z
+#>   age wgt  wgt_z
 #> 1 0.0 3.2 -0.874
 #> 2 0.2 5.2 -0.575
 #> 3 0.5 7.0 -1.048
@@ -149,7 +149,7 @@ given and `y` is calculated.
 # Standard weight centiles at age 0.5 year of Dutch boys
 new("xyz", x = rep(0.5, 5), z = -2:2, sex = "male", yname = "wgt")
 #> package: clopus, library: clopus::nl1997 , member: nl1997.mwgtNL 
-#>   age  wgt wgt.z
+#>   age  wgt wgt_z
 #> 1 0.5 6.24    -2
 #> 2 0.5 7.04    -1
 #> 3 0.5 7.90     0
@@ -160,7 +160,7 @@ new("xyz", x = rep(0.5, 5), z = -2:2, sex = "male", yname = "wgt")
 new("xyz", x = rep(c(0, 0.5, 1), each = 5), z = rep(-2:2, 3), 
     sex = "male", yname = "wgt")
 #> package: clopus, library: clopus::nl1997 , member: nl1997.mwgtNL 
-#>    age   wgt wgt.z
+#>    age   wgt wgt_z
 #> 1  0.0  2.77    -2
 #> 2  0.0  3.15    -1
 #> 3  0.0  3.55     0
@@ -190,7 +190,7 @@ boy <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
            sex = "male")
 boy
 #> package: clopus, library: clopus::nl1997 , member: nl1997.mhgtNL 
-#>   age  hgt  hgt.z
+#>   age  hgt  hgt_z
 #> 1 0.0 51.0 -0.154
 #> 2 0.2 54.1 -2.312
 #> 3 0.5 63.4 -1.829
@@ -198,7 +198,7 @@ boy
 # calculate broken stick estimates at observed ages
 new("bse", data = boy)
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
-#>   age  hgt  hgt.z
+#>   age  hgt  hgt_z
 #> 1 0.0 50.6 -0.349
 #> 2 0.2 54.9 -1.982
 #> 3 0.5 63.5 -1.801
@@ -206,7 +206,7 @@ new("bse", data = boy)
 # calculate broken stick estimates at all break points
 new("bse", data = boy, at = "knots")
 #> package: donordata, model: load_data(dnr = "smocc_bs", element = "hgt") , member: smocc_bs 
-#>       age  hgt  hgt.z
+#>       age  hgt  hgt_z
 #> 1  0.0000 50.6 -0.349
 #> 2  0.0767 50.9 -1.640
 #> 3  0.1533 53.2 -1.945
