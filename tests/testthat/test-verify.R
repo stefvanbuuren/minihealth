@@ -106,7 +106,7 @@ test_that("test21.json (minimal data) WARNS",
                          fixed = TRUE))
 
 test_that("test22.json (range checking) PASSES",
-          expect_silent(verify(jtf[22])))
+          expect_message(verify(jtf[22])))
 
 test_that("test23.json (multiple messages) produces message",
           expect_message(verify(jtf[23])))

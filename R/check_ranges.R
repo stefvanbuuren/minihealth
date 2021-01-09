@@ -19,11 +19,12 @@ check_ranges <- function(d) {
     message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen) heeft geen waarde", appendLF = FALSE)
-  if (!is.na(gad) & (gad < 50 | gad > 350))
+  if (!is.na(gad) & (gad < 50 | gad > 350)) {
     message("BDS 82 (",
             lex[lex$bdsnummer == 82, "description"],
             " in dagen): Buiten bereik 50-350", appendLF = FALSE)
-
+    gad <- NA_real_
+    }
   bw <- extract_field2(d, 110L, "ClientGegevens", "Elementen")
   if (is.na(bw))
     message("BDS 110 (",

@@ -105,7 +105,7 @@ test_that("test21.json (minimal data) MESS",
                          "Missing 'Contactmomenten'",
                          fixed = TRUE))
 
-test_that("test22.json (set gad 50 = ga 7 equal to NA)",
+test_that("test22.json (gad (=49) out of range 50-350: set to NA)",
           expect_message(convert_bds_individual(jtf[22])))
 
 test_that("test23.json (multiple messages) MESS",
@@ -149,4 +149,10 @@ test_that("http400.json proceeds silent - no biological mother",
 #     })
 #   }
 # }
+
+# Kevin S: Check D-score and DAZ
+fn  <- system.file("extdata", "smocc", "Kevin_S.json", package = "jamestest")
+js  <- jsonlite::toJSON(jsonlite::fromJSON(fn), auto_unbox = TRUE)
+
+ind <- convert_bds_individual(js)
 
