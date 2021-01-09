@@ -17,7 +17,7 @@ laura <- donordata_to_individual(dnr = dnr, id = ids[1])
 kevin <- donordata_to_individual(dnr = dnr, id = ids[6])
 
 # lollypop.preterm
-dnr <- "lollypop.preterm"
+dnr <- "lollypop"
 ids <- as.integer(c(53696, 53675, 53676, 53684, 53519, 53520, 53531, 53582, 53583, 53584))
 names <- c("Jurre P", "Sanne P",  "Milan P", "Roos P",  "Bram P",
            "Freek P", "Anouk P",  "Sharon P", "Nick P", "Simon P")
