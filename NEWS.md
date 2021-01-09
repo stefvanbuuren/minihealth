@@ -1,3 +1,9 @@
+# minihealth 0.85.0
+
+* Repairs calculation of DAZ
+* Repair range check, and setting to NA, for out-of-range GA
+* Re-edit to `lollypop` to account for `donordata 0.20.0`
+
 # minihealth 0.84.0
 
 * Renames ".z" to "_z"
