@@ -107,7 +107,6 @@ convert_checked_individual <- function(checked = NULL, ...) {
                dsc = new("xyz", yname = "dsc",
                          x = ds$a,
                          y = ds$d,
-                         z = ds$daz,
                          usetransform = TRUE,
                          sex = pbg@sex,
                          ga = pbg@ga))
