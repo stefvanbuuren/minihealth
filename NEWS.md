@@ -1,3 +1,7 @@
+# minihealth 0.86.0
+
+* Explicit declararion of `clopus::y2z()` and `clopus::z2y()`
+
 # minihealth 0.85.0
 
 * Repairs calculation of DAZ
