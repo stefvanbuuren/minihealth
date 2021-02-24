@@ -168,9 +168,9 @@ setMethod(
           as.numeric(transform_y(df, ynames = yname)[[yname]])
       }
       else slot(.Object, "y") <-
-          as.numeric(z2y(z = as.numeric(z),
-                         x = slot(.Object, "x"),
-                         ref = ref))
+          as.numeric(clopus::z2y(z = as.numeric(z),
+                                 x = slot(.Object, "x"),
+                                 ref = ref))
     }
     else slot(.Object, "y") <- as.numeric(y)
     if (length(slot(.Object, "y")) == 0)
@@ -182,11 +182,11 @@ setMethod(
       else if (usetransform && lx) {
         slot(.Object, "transform") <- "transform_z()"
         if (yname != "wfh") {
-        df <- data.frame(y = slot(.Object, "y"),
-                         x = slot(.Object, "x"),
-                         sex = sexga$sex,
-                         ga = sexga$ga)
-        names(df) <- c(yname, "age", "sex", "ga")
+          df <- data.frame(y = slot(.Object, "y"),
+                           x = slot(.Object, "x"),
+                           sex = sexga$sex,
+                           ga = sexga$ga)
+          names(df) <- c(yname, "age", "sex", "ga")
         } else {
           df <- data.frame(y = slot(.Object, "y"),
                            x = slot(.Object, "x"),
@@ -198,9 +198,9 @@ setMethod(
           as.numeric(transform_z(df, ynames = yname)[[paste0(yname, "_z")]])
       }
       else slot(.Object, "z") <-
-          round(as.numeric(y2z(y = as.numeric(y),
-                               x = slot(.Object, "x"),
-                               ref = ref)), 3L)
+          round(as.numeric(clopus::y2z(y = as.numeric(y),
+                                       x = slot(.Object, "x"),
+                                       ref = ref)), 3L)
     }
     else slot(.Object, "z") <- round(as.numeric(z), 3L)
     if (length(slot(.Object, "z")) == 0)

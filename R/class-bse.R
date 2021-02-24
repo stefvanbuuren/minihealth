@@ -164,10 +164,10 @@ setMethod("initialize", "bse",
                   slot(.Object, "y") <-
                     as.numeric(transform_y(df, ynames = .Object@yname)[[.Object@yname]])
                 } else {
-                  .Object@y <- as.numeric(z2y(z = .Object@z,
-                                              x = .Object@x,
-                                              ref = eval(data@call),
-                                              ...))
+                  .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
+                                                      x = .Object@x,
+                                                      ref = eval(data@call),
+                                                      ...))
                 }
               } else {
                 # transform y into z
@@ -194,10 +194,10 @@ setMethod("initialize", "bse",
                   slot(.Object, "z") <-
                     as.numeric(transform_z(df, ynames = .Object@yname)[[paste0(.Object@yname, "_z")]])
                 } else {
-                  .Object@z <- as.numeric(y2z(y = .Object@y,
-                                              x = .Object@x,
-                                              ref = eval(data@call),
-                                              ...))
+                  .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
+                                                      x = .Object@x,
+                                                      ref = eval(data@call),
+                                                      ...))
                 }
               }
             }
