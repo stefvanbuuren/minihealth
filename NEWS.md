@@ -1,6 +1,10 @@
+# minihealth 0.86.1
+
+* Removes all `lollypop.preterm` pointers
+
 # minihealth 0.86.0
 
-* Explicit declararion of `clopus::y2z()` and `clopus::z2y()`
+* Explicit declaration of `clopus::y2z()` and `clopus::z2y()`
 
 # minihealth 0.85.0
 
