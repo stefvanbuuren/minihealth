@@ -16,7 +16,7 @@ time <- load_data(con = con, dnr = dnr, element = "time", ids = ids[1])
 laura <- donordata_to_individual(dnr = dnr, id = ids[1])
 kevin <- donordata_to_individual(dnr = dnr, id = ids[6])
 
-# lollypop.preterm
+# lollypop
 dnr <- "lollypop"
 ids <- as.integer(c(53696, 53675, 53676, 53684, 53519, 53520, 53531, 53582, 53583, 53584))
 names <- c("Jurre P", "Sanne P",  "Milan P", "Roos P",  "Bram P",

@@ -17,15 +17,15 @@
 #' require("donorloader")
 #' smocc <- load_data(dnr = "smocc")
 #' smocc_bs <- load_data(dnr = "smocc_bs")
-#' lollypop.preterm <- load_data(dnr = "lollypop.preterm")
+#' lollypop <- load_data(dnr = "lollypop")
 #' terneuzen <- load_data(dnr = "terneuzen")
 #' terneuzen_bs <- load_data(dnr = "terneuzen_bs")
 #'
 #' p <- donordata_to_individual(dnr = "smocc", id = 10001)
 #'
-#' # from lollypop.preterm
+#' # from lollypop
 #' # calculating Z-score relative to preterm growth references
-#' q <- donordata_to_individual(dnr = "lollypop.preterm", id = 50001)
+#' q <- donordata_to_individual(dnr = "lollypop", id = 50001)
 #'
 #' # This is a manual way to convert to preterm references
 #' # Not needed anymore after introduction of usetransform (0.81)
