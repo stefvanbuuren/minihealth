@@ -2,20 +2,8 @@ library(donorloader)
 smocc_bs <- load_data(dnr = "smocc_bs")
 
 child <- new("xyz", x = c(0, 0.2, 0.5), y = c(51, 54.1, 63.4))
-test_that("No Z-score since we haven't specified the child's sex", {
-  expect_equal(data.frame(child)$z, rep(NA_real_, 3))
-})
-
-boy <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
-girl <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "female")
-
-test_that("Provides Z-score for boy", {
-  expect_equal(data.frame(boy)$z, c(-0.154, -2.312, -1.829))
-})
-
-test_that("Provides Z-score for girl", {
-  expect_equal(data.frame(girl)$z, c(0.052, -1.824, -1.314))
-})
+boy <-   new("xyz", x = c(0, 0.2, 0.5), y = c(51, 54.1, 63.4), sex = "male")
+girl <-  new("xyz", x = c(0, 0.2, 0.5), y = c(51, 54.1, 63.4), sex = "female")
 
 d1 <- new("bse", child)
 test_that("Returns broken stick estimates in hgt_z", {
@@ -27,6 +15,8 @@ d2 <- new("bse", girl)
 test_that("Returns broken stick estimates in hgt_z", {
   expect_equal(data.frame(d2)$hgt_z, c(-0.125540937662353, -1.51990513649756,
                                        -1.32386127980939))})
+
+d2boy <- new("bse", boy)
 
 d3 <- new("bse", new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4),
 sex = "female"))
