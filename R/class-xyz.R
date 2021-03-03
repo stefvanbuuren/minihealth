@@ -28,7 +28,12 @@
 #'    Alternatively, specify one or more of \code{libname}, \code{prefix},
 #'    \code{sex},
 #'    \code{yname} and \code{sub} arguments, which are passed down to
-#'    \code{create.reference.call()}. See below for examples.}
+#'    \code{create.reference.call()}. DEPRECATED.}
+#'    \item{\code{refcode}:}{Since \code{minihealth 0.90.0}, Name of the reference. See
+#'    \code{\link[centile]{make_refcode}}.}
+#'    \item{\code{pkg}:}{Since \code{minihealth 0.90.0}, Name of the package containing
+#'    the reference. See \code{\link[centile]{make_refcode}}. The default is
+#'    \code{nlreferences}.}
 #'    \item{\code{found}:}{Internal logical flag indicating
 #'    whether the reference specified by
 #'    \code{call} was actually found.}
@@ -56,48 +61,35 @@
 #'   sex = "female")
 #'d2
 #'
-#'# Obtain reference used to calculate Z-scores in d2
-#'eval(d2@call)
-#'
-#'# List available WHO references in clopus package
-#'# find.references() only searches packages in the search list
-#'# so let attach clopus first
-#'library("clopus")
-#'find.reference(libname = "who")
-#' # detach("package:clopus")
+#'# As as data.frame
+#'data.frame(d2)
 #'
 #'# Head circumference of girl, relative to WHO standard
-#'d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
-#'libname = "clopus::who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
+#'d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), pkg = "centile",
+#' refcode = "who_2007_hdc_female_")
 #'d3
-#'
-#'# Shortcut specification of WHO standard
-#'d3@call
-#'d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
-#'d4
+#'data.frame(d3)
 #'
 #'# Standard weight centiles at age 0.5 year of Dutch girls
-#'d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
+#'d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "female", yname = "wgt")
 #'d5
 #'
 #'# calculate centiles at 1 year using the female WHO head circumference reference
-#'ref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
-#'                                 sex = "female", yname = "hdc", sub = "")
-#'d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
+#'d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, pkg = "centile",
+#' refcode = "who_2007_hdc_female_")
 #'d6
 #'
 #'# calculate P50 for preterms, female and born a GA week 32
-#'ref <- clopus::create.reference.call(libname = "clopus::preterm", prefix = "pt2012a",
-#'                                 sex = "female", yname = "hgt", sub = "32")
-#'d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
+#'d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
+#'  refcode = "nl_2012_hgt_female_32")
 #'d7
 #'
-#'# use transform_y function instead of reference call
+#'# use nlreferences::transform2y() as an alternative
 #'d8 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
 #'   usetransform = TRUE, ga = 32, sex = "female")
 #'d8
 #'
-#'# use transform_z function
+#'# use nlreferences::transform2z function
 #'d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
 #'   usetransform = TRUE, ga = 32, sex = "female")
 #'d9
@@ -111,6 +103,8 @@ setClass("xyz",
            yname = "character",
            zname = "character",
            call  = "language",
+           refcode = "character",
+           pkg = "character",
            found = "logical",
            usetransform = "logical",
            transform = "character"
@@ -124,31 +118,51 @@ setMethod(
   function (.Object, x = numeric(0), y, z,
             xname = "age", yname = "hgt",
             call = quote(as.numeric(NULL)),
+            refcode = character(0),
+            pkg = "nlreferences",
             usetransform = FALSE,
+            verbose = FALSE,
             ...) {
+    if (!missing(call)) {
+      stop("Argument `call` is deprecated; please use `refcode` instead.",
+           call. = FALSE)
+    }
 
     # store flag
     slot(.Object, "usetransform") <- usetransform
     slot(.Object, "transform") <- "not set"
 
-    # direct call specification overides everything else
-    if (!missing(call)) slot(.Object, "call") <- as.call(call)
-    # else, create new call from any ... arguments
-    else {
-      call <- create.reference.call(yname = yname, ...)
-      slot(.Object, "call") <- call
-    }
-
-    # obtain reference table
-    ref <- eval(call)
-    .Object@found <- is.reference(ref)
-
-    # parse sex and ga
-    catch <- function(sex = NA_character_, ga = NA_real_, ...) {
-      sex <- match.arg(sex, c("male", "female", NA_character_))
-      list(sex = sex, ga = as.numeric(ga))
+    # filter sex, ga and age from dots
+    catch <- function(sex = NA_character_,
+                      ga = NA_real_,
+                      age = NA_real_, ...) {
+      list(sex = sex, ga = ga, age = age)
     }
     sexga <- catch(...)
+
+    # direct refcode/pkg specification overrides everything else
+    # else, create automatic refcode from the data
+    if (!missing(refcode)) {
+      slot(.Object, "refcode") <- refcode
+    } else {
+      df <- data.frame()
+      if (length(x)) {
+        df <- data.frame(xname = xname,
+                         yname = yname,
+                         x = as.numeric(x),
+                         sex = sexga$sex,
+                         age = sexga$age,
+                         ga = sexga$ga)
+      }
+      slot(.Object, "refcode") <- nlreferences::set_refcodes(df)
+    }
+    slot(.Object, "pkg") <- pkg
+
+    # obtain reference table
+    #ref <- centile::load_reference(refcode,
+    #                               pkg = pkg,
+    #                               verbose = verbose)
+    #.Object@found <- !is.null(ref)
 
     # initialize x
     slot(.Object, "x") <- as.numeric(x)
@@ -158,19 +172,23 @@ setMethod(
     if (missing(y)) {
       if (missing(z)) slot(.Object, "y") <- rep(NA_real_, lx)
       else if (usetransform) {
-        slot(.Object, "transform") <- "transform_y()"
+        slot(.Object, "transform") <- "transform2y()"
         df <- data.frame(z = as.numeric(z),
                          x = slot(.Object, "x"),
                          sex = sexga$sex,
                          ga = sexga$ga)
         names(df) <- c(paste0(yname, "_z"), "age", "sex", "ga")
         slot(.Object, "y") <-
-          as.numeric(transform_y(df, ynames = yname)[[yname]])
+          nlreferences::transform2y(df, znames = paste0(yname, "_z"))[[yname]]
       }
-      else slot(.Object, "y") <-
-          as.numeric(clopus::z2y(z = as.numeric(z),
-                                 x = slot(.Object, "x"),
-                                 ref = ref))
+      else {
+        .Object@y <- centile::z2y(z = as.numeric(z),
+                                  x = .Object@x,
+                                  refcode = .Object@refcode,
+                                  pkg = .Object@pkg,
+                                  verbose = verbose,
+                                  ...)
+      }
     }
     else slot(.Object, "y") <- as.numeric(y)
     if (length(slot(.Object, "y")) == 0)
@@ -180,7 +198,7 @@ setMethod(
     if (missing(z)) {
       if (missing(y)) slot(.Object, "z") <- rep(NA_real_, lx)
       else if (usetransform && lx) {
-        slot(.Object, "transform") <- "transform_z()"
+        slot(.Object, "transform") <- "transform2z()"
         if (yname != "wfh") {
           df <- data.frame(y = slot(.Object, "y"),
                            x = slot(.Object, "x"),
@@ -195,12 +213,17 @@ setMethod(
           names(df) <- c("wgt", "hgt", "sex", "ga")
         }
         slot(.Object, "z") <-
-          as.numeric(transform_z(df, ynames = yname)[[paste0(yname, "_z")]])
+          nlreferences::transform2z(df, ynames = yname,
+                                    verbose = verbose)[[paste0(yname, "_z")]]
       }
-      else slot(.Object, "z") <-
-          round(as.numeric(clopus::y2z(y = as.numeric(y),
-                                       x = slot(.Object, "x"),
-                                       ref = ref)), 3L)
+      else {
+        .Object@z <- centile::y2z(y = as.numeric(y),
+                                  x = .Object@x,
+                                  refcode = .Object@refcode,
+                                  pkg = .Object@pkg,
+                                  verbose = verbose,
+                                  ...)
+      }
     }
     else slot(.Object, "z") <- round(as.numeric(z), 3L)
     if (length(slot(.Object, "z")) == 0)
@@ -211,42 +234,30 @@ setMethod(
     .Object@yname <- as.character(yname[1])
     if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], "_z")
 
-    check <- validObject(.Object)
+    # check <- validObject(.Object)
     return(.Object)
   }
 )
 
 setValidity("xyz", function(object) {
-  if (length(object@y) > 1 && length(object@x) != length(object@y))
+  if (length(object@y) > 1L && length(object@x) != length(object@y))
     return(paste0("Non-conformable length: ",
                   object@xname, " (", length(object@x),") and ",
                   object@yname, " (", length(object@y),")."))
-  if (length(object@z) > 1 && length(object@x) != length(object@z))
+  if (length(object@z) > 1L && length(object@x) != length(object@z))
     return(paste0("Non-conformable length: ",
                   object@xname, " (", length(object@x),") and ",
                   object@zname, " (", length(object@z),")."))
-  if (length(object@xname) > 1) return("xname not of length 1")
-  if (length(object@yname) > 1) return("yname not of length 1")
-  if (length(object@zname) > 1) return("zname not of length 1")
+  if (length(object@xname) > 1L) return("xname not of length 1")
+  if (length(object@yname) > 1L) return("yname not of length 1")
+  if (length(object@zname) > 1L) return("zname not of length 1")
   return(TRUE)
 })
 
 setMethod("show", signature(object = "xyz" ),
           function (object) {
             if (object@usetransform) {
-              cat(paste("package: clopus, function:",
-                        object@transform, "\n"))
-            } else {
-              if (!object@found) cat("No reference\n")
-              else {
-                cat(paste("package: clopus, library:",
-                          strsplit(as.character(object@call[[2]]),
-                                   '\\[\\[\\"')[[1]][1],
-                          ", member:",
-                          strsplit(as.character(object@call[[2]]),
-                                   '\\"')[[1]][2],
-                          "\n"))
-              }
+              cat(paste0("Transform ", object@pkg, "::", object@transform, "\n"))
             }
             if (length(object@x) | length(object@y) | length(object@z)) {
               df <- data.frame(object@x, object@y, object@z)
@@ -254,46 +265,43 @@ setMethod("show", signature(object = "xyz" ),
               print(df)
               return()
             }
-            cat("No data for ", object@xname, ", ", object@yname,
-                " and ", object@zname, "\n", sep = "")
+          cat("No data for ", object@xname, ", ", object@yname,
+              " and ", object@zname, "\n", sep = "")
           }
 )
-
 
 #' as("xyz", "data.frame")
 #'
 #' @name as
 #' @family xyz
 setAs("xyz", "data.frame", function(from) {
-  library <- ifelse(from@found,
-                    strsplit(as.character(from@call[[2]]), '\\[\\[\\"')[[1]][1],
-                    NA_character_)
-  member <- ifelse(from@found,
-                   strsplit(as.character(from@call[[2]]), '\\"')[[1]][2],
-                   NA_character_)
-  if (length(from@x))
-    data.frame(xname = from@xname, yname = from@yname, zname = from@zname,
-               x = from@x, y = from@y, z = from@z,
-               found = from@found,
-               library = library,
-               member  = member,
-               stringsAsFactors = FALSE)
-  else
-    data.frame(xname = character(), yname = character(), zname = character(),
-               x = numeric(), y = numeric(), z = numeric(),
-               found = logical(),
-               library = character(),
-               member = character(),
-               stringsAsFactors = FALSE)
+  if (length(from@x) && from@usetransform)
+    return(data.frame(xname = from@xname,
+                      yname = from@yname,
+                      zname = from@zname,
+                      x = from@x,
+                      y = from@y,
+                      z = from@z,
+                      pkg = from@pkg,
+                      func = from@transform))
+  if (length(from@x) && ! from@usetransform)
+    return(data.frame(xname = from@xname,
+                      yname = from@yname,
+                      zname = from@zname,
+                      x = from@x,
+                      y = from@y,
+                      z = from@z,
+                      pkg = from@pkg,
+                      refcode = from@refcode))
+  data.frame(xname = character(),
+             yname = character(),
+             zname = character(),
+             x = numeric(),
+             y = numeric(),
+             z = numeric(),
+             pkg = character(),
+             refcode = character())
 })
-
-# OLD VERSION PRE 0.71.0, names the columns with xname/yname/zname
-# setAs("xyz", "data.frame", function(from) {
-#   df <- data.frame(x = from@x, y = from@y, z = from@z)
-#   names(df) <- c(from@xname, from@yname, from@zname)
-#   df
-#   }
-# )
 
 #' @export
 as.data.frame.xyz <-

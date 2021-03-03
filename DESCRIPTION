@@ -6,10 +6,12 @@ Authors@R: c(person("Stef", "van Buuren", email = "stef.vanbuuren@tno.nl", role 
              person("Arjan", "Huizing", email = "arjan.huizing@tno.nl", role = "aut"))
 Depends: 
     R (>= 2.10),
-    clopus (>= 0.52.0)
+    clopus (>= 0.52.0),
+    nlreferences,
+    donorloader (>= 0.20.0)
 Imports:
     brokenstick (>= 1.1.0),
-    donorloader (>= 0.20.0),
+    centile,
     dplyr (>= 0.8.3),
     dscore (>= 1.4.0),
     jsonlite,
@@ -25,6 +27,8 @@ Suggests:
     jamestest (>= 0.24.0),
     testthat
 Remotes: 
+    growthcharts/centile,
+    growthcharts/nlreferences,
     stefvanbuuren/clopus,
     stefvanbuuren/donorloader,
     stefvanbuuren/jamestest

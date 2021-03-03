@@ -38,7 +38,12 @@ decimal point.
    Alternatively, specify one or more of \code{libname}, \code{prefix},
    \code{sex},
    \code{yname} and \code{sub} arguments, which are passed down to
-   \code{create.reference.call()}. See below for examples.}
+   \code{create.reference.call()}. DEPRECATED.}
+   \item{\code{refcode}:}{Since \code{minihealth 0.90.0}, Name of the reference. See
+   \code{\link[centile]{make_refcode}}.}
+   \item{\code{pkg}:}{Since \code{minihealth 0.90.0}, Name of the package containing
+   the reference. See \code{\link[centile]{make_refcode}}. The default is
+   \code{nlreferences}.}
    \item{\code{found}:}{Internal logical flag indicating
    whether the reference specified by
    \code{call} was actually found.}
@@ -59,48 +64,35 @@ d2 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0), yname = "wgt",
   sex = "female")
 d2
 
-# Obtain reference used to calculate Z-scores in d2
-eval(d2@call)
-
-# List available WHO references in clopus package
-# find.references() only searches packages in the search list
-# so let attach clopus first
-library("clopus")
-find.reference(libname = "who")
-# detach("package:clopus")
+# As as data.frame
+data.frame(d2)
 
 # Head circumference of girl, relative to WHO standard
-d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41),
-libname = "clopus::who", prefix = "who2011", sex = "female", sub = "", yname = "hdc")
+d3 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), pkg = "centile",
+refcode = "who_2007_hdc_female_")
 d3
-
-# Shortcut specification of WHO standard
-d3@call
-d4 <- new("xyz", x = c(0, 0.2, 0.5), y = c(35, 38, 41), call = d3@call)
-d4
+data.frame(d3)
 
 # Standard weight centiles at age 0.5 year of Dutch girls
-d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "f", yname = "wgt")
+d5 <- new("xyz", x = rep(0.5, 5), z = -2:2, sex = "female", yname = "wgt")
 d5
 
 # calculate centiles at 1 year using the female WHO head circumference reference
-ref <- clopus::create.reference.call(libname = "clopus::who", prefix = "who2011",
-                                sex = "female", yname = "hdc", sub = "")
-d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, call = ref)
+d6 <- new("xyz", yname = "hdc", x = rep(1, 5), z = -2:2, pkg = "centile",
+refcode = "who_2007_hdc_female_")
 d6
 
 # calculate P50 for preterms, female and born a GA week 32
-ref <- clopus::create.reference.call(libname = "clopus::preterm", prefix = "pt2012a",
-                                sex = "female", yname = "hgt", sub = "32")
-d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13), call = ref)
+d7 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
+ refcode = "nl_2012_hgt_female_32")
 d7
 
-# use transform_y function instead of reference call
+# use nlreferences::transform2y() as an alternative
 d8 <- new("xyz", yname = "hgt", x = seq(0, 1, 1/12), z = rep(0, 13),
   usetransform = TRUE, ga = 32, sex = "female")
 d8
 
-# use transform_z function
+# use nlreferences::transform2z function
 d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
   usetransform = TRUE, ga = 32, sex = "female")
 d9
