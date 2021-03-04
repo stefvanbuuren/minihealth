@@ -27,22 +27,6 @@
 #' # calculating Z-score relative to preterm growth references
 #' q <- donordata_to_individual(dnr = "lollypop", id = 50001)
 #'
-#' # This is a manual way to convert to preterm references
-#' # Not needed anymore after introduction of usetransform (0.81)
-#' #q@hgt <- new("xyz", x = q@hgt@x, y = q@hgt@y, yname = "hgt",
-#' #              libname = "clopus::preterm", prefix = "pt2012a",
-#' #             sex = q@sex, sub = q@ga)
-#' #q@wgt <- new("xyz", x = q@wgt@x, y = q@wgt@y, yname = "wgt",
-#' #              libname = "clopus::preterm", prefix = "pt2012a",
-#' #              sex = q@sex, sub = q@ga)
-#' #q@hdc <- new("xyz", x = q@hdc@x, y = q@hdc@y, yname = "hdc",
-#' #              libname = "clopus::preterm", prefix = "pt2012b",
-#' #              sex = q@sex, sub = q@ga)
-#' # # update broken stick estimate
-#' # q@bs.hgt <- new("bse", data = q@hgt)
-#' # q@bs.wgt <- new("bse", data = q@wgt)
-#' # q@bs.hdc <- new("bse", data = q@hdc)
-#'
 #' # use models argument to estimate brokenstick estimates
 #' p <- donordata_to_individual(dnr = "terneuzen", id = 11,
 #'   models = "terneuzen_bs")

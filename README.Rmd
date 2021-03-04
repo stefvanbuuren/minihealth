@@ -59,8 +59,8 @@ d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(3.2, 5.2, 7.0),
           sex = "male", yname = "wgt")
 d1
 
-# Obtain reference table used to calculate Z-scores in d3
-eval(d1@call)
+# View reference names used to calculate Z-scores in d1
+data.frame(d1)
 ```
 
 It is also possible to perform the reverse calculation, where `z` 
@@ -76,7 +76,7 @@ new("xyz", x = rep(c(0, 0.5, 1), each = 5), z = rep(-2:2, 3),
 ```
 
 See the help ("?`xyz-class`") and the 
-[clopus](https://github.com/stefvanbuuren/clopus) package for more examples.
+[centile](https://github.com/growthcharts/centile) package for more examples.
 
 ## Example 2: Automatic brokenstick estimation
 
@@ -94,7 +94,7 @@ new("bse", data = boy, at = "knots")
 ```
 
 See the help ("?`bse-class`") and the 
-[brokenstick](https://github.com/stefvanbuuren/brokenstick) package for more examples.
+[brokenstick](https://github.com/growthcharts/brokenstick) package for more examples.
 
 ## Example 3: Bundle all measures by individual
 

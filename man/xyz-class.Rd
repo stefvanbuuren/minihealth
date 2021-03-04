@@ -44,9 +44,9 @@ corresponding to \code{y} given \code{x}). The class calculates
    whether the reference specified by
    \code{call} was actually found.}
    \item{\code{usetransform}:}{Logical indicating whether conversion to
-   and from should be done using \code{clopus::transform_z()} and
-   \code{clopus::transform_y()}.}
-   \item{\code{transform}:}{Name of the \code{clopus} transform function.}
+   and from should be done using \code{nlreferences::transform2z()} and
+   \code{nlreferences::transform2y()}.}
+   \item{\code{transform}:}{Name of the \code{nlreferences} transform function.}
    \item{\code{sex}:}{Sex specified by user argument.}
    \item{\code{ga}:}{Gestational age specified by user argument.}
    \item{\code{age}:}{Decimal age specified by user argument.}
