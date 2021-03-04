@@ -27,23 +27,28 @@ head circumference, bmi, and weight for height.
 
 \examples{
 # create object with height and weight measures
-# do not calculate Z-scores since reference is undefined
+# do not calculate Z-scores since reference is undefined (no sex)
 z <- new("individualAN",
-     hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70)),
-     wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6)))
-z
+     hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70), verbose = TRUE),
+     wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6), verbose = TRUE))
+data.frame(z)
+
+# specify sex, and we get a reference
+z <- new("individualAN",
+     hgt = new("xyz", yname = "hgt", x = c(0, 0.5), y = c(50, 70), sex = "male"),
+     wgt = new("xyz", yname = "wgt", x = c(0, 0.3), y = c(3, 6), sex = "male"))
+data.frame(z)
 
 # calculate -2 and +2 centiles for height and head circumference
 # using the WHO Child Growth Standard for girls
-hgtref <- clopus::create.reference.call(libname = "clopus::who",
-  prefix = "who2011", sex = "female", yname = "hgt", sub = "")
-hdcref <- clopus::create.reference.call(libname = "clopus::who",
-  prefix = "who2011", sex = "female", yname = "hdc", sub = "")
-new("individualAN",
+hgtref <- "who_2006_hgt_female_"
+hdcref <- "who_2007_hdc_female_"
+z <- new("individualAN",
      hgt = new("xyz", yname = "hgt", x = c(0, 0, 0.25, 0.25),
-       z = c(-2, 2, -2, 2), call = hgtref),
-     hdc = new("xyz", yname = "wgt", x = c(0, 0, 1, 1),
-       z = c(-2, 2, -2, 2), call = hdcref))
+       z = c(-2, 2, -2, 2), refcode = hgtref, pkg = "centile"),
+     hdc = new("xyz", yname = "wgt", x = c(0, 0, 0.25, 0.25),
+       z = c(-2, 2, -2, 2), refcode = hdcref, pkg = "centile"))
+data.frame(z)
 }
 \seealso{
 \code{\link{xyz-class}}

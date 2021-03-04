@@ -41,19 +41,21 @@
 #'    and from should be done using \code{clopus::transform_z()} and
 #'    \code{clopus::transform_y()}.}
 #'    \item{\code{transform}:}{Name of the \code{clopus} transform function.}
+#'    \item{\code{sex}:}{Sex specified by user argument.}
+#'    \item{\code{ga}:}{Gestational age specified by user argument.}
+#'    \item{\code{age}:}{Decimal age specified by user argument.}
+#'    \item{\code{digits}:}{Number of digits for \code{round()} function. Default
+#'    is 3.}
 #'}
 #'
-#' @details Changed Feb 2020: The function rounds `z` to 3 digits after the
-#' decimal point.
 #'@name xyz-class
 #'@rdname xyz-class
 #'@aliases xyz-class
-#'@author Stef van Buuren 2016
-#'@seealso \code{\link[clopus]{create.reference.call}}
+#'@author Stef van Buuren
 #'@keywords classes
 #'@examples
 #'# specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
-#'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
+#'d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
 #'d1
 #'
 #'# Z-scores of weight (in kg) at same ages
@@ -91,7 +93,7 @@
 #'
 #'# use nlreferences::transform2z function
 #'d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
-#'   usetransform = TRUE, ga = 32, sex = "female")
+#'   usetransform = TRUE, ga = 32, sex = "female", digits = 10)
 #'d9
 #'@export
 setClass("xyz",
@@ -102,29 +104,36 @@ setClass("xyz",
            xname = "character",
            yname = "character",
            zname = "character",
-           call  = "language",
            refcode = "character",
            pkg = "character",
-           found = "logical",
            usetransform = "logical",
-           transform = "character"
-         ), prototype = list(
-           call = quote(as.numeric(NULL)),
-           found = FALSE)
+           transform = "character",
+           sex = "character",
+           ga = "numeric",
+           age = "numeric",
+           digits = "integer",
+           call = "language",  # deprecated
+           found = "logical"   # deprecated
+         ), prototype = list()
 )
 
 setMethod(
   "initialize", "xyz",
   function (.Object, x = numeric(0), y, z,
             xname = "age", yname = "hgt",
-            call = quote(as.numeric(NULL)),
             refcode = character(0),
             pkg = "nlreferences",
             usetransform = FALSE,
             verbose = FALSE,
+            sex = NA_character_,
+            ga = NA_real_,
+            age = NA_real_,
+            digits = 3L,
+            call = NULL,
             ...) {
+
     if (!missing(call)) {
-      stop("Argument `call` is deprecated; please use `refcode` instead.",
+      stop("Argument `call` is deprecated; please use `refcode` and `pkg` instead.",
            call. = FALSE)
     }
 
@@ -133,12 +142,16 @@ setMethod(
     slot(.Object, "transform") <- "not set"
 
     # filter sex, ga and age from dots
-    catch <- function(sex = NA_character_,
-                      ga = NA_real_,
-                      age = NA_real_, ...) {
-      list(sex = sex, ga = ga, age = age)
-    }
-    sexga <- catch(...)
+    # catch <- function(sex = NA_character_,
+    #                   ga = NA_real_,
+    #                   age = NA_real_, ...) {
+    #   list(sex = sex, ga = ga, age = age)
+    # }
+    # sexga <- catch(...)
+    .Object@sex <- sex
+    .Object@ga  <- ga
+    .Object@age <- age
+    .Object@digits <- as.integer(digits)
 
     # direct refcode/pkg specification overrides everything else
     # else, create automatic refcode from the data
@@ -150,9 +163,9 @@ setMethod(
         df <- data.frame(xname = xname,
                          yname = yname,
                          x = as.numeric(x),
-                         sex = sexga$sex,
-                         age = sexga$age,
-                         ga = sexga$ga)
+                         sex = .Object@sex,
+                         age = .Object@age,
+                         ga = .Object@ga)
       }
       slot(.Object, "refcode") <- nlreferences::set_refcodes(df)
     }
@@ -175,11 +188,12 @@ setMethod(
         slot(.Object, "transform") <- "transform2y()"
         df <- data.frame(z = as.numeric(z),
                          x = slot(.Object, "x"),
-                         sex = sexga$sex,
-                         ga = sexga$ga)
+                         sex = .Object@sex,
+                         ga = .Object@ga)
         names(df) <- c(paste0(yname, "_z"), "age", "sex", "ga")
         slot(.Object, "y") <-
-          nlreferences::transform2y(df, znames = paste0(yname, "_z"))[[yname]]
+          nlreferences::transform2y(df, znames = paste0(yname, "_z"),
+                                    verbose = verbose)[[yname]]
       }
       else {
         .Object@y <- centile::z2y(z = as.numeric(z),
@@ -187,6 +201,7 @@ setMethod(
                                   refcode = .Object@refcode,
                                   pkg = .Object@pkg,
                                   verbose = verbose,
+                                  dec = .Object@digits,
                                   ...)
       }
     }
@@ -202,15 +217,16 @@ setMethod(
         if (yname != "wfh") {
           df <- data.frame(y = slot(.Object, "y"),
                            x = slot(.Object, "x"),
-                           sex = sexga$sex,
-                           ga = sexga$ga)
+                           sex = .Object@sex,
+                           ga = .Object@ga)
           names(df) <- c(yname, "age", "sex", "ga")
         } else {
           df <- data.frame(y = slot(.Object, "y"),
                            x = slot(.Object, "x"),
-                           sex = sexga$sex,
-                           ga = sexga$ga)
-          names(df) <- c("wgt", "hgt", "sex", "ga")
+                           sex = .Object@sex,
+                           ga = .Object@ga,
+                           age = .Object@age)
+          names(df) <- c("wgt", "hgt", "sex", "ga", "age")
         }
         slot(.Object, "z") <-
           nlreferences::transform2z(df, ynames = yname,
@@ -222,17 +238,18 @@ setMethod(
                                   refcode = .Object@refcode,
                                   pkg = .Object@pkg,
                                   verbose = verbose,
+                                  dec = .Object@digits,
                                   ...)
       }
     }
-    else slot(.Object, "z") <- round(as.numeric(z), 3L)
-    if (length(slot(.Object, "z")) == 0)
+    else slot(.Object, "z") <- round(as.numeric(z), .Object@digits)
+    if (!length(slot(.Object, "z")))
       slot(.Object, "z") <- rep(NA_real_, lx)
 
     # administrative names
-    .Object@xname <- as.character(xname[1])
-    .Object@yname <- as.character(yname[1])
-    if (length(.Object@zname) == 0) .Object@zname <- paste0(yname[1], "_z")
+    .Object@xname <- as.character(xname[1L])
+    .Object@yname <- as.character(yname[1L])
+    if (!length(.Object@zname)) .Object@zname <- paste0(yname[1L], "_z")
 
     # check <- validObject(.Object)
     return(.Object)

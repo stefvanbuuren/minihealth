@@ -11,10 +11,6 @@ or standard deviation score (SDS)
 corresponding to \code{y} given \code{x}). The class calculates
 \code{z} (when \code{y} is specified), or \code{y} (when \code{z} is specified).
 }
-\details{
-Changed Feb 2020: The function rounds `z` to 3 digits after the
-decimal point.
-}
 \section{Slots}{
 
  \describe{
@@ -51,12 +47,17 @@ decimal point.
    and from should be done using \code{clopus::transform_z()} and
    \code{clopus::transform_y()}.}
    \item{\code{transform}:}{Name of the \code{clopus} transform function.}
+   \item{\code{sex}:}{Sex specified by user argument.}
+   \item{\code{ga}:}{Gestational age specified by user argument.}
+   \item{\code{age}:}{Decimal age specified by user argument.}
+   \item{\code{digits}:}{Number of digits for \code{round()} function. Default
+   is 3.}
 }
 }
 
 \examples{
 # specify length (in cm) for boy at ages 0, 0.2 and 0.5 years
-d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4), sex = "male")
+d1 <- new("xyz", x = c(0, 0.2, 0.5), y = c(51.0, 54.1, 63.4))
 d1
 
 # Z-scores of weight (in kg) at same ages
@@ -94,13 +95,10 @@ d8
 
 # use nlreferences::transform2z function
 d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
-  usetransform = TRUE, ga = 32, sex = "female")
+  usetransform = TRUE, ga = 32, sex = "female", digits = 10)
 d9
 }
-\seealso{
-\code{\link[clopus]{create.reference.call}}
-}
 \author{
-Stef van Buuren 2016
+Stef van Buuren
 }
 \keyword{classes}

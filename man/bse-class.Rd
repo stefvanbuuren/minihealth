@@ -70,6 +70,6 @@ d5@transform
 \code{\link[brokenstick]{predict.brokenstick}}
 }
 \author{
-Stef van Buuren 2016
+Stef van Buuren
 }
 \keyword{classes}

@@ -67,3 +67,6 @@ d9 <- new("xyz", yname = "hgt", x = seq(0, 0.25, 1/12), y = c(43, 46, 48, 50),
 test_that("Use transform_z function instead of reference call", {
   expect_equal(data.frame(d9)$y, c(43, 46, 48, 50))
 })
+
+
+d10 <- new("xyz", yname = "wfh", xname = "hgt", x = c(60, 70, 80), z = rep(0, 3))

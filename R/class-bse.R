@@ -28,7 +28,7 @@ NULL
 #'@name bse-class
 #'@rdname bse-class
 #'@aliases bse-class
-#'@author Stef van Buuren 2016
+#'@author Stef van Buuren
 #'@seealso \code{\link{xyz-class}}, \code{\link[brokenstick]{brokenstick}},
 #'\code{\link[brokenstick]{predict.brokenstick}}
 #'@keywords classes
@@ -87,7 +87,14 @@ setMethod("initialize", "bse",
                     at = c("x", "knots"),
                     models = "smocc_bs",
                     call = quote(as.numeric(NULL)),
+                    refcode = character(0),
+                    pkg = "nlreferences",
                     usetransform = FALSE,
+                    verbose = FALSE,
+                    sex = NA_character_,
+                    ga = NA_real_,
+                    age = NA_real_,
+                    digits = 3L,
                     ...) {
             at <- match.arg(at)
 
@@ -106,12 +113,10 @@ setMethod("initialize", "bse",
             .Object@yname <- data@yname
             .Object@zname <- data@zname
 
-            # parse sex and ga
-            catch <- function(sex = NA_character_, ga = NA_real_, ...) {
-              sex <- match.arg(sex, c("male", "female", NA_character_))
-              list(sex = sex, ga = as.numeric(ga))
-            }
-            sexga <- catch(...)
+            # inherit covariates value from data if not explicitly specified
+            .Object@sex <- ifelse(missing(sex), data@sex, sex)
+            .Object@ga  <- ifelse(missing(ga), data@ga, ga)
+            .Object@age <- ifelse(missing(age), data@age, age)
 
             # direct call specification overides everything else
             if (!missing(call)) slot(.Object, "call") <- as.call(call)
@@ -119,7 +124,6 @@ setMethod("initialize", "bse",
             else {
               expr <- parse(text = paste0("load_data(dnr='", models,"', element='", data@yname, "')"))
               call <- call("eval", expr)
-              # call <- call("[[", as.name(models), data@yname)
               slot(.Object, "call") <- call
             }
 
@@ -139,6 +143,24 @@ setMethod("initialize", "bse",
               if (at == "x") .Object@x <- data@x
               if (at == "knots") .Object@x <- as.numeric(get_knots(model))
 
+              # direct refcode/pkg specification overrides everything else
+              # else, create automatic refcode from the data
+              if (!missing(refcode)) {
+                .Object@refcode <- refcode
+              } else {
+                df <- data.frame()
+                if (length(.Object@x)) {
+                  df <- data.frame(xname = data@xname,
+                                   yname = data@yname,
+                                   x = .Object@x,
+                                   sex = .Object@sex,
+                                   age = .Object@age,
+                                   ga = .Object@ga)
+                }
+                .Object@refcode <- nlreferences::set_refcodes(df)
+              }
+              .Object@pkg <- pkg
+
               if (.Object@zscale) {
                 # transform z into y
                 df <- data.frame(
@@ -155,19 +177,22 @@ setMethod("initialize", "bse",
                   .Object@x <- numeric(0)
                   .Object@y <- numeric(0)
                 } else if (usetransform) {
-                  slot(.Object, "transform") <- "transform_y()"
+                  slot(.Object, "transform") <- "transform2y()"
                   df <- data.frame(z = .Object@z,
                                    x = .Object@x,
-                                   sex = sexga$sex,
-                                   ga = sexga$ga)
+                                   sex = .Object@sex,
+                                   ga = .Object@ga)
                   names(df) <- c(paste0(.Object@yname, "_z"), "age", "sex", "ga")
-                  slot(.Object, "y") <-
-                    as.numeric(transform_y(df, ynames = .Object@yname)[[.Object@yname]])
+                  .Object@y <-
+                    nlreferences::transform2y(df, znames = .Object@zname,
+                                              verbose = verbose)[[.Object@yname]]
                 } else {
-                  .Object@y <- as.numeric(clopus::z2y(z = .Object@z,
-                                                      x = .Object@x,
-                                                      ref = eval(data@call),
-                                                      ...))
+                  .Object@y <- centile::z2y(z = .Object@z,
+                                            x = .Object@x,
+                                            refcode = .Object@refcode,
+                                            pkg = .Object@pkg,
+                                            verbose = verbose,
+                                            ...)
                 }
               } else {
                 # transform y into z
@@ -185,19 +210,22 @@ setMethod("initialize", "bse",
                   .Object@x <- numeric(0)
                   .Object@z <- numeric(0)
                 } else if (usetransform) {
-                  slot(.Object, "transform") <- "transform_z()"
+                  slot(.Object, "transform") <- "transform2z()"
                   df <- data.frame(y = .Object@y,
                                    x = .Object@x,
-                                   sex = sexga$sex,
-                                   ga = sexga$ga)
+                                   sex = .Object@sex,
+                                   ga = .Object@ga)
                   names(df) <- c(.Object@yname, "age", "sex", "ga")
                   slot(.Object, "z") <-
-                    as.numeric(transform_z(df, ynames = .Object@yname)[[paste0(.Object@yname, "_z")]])
+                    nlreferences::transform2z(df, ynames = .Object@yname,
+                                              verbose = verbose)[[paste0(.Object@yname, "_z")]]
                 } else {
-                  .Object@z <- as.numeric(clopus::y2z(y = .Object@y,
-                                                      x = .Object@x,
-                                                      ref = eval(data@call),
-                                                      ...))
+                  .Object@z <- as.numeric(centile::y2z(y = .Object@y,
+                                                       x = .Object@x,
+                                                       refcode = .Object@refcode,
+                                                       pkg = .Object@pkg,
+                                                       verbose = verbose,
+                                                       ...))
                 }
               }
             }
@@ -216,17 +244,15 @@ setValidity("bse", function(object) {
 
 
 setMethod("show",
-          signature(object = "bse" ),
+          signature(object = "bse"),
           function (object) {
             if (!object@found) cat("Broken stick model not found.\n")
-            else cat(paste("package: donordata, model:",
-                           strsplit(as.character(object@call[[2]]), '\\[\\[\\"')[[1]][1],
-                           ", member:",
-                           strsplit(as.character(object@call[[2]]), '\\"')[[1]][2],
-                           "\n"))
-            if (length(object@x) == 0) object@x <- as.numeric(NA)
-            if (length(object@y) == 0) object@y <- as.numeric(NA)
-            if (length(object@z) == 0) object@z <- as.numeric(NA)
+            else cat(paste0("donorloader::",
+                            strsplit(as.character(object@call[[2]]), '\\[\\[\\"')[[1]][1],
+                            "\n"))
+            if (!length(object@x)) object@x <- NA_real_
+            if (!length(object@y)) object@y <- NA_real_
+            if (!length(object@z)) object@z <- NA_real_
             df <- data.frame(object@x, object@y, object@z)
             names(df) <- c(object@xname, object@yname, object@zname)
             print(df)
@@ -239,13 +265,35 @@ setMethod("show",
 #' @name as
 #' @family bse
 setAs("bse", "data.frame", function(from) {
-  df <- data.frame(x = from@x, y = from@y, z = from@z)
-  names(df) <- c(from@xname, from@yname, from@zname)
-  return(df)}
+  if (length(from@x) && from@usetransform)
+    return(data.frame(xname = from@xname,
+                      yname = from@yname,
+                      zname = from@zname,
+                      x = from@x,
+                      y = from@y,
+                      z = from@z,
+                      pkg = from@pkg,
+                      func = from@transform))
+  if (length(from@x) && ! from@usetransform)
+    return(data.frame(xname = from@xname,
+                      yname = from@yname,
+                      zname = from@zname,
+                      x = from@x,
+                      y = from@y,
+                      z = from@z,
+                      pkg = from@pkg,
+                      refcode = from@refcode))
+  data.frame(xname = character(),
+             yname = character(),
+             zname = character(),
+             x = numeric(),
+             y = numeric(),
+             z = numeric(),
+             pkg = character(),
+             refcode = character())
+  }
 )
 
 #' @export
 as.data.frame.bse <-
   function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
-
-
