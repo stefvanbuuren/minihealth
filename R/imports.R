@@ -2,8 +2,6 @@
 #' @import nlreferences
 #' @importFrom centile         y2z z2y
 #' @importFrom brokenstick     get_knots
-#' @importFrom clopus          create.reference.call is.reference
-#'                             transform_z transform_y
 #' @importFrom donorloader     load_data
 #' @importFrom dplyr           %>% arrange bind_rows distinct filter
 #'                             full_join mutate one_of recode
