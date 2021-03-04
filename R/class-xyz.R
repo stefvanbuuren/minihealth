@@ -251,7 +251,7 @@ setMethod(
     .Object@yname <- as.character(yname[1L])
     if (!length(.Object@zname)) .Object@zname <- paste0(yname[1L], "_z")
 
-    # check <- validObject(.Object)
+    check <- validObject(.Object)
     return(.Object)
   }
 )
