@@ -1,3 +1,9 @@
+test_that("new xyz object has proper length",
+          {
+            expect_length(new("xyz")@x, 0)
+            expect_length(new("xyz", x = 1:3)@x, 3)
+          })
+
 child <- new("xyz", x = c(0, 0.2, 0.5), y = c(51, 54.1, 63.4))
 test_that("No Z-score since we haven't specified the child's sex", {
   expect_equal(data.frame(child)$z, rep(NA_real_, 3))
