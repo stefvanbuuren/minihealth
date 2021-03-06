@@ -1,3 +1,7 @@
+# minihealth 0.90.0
+
+* Major update: Replaces `clopus` package by `centile` and `nlreferences`
+
 # minihealth 0.86.1
 
 * Removes all `lollypop.preterm` pointers
