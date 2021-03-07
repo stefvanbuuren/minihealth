@@ -1,3 +1,7 @@
+# minihealth 0.90.1
+
+* Adds separate birth weight field to weight table
+
 # minihealth 0.90.0
 
 * Major update: Replaces `clopus` package by `centile` and `nlreferences`
