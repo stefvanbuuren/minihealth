@@ -65,6 +65,14 @@ convert_checked_individual <- function(checked = NULL, ...) {
         hdc = r$hdc / 10,
         stringsAsFactors = FALSE)
     time$bmi <- time$wgt / (time$hgt / 100)^2
+
+    # append birth weight if needed
+    if (!is.na(pbg@bw) && !any(is.na(time$age)) && !any(time$age == 0)) {
+      time <- bind_rows(
+        data.frame(age = 0,
+                   wgt = pbg@bw / 1000),
+        time)
+    }
   }
 
   if (is.null(time)) {
