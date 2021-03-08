@@ -7,6 +7,10 @@ test_that("test1.json (client3.json) passes individual_to_donordata()", {
 test_that("test3.json (client3.json) passes individual_to_donordata()", {
   expect_message(individual_to_donordata(convert_bds_individual(jtf[3])))})
 
+test_that("test5.json passes individual_to_donordata()", {
+  expect_message(individual_to_donordata(convert_bds_individual(jtf[5])))})
+
+
 # invalid json --> error
 test_that("test8.json passes individual_to_donordata()", {
   expect_error(individual_to_donordata(convert_bds_individual(jtf[8])))})
