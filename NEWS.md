@@ -1,5 +1,7 @@
-# minihealth 0.90.1
+# minihealtg 0.91.0
 
+* Prevents `pid@src` from becoming empty
+* Adds tests for `individual_to_donordata()`
 * Adds separate birth weight field to weight table
 
 # minihealth 0.90.0
