@@ -13,11 +13,13 @@ convert_checked_individual <- function(checked = NULL, ...) {
 
   # browser()
   # is this child or message number?
+  src <- as.character(d$OrganisatieCode)
+  src <- ifelse(length(src), src, "")
   pid <- new("individualID",
              id = 0L,
              name = as.character(d$Referentie),
              dob = extract_dob(d),
-             src = as.character(d$OrganisatieCode),
+             src = src,
              dnr = NA_character_)
 
   pbg <- new("individualBG",
